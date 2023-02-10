@@ -13,15 +13,16 @@ def home(response):
 
 def createAd(response):
     if response.method == "POST":
-        form = createAdForm(response.POST)
+        form = createAdForm(response.POST, response.FILES)
 
         if form.is_valid():
             title = form.cleaned_data["title"]
             date = form.cleaned_data["date"]
             price = form.cleaned_data["price"]
             description = form.cleaned_data["description"]
+            adImage = form.cleaned_data["adImage"]
             # Need to add for image as well
-            newAd = ad(title=title, date=date, price=price, description=description)
+            newAd = ad(title=title, date=date, price=price, description=description, image=adImage)
             newAd.save()
         
         return render(response, "main/home.html", {})
