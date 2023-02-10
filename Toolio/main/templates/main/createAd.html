@@ -7,7 +7,7 @@
     <button type="button" class="btn btn-outline-primary">Annonse</button>
     <button type="button" class="btn btn-outline-primary">Ønskes Leid</button>
 </div>
-<form method="POST" action="/createAd/">
+<form method="POST" action="/createAd/" enctype="multipart/form-data"> <!-- multipart/form-data allows for sending files throug POST request -->
     {% csrf_token %}
     <div class="form-group mx-5">
         <h5>Tittel</h5>
@@ -18,9 +18,12 @@
         {{form.price}}
         <h5>Beskrivelse</h5>
         {{form.description}}
+        <h5>Legg til bilde</h5>
+        {{form.adImage}}
     </br>
         <button type="submit" class="btn btn-success", name="submitAd">Lag Annonse</button>
     </div>
     
 </form>
+
 {% endblock %}
