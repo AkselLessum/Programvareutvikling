@@ -8,6 +8,6 @@ class ad(models.Model):
     date = models.DateField(default=django.utils.timezone.now)
     price = models.IntegerField(default=0)
     description = models.CharField(max_length=500, default="")
-    image = models.ImageField(upload_to='images')
+    image = models.ImageField(upload_to='images', default="")
 
 
