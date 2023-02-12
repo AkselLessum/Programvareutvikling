@@ -3,19 +3,24 @@
 {% block title %} Create new Ad {% endblock %}
 
 {% block content %}
+
 <form method="POST" action="/createAd/" enctype="multipart/form-data"> <!-- multipart/form-data allows for sending files throug POST request -->
     {% csrf_token %}
     <div class="form-group mx-5">
-        <h5>Tittel</h5>
+
+        {{form.type}}
+
+        <h5 id="tjom">Tittel</h5>
         {{form.title}}
-        <h5>Tid produktet er ledig til</h5>
+        <h5>Tid produktet er ledig til / Til når vil du leie</h5>
         {{form.date}}
-        <h5>Pris</h5>
+        <h5>Pris / Budsjett</h5>
         {{form.price}}
         <h5>Beskrivelse</h5>
         {{form.description}}
         <h5>Legg til bilde</h5>
         {{form.adImage}}
+    </br>
     </br>
         <button type="submit" class="btn btn-success", name="submitAd">Lag Annonse</button>
     </div>
