@@ -2,18 +2,24 @@
 
 {% block content %}
 
-<h3 class="mx-5"><strong>Tilbud på markedet</h3>
+<center><h3 class="mx-5">Tilbud på markedet</h3></center>
 {% if adList %}
+    <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 80%; margin: auto;">
     {% for ad in adList %}
-        <div class="card my-2 mx-5 boy-card">
-            <div class="card-header">
-                <h3>{{ad.title}}</h3>
-                <p>Ledig til: {{ad.date}}</p>
-                <p>Pris: {{ad.price}}kr</p>
-                <p>{{ad.description}}</p>
+        <div class="col">
+        <div class="card h-100" style="width: 18rem;">
+            <img class="card-img-top" src="{{ad.image.url}}" alt="{{ad.title}}">
+            <div class="card-body">
+                <h5 class="card-title">{{ad.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ad.date}}</h6>
+                <p class="card-text">{{ad.description}}</p>
+                <a href='#' class="btn btn-primary">Book produkt</a>
+                <p class="card-text">Pris: {{ad.price}}kr</p>
             </div>
         </div>
+        </div>
     {% endfor %}
+    </div>
 {% else %}
 <p>Det er ingen annonser tilstede nå</p>
 {% endif %}

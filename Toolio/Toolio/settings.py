@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+        'DIRS': [BASE_DIR / "templates"],
     },
 ]
 
@@ -135,4 +136,4 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 MEDIA_URL='/media/'
 
 # Path where media is stored 
-MEDIA_ROOT=os.path.join(BASE_DIR,'media/')
+MEDIA_ROOT=BASE_DIR / "media"
