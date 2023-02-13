@@ -27,12 +27,7 @@ Routines and standards for **contributing** can be found [here](#).
 
 [Bootstrap#](#): 
 
-[Crispy-forms#](#):
-
-
-```bash
-pip install pillow
-```
+?[Crispy-forms#](#):?
 
 ## Installation 
 
@@ -40,7 +35,7 @@ pip install pillow
 2. Clone the project with the following command from inside the folder where you want the project:
 `git clone https://gitlab.stud.idi.ntnu.no/tdt4140-2023/landsby-3/gruppe-48/pu48.git`
 3. Make sure you have the [required](#technology-and-framework) versions of technologies used in the project installed.
-4. Install dependencies from inside `pu48/Toolio??`: `pip install -r requirements.txt`
+4. Install dependencies from inside `pu48/Toolio/`: `pip install -r requirements.txt`
 5. From the same folder run the following commands:
 `python manage.py makemigrations`
 `python manage.py migrate`
