@@ -30,7 +30,7 @@ def createAd(response):
             newAd = ad(isRequest=request, title=title, date=date, price=price, description=description, image=adImage)
             newAd.save()
         
-        return render(response, "main/home.html", {})
+        return home(response)
 
     else:
         form = createAdForm()
