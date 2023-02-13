@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>Toolio</title>
+        {% block title %}<title>Toolio</title>{% endblock %}
     </head>
     <style>
         body {
@@ -21,7 +21,7 @@
                 <a href="/createAd">
                     <img src="{% static 'media/plus.png' %}" width="40" height="40" class="d-inline-block align-top" alt="">
                 </a>
-                <a href="/user">
+                <a href="/login">
                     <img src="{% static 'media/profile.png' %}" width="35" height="35" class="d-inline-block align-top" alt="">
                 </a>
             </div>
