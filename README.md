@@ -19,31 +19,31 @@ Routines and standards for **contributing** can be found [here](#).
 
 **Back-end:**
 
-[Python#](#): Is the chosen language
+[Python 3.9.6](https://www.python.org/downloads/): Is the chosen language
 
-[Django#](#): Web-framework written in Python, is used to host all pages
+[Django 3.2.8](https://www.djangoproject.com): Web-framework written in Python, is used to host all pages
 
 **Front-end:**
 
-[Bootstrap#](#): 
+[Bootstrap ?version?](https://getbootstrap.com/docs/4.1/getting-started/introduction/): 
 
-?[Crispy-forms#](#):?
+?[Crispy-forms#](https://github.com/django-crispy-forms/django-crispy-forms):?
+?[Pillow#](https://python-pillow.org)?
 
 ## Installation 
 
 1. Download [git](https://git-scm.com/downloads) if not already installed.
 2. Clone the project with the following command from inside the folder where you want the project:
 `git clone https://gitlab.stud.idi.ntnu.no/tdt4140-2023/landsby-3/gruppe-48/pu48.git`
-3. Make sure you have the [required](#technology-and-framework) versions of technologies used in the project installed.
+3. Make sure you have the [required](#technology-and-framework) version of Python installed.
 4. Install dependencies from inside `pu48/Toolio/`: `pip install -r requirements.txt`
-5. From the same folder run the following commands:
+5. In order to create and apply the database schema run the following commands from inside `pu48/Toolio/`:
 `python manage.py makemigrations`
 `python manage.py migrate`
 6. Run the server:
 `python manage.py runserver`
 7. Go to:
 [http://localhost:8000/](http://localhost:8000/)
-
 
 ## Maintenance
 
