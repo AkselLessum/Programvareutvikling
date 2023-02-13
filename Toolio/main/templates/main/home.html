@@ -4,10 +4,9 @@
 
 <center><h3 class="mx-5">Tilbud på markedet</h3></center>
 {% if adList %}
-    <div class="row row-cols-1 row-cols-md-3 g-4" style="width: 80%; margin: auto;">
+    <div class="card-columns" style="width: 80%; margin: auto;">
     {% for ad in adList %}
-        <div class="col">
-            <div class="card h-100" style="width: 18rem;">
+            <div class="card" style="width: 18rem;">
                 {% if ad.isRequest == True%}
                     <div class="card-body">
                         <h5 class="card-title">Ønskes leid: {{ad.title}}</h5>
@@ -26,7 +25,6 @@
                     </div>
                 {% endif %}
             </div>
-        </div>
     {% endfor %}
     </div>
 {% else %}
