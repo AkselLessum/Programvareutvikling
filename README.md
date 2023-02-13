@@ -68,7 +68,7 @@ This project has only used unit-testing. To run all the test type the following 
 1. `pip install coverage`
 2. To get a coverage report in the terminal: `coverage run --source='#' manage.py test && coverage report` replace the '#' with one of the following: main, Toolio, user
 3. To also get a html coverage report: `coverage run --source='#' manage.py test && coverage report && coverage html` replace the '#' with one of the following: main, Toolio, user
-4. To open the html report 'live server' can be used, if not already installed run: `npm i -g live-server` and then to open the report run: `cd htmlcov/ && live-server`
+4. To open the html report [live server](https://github.com/tapio/live-server) can be used, if not already installed run: `npm i -g live-server` and then to open the report run: `cd htmlcov/ && live-server`
 
 ## Not finished -->
 
