@@ -7,8 +7,13 @@
     {% for ad in adList %}
         <div class="card my-2 mx-5 boy-card">
             <div class="card-header">
-                <h3>{{ad.title}}</h3>
-                <p>Ledig til: {{ad.date}}</p>
+                {% if ad.isRequest == True%}
+                    <h3>Ønskes leid: {{ad.title}}</h3>
+                    <p>Ønskes til: {{ad.date}}</p>
+                {% else %}
+                    <h3>{{ad.title}}</h3>
+                    <p>Ledig til: {{ad.date}}</p>
+                {% endif %}
                 <p>Pris: {{ad.price}}kr</p>
                 <p>{{ad.description}}</p>
             </div>
