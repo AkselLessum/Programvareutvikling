@@ -31,7 +31,18 @@ git push -uf origin main
 - [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
 - [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
 - [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+- For Pair-Programming documentation: 
+```
+Commit title
 
+Commit body
+
+Co-authored-by: name <additional-dev-1@example.com>
+Co-authored-by: name <additional-dev-2@example.com>
+
+F:EKS:
+Co-authored-by: Magnus Stavland Jakobsen <magnsjak@stud.ntnu.no>
+```
 ## Test and Deploy
 
 Use the built-in continuous integration in GitLab.
