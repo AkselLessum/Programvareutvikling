@@ -1,6 +1,5 @@
-# Toolio
 
-Toolio is a website where people can lend tools from each other. The service is supposed to make it easy for people to lend tools from others for a short amount of period. "I dialog med en studenassitstent, som var ment til å virke som produkteier, har vi utviklet et produkt i tråd med produkteiers ønske."
+# Toolio
 
 ## Description
 
@@ -10,7 +9,7 @@ Toolio is a website where people can lend tools from each other. The service is 
 
 ## Figma
 
-In the first Sprint a Figma [diagram](https://www.figma.com/file/7mZ3F55lnI0v0tEG3I7XU6/TOOLIO-SPRINT-1?node-id=25%3A227&t=KHcrblGRzwLO8f9o-1) was made for the project.
+
 
 ## Usage
 
