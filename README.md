@@ -6,14 +6,11 @@
 <h3 align="center">Toolio</h3>
 
 ---
-<p align="center">
-This is the code repo for group 48 in the subject TDT4140 Software Development. 
+
+This is the code repo for group 48 in the subject [TDT4140 Software Engineering](https://www.ntnu.edu/studies/courses/TDT4140#tab=omEmnet). 
 
 - [ ] Check that all links are inserted
 - [ ] Check that all commands are correct
-<br>
-</p>
-
 ## Table of Contents
 - [About](#about)
 - [Getting Started](#getting_started)
