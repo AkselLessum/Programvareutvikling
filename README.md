@@ -7,7 +7,7 @@
 
 ---
 <p align="center">
-This is the code repo for group 48 in the subject TDT4140 Software Engineering. 
+This is the code repo for group 48 in the subject TDT4140 Software Development. 
 
 - [ ] Check that all links are inserted
 - [ ] Check that all commands are correct
@@ -27,25 +27,25 @@ This is the code repo for group 48 in the subject TDT4140 Software Engineering.
 - [Acknowledgments](#acknowledgement)
 
 ## 🧐 About <a name = "about"></a>
-Toolio is a website where people can lend tools from each other. The service is supposed to make it easy for people to lend tools from others for a short amount of period. "I dialog med en studenassitstent, som var ment til å virke som produkteier, har vi utviklet et produkt i tråd med produkteiers ønske."
+Toolio is a platform where users can lend out their tools and equipment to each other by publishing advertisements. Through constant dialogue with our Student Assistant, who has simulated the role of Product Owner throughout this project, we have developed a product fulfilling his wishes and requirements.
 
-In the first Sprint a Figma [diagram](https://www.figma.com/file/7mZ3F55lnI0v0tEG3I7XU6/TOOLIO-SPRINT-1?node-id=25%3A227&t=KHcrblGRzwLO8f9o-1) was made for the project.
+To illustrate the product's functionality goals of Sprint 1, a Figma [model](https://www.figma.com/file/7mZ3F55lnI0v0tEG3I7XU6/TOOLIO-SPRINT-1?node-id=25%3A227&t=KHcrblGRzwLO8f9o-1) was created.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
 ### Prerequisites
-What things you need to install the software and how to install them.
+What you need to install the software, as well as how to install them.
 
 ```
 Give examples
 ```
 
 1. Download [git](https://git-scm.com/downloads) if not already installed.
-2. python download
+2. Python download
 
-### Installing
-A step by step series of examples that tell you how to get a development env running.
+### Installation
+A step by step series of examples that tell you how to get a development environment running.
 
 Say what the step will be
 
