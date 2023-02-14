@@ -179,5 +179,5 @@ Add additional notes about how to deploy this on a live system.
 
 ## ✒️ License
 
-**[MIT](https://choosealicense.com/licenses/mit/)**
+[Apache 2.0](LICENSE.txt)
 
