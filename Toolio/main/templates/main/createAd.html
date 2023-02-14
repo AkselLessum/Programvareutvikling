@@ -2,12 +2,25 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %} Create new Ad {% endblock %}
+{% block title %}<title>Create New Ad</title>{% endblock %}
 
 {% block content %}
-    <form method="POST" class="form-group" enctype="multipart/form-data"> <!-- multipart/form-data allows for sending files throug POST request -->
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-success">Lag Annonse</button>
-    </form>
+<div class="card" style="width: 35rem; margin: auto;">
+    <div class="card-body">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label for="type" class="btn btn-info active">
+              <input type="radio" name="type" id="type" autocomplete="off" checked> Advertise
+            </label>
+            <label for="type" class="btn btn-info">
+              <input type="radio" name="type" id="type" autocomplete="off"> Request
+            </label>
+        </div>
+        <!-- multipart/form-data allows for sending files throug POST request -->
+        <form method="post" enctype="multipart/form-data" class="form-group" style="width: 80%; margin: auto;">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-success">Post Ad</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
