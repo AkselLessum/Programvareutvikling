@@ -3,7 +3,7 @@
 - [ ] Check that all links are inserted
 - [ ] Check that all commands are correct
 
-This is the code repo for group 48 in the subject TDT4140 Software Engineering.
+This is the code repo for Group 48 in the subject TDT4140 Software Development.
 
 Routines and standards for **contributing** can be found [here](#).
 
@@ -60,7 +60,7 @@ Routines and standards for **contributing** can be found [here](#).
 
 ## Testing
 
-This project has only used unit-testing. To run all the test type the following command:
+This project has only applied unit-testing. To run all the tests, type the following command:
 `python manage.py test ?Toolio?`
 
 ### Test-coverage
