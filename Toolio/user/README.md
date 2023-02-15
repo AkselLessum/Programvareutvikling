@@ -1,6 +1,6 @@
 # User
 
-This part of the code handles user registration and login.
+The user application handles user registration and login.
 
 ## Registration
 
@@ -9,3 +9,8 @@ The registration [form](forms.py) for new users has been made by extending the [
 ## Login
 
 ## Testing
+
+To run all test in the user application run: 
+```
+./manage.py test user
+```
