@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
     <head>
-        <title>Toolio</title>
+        {% block title %}<title>Toolio</title>{% endblock %}
     </head>
     <style>
         body {
-            padding-top: 60px;
+            padding: 6em 3em 6em 3em;
         }
     </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -14,15 +14,15 @@
         <div class="navbar fixed-top navbar-light justify-content-between " style="background-color: #e3f2fd;">
             <a class ="navbar-brand" href="/">
                 {% load static %}
-                <img src="{% static 'media/Toolio.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-                Toolio
-            </a><!--These need to be changed to whatever we name the views-->
+                <img src="{% static 'media/ToolioLogoText.png' %}" height="60" class="d-inline-block align-top" alt="">
+            </a>
+
             <div>
                 <a href="/createAd">
-                    <img src="{% static 'media/+.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                    <img src="{% static 'media/plus.png' %}" width="40" height="40" class="d-inline-block align-top" alt="">
                 </a>
-                <a href="/user">
-                    <img src="{% static 'media/user.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                <a href="/login">
+                    <img src="{% static 'media/profile.png' %}" width="35" height="35" class="d-inline-block align-top" alt="">
                 </a>
             </div>
             
