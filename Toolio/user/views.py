@@ -19,7 +19,7 @@ def register(response):
         for error in field.errors:
           messages.error(response, error)
     
-      return render(response, "user/register.html", {"form": form}) # Gir alt vissuelt, men ikke feilmelding 400
+      return render(response, "user/register.html", {"form": form}, status=400) # Gir alt vissuelt, men ikke feilmelding 400
       #return JsonResponse({'errors': form.errors}, status=400) # Gir feilmelding 400, men redirecter til en dumfane
   else:
     form=RegisterForm()
