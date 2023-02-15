@@ -4,23 +4,23 @@
 
 <center><h3 class="mx-5">Tilbud på markedet</h3></center>
 {% if adList %}
-    <div class="card-columns" style="width: 80%; margin: auto;">
+    <div class ="card-columns" style="width: 80%; margin: auto;">
     {% for ad in adList %}
-            <div class="card" style="width: 18rem;">
+            <div class="card">
                 {% if ad.isRequest == True%}
                     <div class="card-body">
                         <h5 class="card-title">Ønskes leid: {{ad.title}}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ad.date}}</h6>
-                        <a href='#' class="btn btn-primary">Lån bort produkt</a>
+                        <button class="ui primary button">Lån bort produkt</button>
                         <p class="card-text">Budsjett: {{ad.price}}kr</p>
                     </div>
                 {% else %}
-                <img class="card-img-top" src="{{ad.image.url}}" alt="{{ad.title}}">
+                <img class ="card-img-top"src="{{ad.image.url}}" alt="{{ad.title}}">
                     <div class="card-body">
                         <h5 class="card-title">{{ad.title}}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ad.date}}</h6>
                         <p class="card-text">{{ad.description}}</p>
-                        <a href='#' class="btn btn-primary">Book produkt</a>
+                        <button class="ui primary button">Book produkt</button>
                         <p class="card-text">Pris: {{ad.price}}kr</p>
                     </div>
                 {% endif %}
