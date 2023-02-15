@@ -9,16 +9,14 @@
 
 This is the code repo for group 48 in the subject [TDT4140 Software Engineering](https://www.ntnu.edu/studies/courses/TDT4140#tab=omEmnet). 
 
-- [ ] Check that all links are inserted
-- [ ] Check that all commands are correct
 ## Table of Contents
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
 - [Usage](#usage)
 - [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
+- [TODO](docs/TODO.md)
+- [Contributing](docs/CONTRIBUTING.md)
 - [Roadmap](#roadmap)
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
