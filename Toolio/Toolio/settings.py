@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+        'DIRS': [BASE_DIR / "templates"],
     },
 ]
 
@@ -130,3 +131,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = 'static/'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
+
+# Base url to serve media files 
+MEDIA_URL='/media/'
+
+# Path where media is stored 
+MEDIA_ROOT=BASE_DIR / "media"
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"

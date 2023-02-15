@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} Create new Ad {% endblock %}
+
+{% block content %}
+    <form method="POST" class="form-group" enctype="multipart/form-data"> <!-- multipart/form-data allows for sending files throug POST request -->
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-success">Lag Annonse</button>
+    </form>
+{% endblock %}
