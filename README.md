@@ -1,106 +1,178 @@
-# PU48
+<p align="center">
+  <a href="" rel="noopener">
+  <img width=300px src="images/LogoTextBackground.png" alt="Toolio logo"></a>
+</p>
 
+<h3 align="center">Toolio</h3>
 
+---
 
-## Getting started
+This is the code repo for group 48 in the subject [TDT4140 Software Engineering](https://www.ntnu.edu/studies/courses/TDT4140#tab=omEmnet). 
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Table of Contents
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Deployment](#deployment)
+- [Usage](#usage)
+- [Built Using](#built_using)
+- [TODO](docs/TODO.md)
+- [Contributing](docs/CONTRIBUTING.md)
+- [Roadmap](#roadmap)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgement)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## 🧐 About <a name = "about"></a>
+Toolio is a platform where users can lend out their tools and equipment to each other by publishing advertisements. Through constant dialogue with our Student Assistant, who has simulated the role of Product Owner throughout this project, we have developed a product fulfilling his wishes and requirements.
 
-## Add your files
+To illustrate the product's functionality goals of Sprint 1, a Figma [model](https://www.figma.com/file/7mZ3F55lnI0v0tEG3I7XU6/TOOLIO-SPRINT-1?node-id=25%3A227&t=KHcrblGRzwLO8f9o-1) was created.
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## 🏁 Getting Started <a name = "getting_started"></a>
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+
+### Prerequisites
+What you need to install the software, as well as how to install them.
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.stud.idi.ntnu.no/tdt4140-2023/landsby-3/gruppe-48/pu48.git
-git branch -M main
-git push -uf origin main
+Give examples
 ```
 
-## Integrate with your tools
+1. Download [git](https://git-scm.com/downloads) if not already installed.
+2. Python download
 
-- [ ] [Set up project integrations](https://gitlab.stud.idi.ntnu.no/tdt4140-2023/landsby-3/gruppe-48/pu48/-/settings/integrations)
+### Installation
+A step by step series of examples that tell you how to get a development environment running.
 
-## Collaborate with your team
+Say what the step will be
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-- For Pair-Programming documentation: 
 ```
-Commit title
-
-Commit body
-
-Co-authored-by: name <additional-dev-1@example.com>
-Co-authored-by: name <additional-dev-2@example.com>
-
-F:EKS:
-Co-authored-by: Magnus Stavland Jakobsen <magnsjak@stud.ntnu.no>
+Give the example
 ```
-## Test and Deploy
 
-Use the built-in continuous integration in GitLab.
+And repeat
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+```
+until finished
+```
 
-***
+End with an example of getting some data out of the system or using it for a little demo.
 
-# Editing this README
+---
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Before installing the project make sure you have installed all the [required](#prerequisites) technologies for this project. Navigate to the folder where you want to have the project, and clone the project here.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+```
+git clone https://gitlab.stud.idi.ntnu.no/tdt4140-2023/landsby-3/gruppe-48/pu48.git
+```
 
-## Name
-Choose a self-explaining name for your project.
+In the folder `pu48/Toolio/` install all dependecies.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```
+pip install -r requirements.txt
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+To create and apply the database schema run the following commands.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```
+python manage.py makemigrations
+python manage.py migrate
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Then you can start the server.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+```
+python manage.py runserver
+```
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+In the terminal a url will be displayed for where you can view the website. The default is [http://localhost:8000/](http://localhost:8000/). To view the website simply go to this url.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+## 🔧 Running the tests <a name = "tests"></a>
+This project has only used unit-testing. To run all the test type the following command:
+`python manage.py test ?Toolio?`
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+### Test-coverage
+To display the test coverage the python library coverage must first be installed.
+```
+pip install coverage
+```
+To get a coverage report in the terminal run the following command, but replace the '#' with one of the following: main, Toolio, user.
+```
+coverage run --source='#' manage.py test && coverage report
+```
+To also get a html coverage report run the following command.
+```
+coverage run --source='#' manage.py test && coverage report && coverage html
+```
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+To open the html report [live server](https://github.com/tapio/live-server) can be used, if not already installed run:
+```
+npm i -g live-server
+```
+and then to open the report run:
+```
+cd htmlcov/ && live-server
+```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
 
-## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## 🎈 Usage <a name="usage"></a>
+Add notes about how to use the system.
 
-## Figma link
-[Figma_nettside](https://www.figma.com/file/7mZ3F55lnI0v0tEG3I7XU6/TOOLIO-SPRINT-1?node-id=25%3A227&t=KHcrblGRzwLO8f9o-1)
+### Reset the Database
+
+Navigate to the right folder.
+```
+cd ./pu48/Toolio
+```
+Answer 'yes' if asked whether you're sure about resetting.
+```
+python manage.py flush
+```
+### Make a New Super User
+
+Navigate to the right folder.
+```
+cd ./pu48/Toolio
+```
+
+Create a new super user.
+```
+python manage.py createsuperuser
+```
+Finish registration by filling out the questions asked in the terminal
+
+## 🚀 Deployment <a name = "deployment"></a>
+Add additional notes about how to deploy this on a live system.
+
+## ⛏️ Built Using <a name = "built_using"></a>
+- [Python 3.9.6](https://www.python.org/downloads/) - ??
+- [Django 3.2.8](https://www.djangoproject.com) - Web Framework
+- [Bootstrap4](https://getbootstrap.com/docs/4.1/getting-started/introduction/) - Frontend
+
+- ?[Crispy-forms#](https://github.com/django-crispy-forms/django-crispy-forms):?
+- ?[Pillow#](https://python-pillow.org)?
+
+## 🗺️ Roadmap
+
+**If you have ideas for releases in the future, it is a good idea to list them in the README.**
+
+
+## ✍️ Authors <a name = "authors"></a>
+- Magnus Stavland Jakobsen, magnsjak@stud.ntnu.no
+- Andreas Granhøy-Lieng, andrgran@stud.ntnu.no
+- Iver Ringheim, iverri@stud.ntnu.no
+- Mats Kjær, mbkjaer@stud.ntnu.no
+- Aksel Lessum, akselhl@stud.ntnu.no
+- Ksenia Mordovets, kseniam@stud.ntnu.no
+
+## 🎉 Acknowledgements <a name = "acknowledgement"></a>
+- Hat tip to anyone whose code was used
+- Inspiration
+- References
+- [The Documentation Compendium](https://github.com/kylelobo/The-Documentation-Compendium) - kylelobo
+
+
+## ✒️ License
+
+[Apache 2.0](LICENSE.txt)
+
