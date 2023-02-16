@@ -2,46 +2,110 @@
 <html>
     <head>
         {% block title %}<title>Toolio</title>{% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <style>
+            body {
+                padding: 3em 3em 6em 3em;
+                background: linear-gradient(0deg, rgba(249,211,146,1) 0%, rgba(243,220,180,1) 37%, rgba(247,241,232,1) 100%) !important;
+                background-attachment: fixed !important;
+            }
+
+            main {
+                margin: 3em;
+                min-height: 60%;
+            }
+
+            .footer {
+                background-color: #211b31;
+                padding: 2em 0em 2em 0em;
+            }
+              
+            .footer ul {
+                padding:0;
+                list-style:none;
+                text-align:center;
+                font-size:18px;
+                line-height:1.6;
+                margin-bottom:0;
+            }
+              
+            .footer li {
+                padding:0 10px;
+            }
+              
+            .footer ul a {
+                color: #f7e7ce;
+                text-decoration:none;
+                opacity:0.8;
+            }
+              
+            .footer ul a:hover {
+                opacity:1;
+            }
+              
+            .footer .copyright {
+                margin-top:15px;
+                text-align:center;
+                font-size:13px;
+                color:#aaa;
+                margin-bottom:0;
+            }
+
+            button {
+                background-color: #211b31 !important;
+                color: #f7e7ce !important;
+            }
+              
+        </style>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
     </head>
-    <style>
-        body {
-            padding: 6em 3em 6em 3em;
-        }
-    </style>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <body>
-
-        <div class="navbar fixed-top navbar-light justify-content-between " style="background-color: #e3f2fd;">
-            <a class ="navbar-brand" href="/">
-                {% load static %}
-                <img src="{% static 'media/ToolioLogoText.png' %}" height="60" class="d-inline-block align-top" alt="">
-            </a>
-
-            <div>
-                <a href="/createAd">
-                    <img src="{% static 'media/plus.png' %}" width="40" height="40" class="d-inline-block align-top" alt="">
+        <header>
+            <div class="navbar " style="background-color: #fbc770;">
+                <a class ="navbar-brand" href="/">
+                    {% load static %}
+                    <img src="{% static 'media/ToolioLogoText.png' %}" height="60" class="d-inline-block align-top" alt="">
                 </a>
-
-                {% if user.is_authenticated == False %}
-                <a href="/login">
-                    <img src="{% static 'media/profile.png' %}" width="35" height="35" class="d-inline-block align-top" alt="">
-                </a>
-                {% else %}
-                <a href="/profile">
-                    <img src="{% static 'media/profile.png' %}" width="35" height="35" class="d-inline-block align-top" alt="">
-                </a>
-                {% endif %}  
+                <div>
+                    <a href="/createAd">
+                        <img src="{% static 'media/plus.png' %}" width="40" height="40" class="d-inline-block align-top" alt="">
+                    </a>
+                    {% if user.is_authenticated == False %}
+                        <a href="/login">
+                            <img src="{% static 'media/profile.png' %}" width="35" height="35" class="d-inline-block align-top" alt="">
+                        </a>
+                        {% else %}
+                        <a href="/profile">
+                            <img src="{% static 'media/profile.png' %}" width="35" height="35" class="d-inline-block align-top" alt="">
+                        </a>
+                    {% endif %} 
+                </div>
             </div>
-            
+        </header>
+        <main class="container">
+            {% block content %}
+            {% endblock %}
+        </main>
+        <footer class="footer">
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">Home</a></li>
+                <li class="list-inline-item"><a href="#">Services</a></li>
+                <li class="list-inline-item"><a href="#">About</a></li>
+                <li class="list-inline-item"><a href="#">Terms</a></li>
+                <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+            </ul>
+            <p class="copyright">Company Name © 2018</p>
+        </footer>
         </div>
-
-        {% block content %}
-        {% endblock %}
-
-
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
     </body>
 </html>

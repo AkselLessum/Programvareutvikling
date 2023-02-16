@@ -4,6 +4,10 @@ from .forms import RegisterForm
 from django.contrib.auth.decorators import login_required
 
 from .forms import UpdateUserForm, UpdateProfileForm
+from django.contrib import messages
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.contrib.auth.models import User
+
 
 # Create your views here.
 
@@ -11,10 +15,19 @@ from .forms import UpdateUserForm, UpdateProfileForm
 def register(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
+
         if form.is_valid():
             form.save()
+            return redirect("/")
+        else:
 
-        return redirect("/")
+            for field in form:
+                for error in field.errors:
+                    messages.error(response, error)
+
+            # Gir alt vissuelt, men ikke feilmelding 400
+            return render(response, "user/register.html", {"form": form}, status=400)
+            # return JsonResponse({'errors': form.errors}, status=400) # Gir feilmelding 400, men redirecter til en dumfane
     else:
         form = RegisterForm()
 
