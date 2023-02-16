@@ -9,14 +9,14 @@
     <div class="card-body">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
             <label for="type" class="btn btn-info active">
-              <input type="radio" name="type" id="normalAd" autocomplete="off" checked> Advertise
+              <input type="radio" name="type" id="normalAd" autocomplete="off" checked onchange="changeForm(this.id)"> Advertise
             </label>
             <label for="type" class="btn btn-info">
-              <input type="radio" name="type" id="requestAd" autocomplete="off"> Request
+              <input type="radio" name="type" id="requestAd" autocomplete="off" onchange="changeForm(this.id)"> Request
             </label>
         </div>
         <!-- multipart/form-data allows for sending files throug POST request -->
-        <form method="post" enctype="multipart/form-data" class="ui form" style="width: 80%; margin: auto;">
+        <form method="post" enctype="multipart/form-data" class="ui form" style="width: 80%; margin: auto;" id="adForm">
             {% csrf_token %}
 
             <div class="field">
@@ -51,7 +51,7 @@
               <textarea rows="2"></textarea>
             </div>
 
-            <div class="field">
+            <div class="field" id="imgField">
               <label>Upload a image of the tool</label>
               <input type="file" id="invisibleupload1" class="ui invisible file input">
               <label for="invisibleupload1" class="ui icon button">
@@ -64,4 +64,18 @@
         </form>
     </div>
 </div>
+
+<script>
+    function changeForm (radioID){
+        const imgField = document.getElementById("imgField");
+        //const imgFieldBackup += imgField.innerHTML;
+        
+        if (radioID == "requestAd") {
+            document.getElementById("imgField").hidden = "true";
+        } else {
+            document.getElementById("imgField").removeAttribute("hidden");
+        }
+    }
+</script>
+
 {% endblock %}
