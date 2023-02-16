@@ -1,5 +1,6 @@
 import django.utils.timezone
 from django.db import models
+from user.models import Profile
 
 
 # Create your models here.
