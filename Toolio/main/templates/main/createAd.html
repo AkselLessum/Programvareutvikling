@@ -7,59 +7,63 @@
 {% block content %}
 <div class="card" style="width: 35rem; margin: auto;">
     <div class="card-body">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label for="type" class="btn btn-info active">
-              <input type="radio" name="type" id="normalAd" autocomplete="off" checked> Advertise
-            </label>
-            <label for="type" class="btn btn-info">
-              <input type="radio" name="type" id="requestAd" autocomplete="off"> Request
-            </label>
-        </div>
+
         <!-- multipart/form-data allows for sending files throug POST request -->
         <form method="post" enctype="multipart/form-data" class="ui form" style="width: 80%; margin: auto;">
             {% csrf_token %}
 
+            {{ form.non_field_errors }}
+
+            {{ form.source.errors }}
+            {{ form.source }}
+
+           
+            {{ form.type.label_tag }}
+            {{ form.type.errors }}
+            {{ form.type }}
+            
+
             <div class="field">
-              <label>Title</label>
-              <input type="text" name="" placeholder="Tool">
+              {{ form.title.label_tag }}
+              {{ form.title.errors }}
+              {{ form.title }}
             </div>
 
             <div class="field">
               <div class="two fields">
                 <div class="field">
-                  <label>Date</label>
+                  {{ form.date.label_tag }}
                   <div class="ui calendar">
                     <div class="ui input left icon">
                       <i class="calendar icon"></i>
-                      <input type="text" placeholder="Available from" name="date">
+                      {{ form.date.errors }}
+                      {{ form.date }}
                     </div>
                   </div>
                 </div>
                 <div class="field">
-                  <label>Price</label>
+                  {{ form.price.label_tag }}
                   <div class="ui right labeled input">
                     <label for="amount" class="ui label" style="font-size: 0.8em !important; display: block; text-align: center;">NOK</label>
-                    <input type="text" placeholder="Amount" id="amount">
+                      {{ form.price.errors }}
+                      {{ form.price }}
                     <div class="ui basic label">.00</div>
                   </div>
                 </div>
               </div>
             </div>
-
+            
             <div class="field">
-              <label>Description</label>
-              <textarea rows="2"></textarea>
+              {{ form.description.label_tag }}
+              {{ form.description.errors }}
+              {{ form.description }}
             </div>
 
             <div class="field">
-              <label>Upload a image of the tool</label>
-              <input type="file" id="invisibleupload1" class="ui invisible file input">
-              <label for="invisibleupload1" class="ui icon button">
-                <i class="file icon"></i>
-                Choose a file
-              </label>
+              {{ form.image.label_tag }}
+              {{ form.image.errors }}
+              {{ form.image }}
             </div>
-
             <button type="submit" class="ui primary button">Post Ad</button>
         </form>
     </div>
