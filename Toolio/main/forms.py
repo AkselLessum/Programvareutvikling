@@ -1,4 +1,7 @@
 from django import forms
+from django.forms import widgets
+
+from .models import ad
 
 AD_TYPES = [
     ("normalAd", "Annonse"),
@@ -8,10 +11,19 @@ AD_TYPES = [
 class DateInput(forms.DateInput):
     input_type = "date"
 
-class createAdForm(forms.Form):
-    type = forms.ChoiceField(choices=AD_TYPES, widget=forms.RadioSelect)
-    title = forms.CharField(label="Tittel", max_length=100)
-    date = forms.DateField(widget=DateInput(), label="Velg dato produktet er ledig frem til:")
-    price = forms.IntegerField(label="Pris")
-    description = forms.CharField(label="Beskrivelse", widget=forms.Textarea, max_length=500)
+class createAdForm(forms.ModelForm):
+    error_css_class = 'error-field'
+    required_css_class = 'required-field'
+    
+    type = forms.ChoiceField(choices=AD_TYPES, widget=forms.RadioSelect, label="")
+    title = forms.CharField(label="Tittel", max_length=100, widget=forms.TextInput(attrs={"placeholder": "Toolio"}))
+    date = forms.DateField(widget=DateInput, label="Produktet er ledig frem til")
+    price = forms.IntegerField(label="Pris", widget=widgets.NumberInput)
+    description = forms.CharField(label="Beskrivelse", widget=forms.Textarea(attrs={"placeholder": "Beskriv verktøyet", "rows": 3}), max_length=500)
     image = forms.FileField(label="Bilde av redskapet")
+    
+
+    class Meta:
+        model = ad
+        fields = ['type', 'title', 'date', 'price', 'description', 'image']
+        

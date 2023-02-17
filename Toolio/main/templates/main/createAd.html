@@ -18,9 +18,14 @@
             {{ form.source }}
 
            
-            {{ form.type.label_tag }}
-            {{ form.type.errors }}
-            {{ form.type }}
+            <div class="btn-group btn-group-toggle" id="id_type">
+              <label for="id_type_0" class="btn btn-info">
+                <input type="radio" name="type" value="normalAd" required id="id_type_0" checked> Annonse
+              </label>
+              <label for="id_type_1" class="btn btn-info">
+                <input type="radio" name="type" value="requestAd" required id="id_type_1"> Ønskes leid
+              </label>
+            </div>
             
 
             <div class="field">
@@ -34,11 +39,11 @@
                 <div class="field">
                   {{ form.date.label_tag }}
                   <div class="ui calendar">
-                    <div class="ui input left icon">
-                      <i class="calendar icon"></i>
+                    <!--<div class="ui input left icon">
+                      <i class="calendar icon"></i>-->
                       {{ form.date.errors }}
                       {{ form.date }}
-                    </div>
+                   <!--</div>-->
                   </div>
                 </div>
                 <div class="field">
