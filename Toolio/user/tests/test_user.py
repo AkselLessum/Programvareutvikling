@@ -115,3 +115,5 @@ class RegisterTest(BaseTest):
         response = self.client.post(
             self.register_url, self.user_invalid_number, format='text/html')
         self.assertEqual(response.status_code, 400)
+
+#
