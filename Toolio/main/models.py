@@ -3,7 +3,7 @@ from django.db import models
 
 
 # Create your models here.
-class Ad(models.Model):
+class ad(models.Model):
     isRequest = models.BooleanField(default="False")
     title = models.CharField(max_length=100, default="")
     date = models.DateField(default=django.utils.timezone.now)

@@ -1,11 +1,11 @@
-from .models import Ad
+from .models import ad
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import createAdForm, editAdForm, editAdFormWanted
 # Create your views here.
 
 def home(response):
     context = {
-        'adList': Ad.objects.all()
+        'adList': ad.objects.all()
     }
 
     return render(response, "main/home.html", context)
@@ -25,7 +25,7 @@ def createAd(response):
                 request = True
             else:
                 request = False
-            newAd = Ad(isRequest=request, title=title, date=date, price=price, description=description, image=image)
+            newAd = ad(isRequest=request, title=title, date=date, price=price, description=description, image=image)
             newAd.save()
         
         return redirect("/")
@@ -37,7 +37,7 @@ def createAd(response):
 
 
 def edit_ad(request, ad_id):
-    ad_to_edit = get_object_or_404(Ad, id=ad_id)
+    ad_to_edit = get_object_or_404(ad, id=ad_id)
 
     if ad_to_edit.isRequest: # Different classes for editing "annonse" and editing "ønskes leid"
         form_class = editAdFormWanted
@@ -56,6 +56,6 @@ def edit_ad(request, ad_id):
 
 
 def delete_ad(request, ad_id):
-    ad = get_object_or_404(Ad, pk=ad_id)  # use the model class Ad to retrieve the object
-    ad.delete()
+    ad_obj = get_object_or_404(ad, id=ad_id)  # use the model class Ad to retrieve the object
+    ad_obj.delete()
     return redirect('home')  # redirect to the home page
