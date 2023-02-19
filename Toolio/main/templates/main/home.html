@@ -1,34 +1,53 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+    <center><h3 class="mx-5">Tilbud på markedet</h3></center>
+    {% if adList %}
+        <div class="card-columns" style="width: 80%; margin: auto;">
+            {% for ad in adList %}
+                <div class="card">
+                    {% if ad.isRequest == True %}
+                        <div class="card-body">
+                            <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
+                            <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+                            <button class="ui primary button">Lån bort produkt</button>
+                            <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                        </div>
+                    {% else %}
+                        <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ ad.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ ad.date }}</h6>
+                            <div class="card-text">
+                                {% if ad.description|length > 150 %}
+                                    <span class="card-text-truncated">{{ ad.description|truncatewords:30 }}</span>
+                                    <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
+                                    <span class="hidden-text" style="display:none;">{{ ad.description }}</span>
+                                {% else %}
+                                    {{ ad.description }}
+                                {% endif %}
+                            </div>
+                            <p class="card-text">Pris: {{ ad.price }}kr</p>
+                            <button class="ui primary button">Book produkt</button>
+                            <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Det er ingen annonser tilstede nå</p>
+    {% endif %}
 
-<center><h3 class="mx-5">Tilbud på markedet</h3></center>
-{% if adList %}
-    <div class ="card-columns" style="width: 80%; margin: auto;">
-    {% for ad in adList %}
-            <div class="card">
-                {% if ad.isRequest == True%}
-                    <div class="card-body">
-                        <h5 class="card-title">Ønskes leid: {{ad.title}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ad.date}}</h6>
-                        <button class="ui primary button">Lån bort produkt</button>
-                        <p class="card-text">Budsjett: {{ad.price}}kr</p>
-                    </div>
-                {% else %}
-                <img class ="card-img-top"src="{{ad.image.url}}" alt="{{ad.title}}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ad.title}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ad.date}}</h6>
-                        <p class="card-text">{{ad.description}}</p>
-                        <button class="ui primary button">Book produkt</button>
-                        <p class="card-text">Pris: {{ad.price}}kr</p>
-                    </div>
-                {% endif %}
-            </div>
-    {% endfor %}
-    </div>
-{% else %}
-<p>Det er ingen annonser tilstede nå</p>
-{% endif %}
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".expand-text").click(function() {
+                $(this).hide();
+                $(this).siblings(".hidden-text").show();
+                $(this).siblings(".card-text-truncated").hide();
+            });
+        });
+    </script>
 {% endblock %}

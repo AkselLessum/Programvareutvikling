@@ -1,4 +1,5 @@
 from django import forms
+from .models import ad
 
 AD_TYPES = [
     ("normalAd", "Annonse"),
@@ -16,3 +17,28 @@ class createAdForm(forms.Form):
     price = forms.IntegerField(label="Pris")
     description = forms.CharField(label="Beskrivelse", widget=forms.Textarea, max_length=500)
     image = forms.FileField(label="Bilde av redskapet", required=False)
+
+    class Meta:
+        model = ad
+        fields = ('type', 'title', 'date', 'price', 'description', 'image')
+
+
+class editAdForm(forms.ModelForm):
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 10, 'cols': 40})
+    )
+
+    class Meta:
+        model = ad
+        fields = ('title', 'description', 'price', 'image')
+
+
+
+class editAdFormWanted(forms.ModelForm): # Edit "ønsket leid", no image in fields
+    description = forms.CharField(
+        widget=forms.Textarea(attrs={'rows': 10, 'cols': 40})
+    )
+
+    class Meta:
+        model = ad
+        fields = ('title', 'description', 'price')
