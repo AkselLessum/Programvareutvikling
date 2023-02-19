@@ -22,33 +22,33 @@
           <label>Name</label>
           <div class="two fields">
             <div class="field">
-              <input type="text" name="first_name" placeholder="First Name">
+              {{ form.first_name }}
             </div>
             <div class="field">
-              <input type="text" name="last_name" placeholder="Last Name">
+              {{ form.last_name }}
             </div>
           </div>
         </div>
         <div class="field">
-          <label>Username</label>
-          <input placeholder="Username" name="username" type="text">
+          {{ form.username.label_tag }}
+          {{ form.username }}
         </div>
         <div class="field">
-          <label>Telefon</label>
-          <input placeholder="telefon" name="phone_number" type="text">
+          {{ form.phone_number.label_tag}}
+          {{ form.phone_number }}
         </div>
         <div class="field">
-          <label>E-mail</label>
-          <input placeholder="" name="email" type="text">
+          {{ form.email.label_tag }}
+          {{ form.email }}
         </div>
         <div class="field">
-          <label>Password</label>
+          {{ form.password1.label_tag}}
           <div class="two fields">
             <div class="field">
-              <input type="text" name="password1" placeholder="">
+              {{ form.password1 }}
             </div>
             <div class="field">
-              <input type="text" name="password2" placeholder="">
+              {{ form.password2 }}
             </div>
           </div>
         </div>

@@ -5,10 +5,13 @@ from django.core.exceptions import ValidationError
 from .models import CustomUser
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    phone_number = forms.IntegerField(required=True)
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
+    email = forms.EmailField(label="Email")
+    phone_number = forms.IntegerField(label="Telefon nummer")
+    first_name = forms.CharField(label="Fornavn")
+    last_name = forms.CharField(label="Etternavn")
+    username = forms.CharField(label="Brukernavn")
+    password1 = forms.CharField(label="Passord",widget=forms.PasswordInput())
+    password2 = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = CustomUser
