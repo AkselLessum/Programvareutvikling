@@ -3,6 +3,7 @@
 {% block content %}
 
 <center><h3 class="mx-5">Tilbud på markedet</h3></center>
+<input type="text" class="form-control w-25 align-left" placeholder="Søk etter produkt" width="100" onkeyup="searchFunc(this.value)"> 
 {% if adList %}
     <div class ="card-columns" style="width: 80%; margin: auto;">
     {% for ad in adList %}
@@ -10,7 +11,7 @@
                 {% if ad.isRequest == True%}
                     <div class="card-body">
                         <h5 class="card-title">Ønskes leid: {{ad.title}}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ad.date}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ad.date}}</h6> 
                         <button class="ui primary button">Lån bort produkt</button>
                         <p class="card-text">Budsjett: {{ad.price}}kr</p>
                     </div>
@@ -30,5 +31,23 @@
 {% else %}
 <p>Det er ingen annonser tilstede nå</p>
 {% endif %}
+<script>
+    function searchFunc(value) {
+        let adTitles = document.getElementsByClassName("card-title");
+        // I use titles as source so we can search through them
+        // Then in the loop we find the parent nodes so we can edit the whole "ad card"
+        for (let i = 0; i < adTitles.length; i++) {
+            //The whole div for the card is two parent elements up
+            let parentCard = adTitles[i].parentElement.parentElement;
+            console.log(adTitles[i].innerHTML);
+            if (adTitles[i].innerHTML.includes(value)) {
+                parentCard.removeAttribute("hidden");
+            } else {
+                parentCard.hidden = "true";
+            }
+        }
+
+    }
+</script>
 
 {% endblock %}
