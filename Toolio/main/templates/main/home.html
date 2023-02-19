@@ -2,26 +2,33 @@
 
 {% block content %}
 
-<h3 class="mx-5"><strong>Tilbud på markedet</h3>
+<center><h3 class="mx-5">Tilbud på markedet</h3></center>
 {% if adList %}
+    <div class ="card-columns" style="width: 80%; margin: auto;">
     {% for ad in adList %}
-        <div class="card my-2 mx-5 boy-card">
-            <div class="card-header">
+            <div class="card">
                 {% if ad.isRequest == True%}
-                    <h3>Ønskes leid: {{ad.title}}</h3>
-                    <p>Ønskes til: {{ad.date}}</p>
+                    <div class="card-body">
+                        <h5 class="card-title">Ønskes leid: {{ad.title}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ad.date}}</h6>
+                        <button class="ui primary button">Lån bort produkt</button>
+                        <p class="card-text">Budsjett: {{ad.price}}kr</p>
+                    </div>
                 {% else %}
-                    <h3>{{ad.title}}</h3>
-                    <p>Ledig til: {{ad.date}}</p>
+                <img class ="card-img-top"src="{{ad.image.url}}" alt="{{ad.title}}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ad.title}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ad.date}}</h6>
+                        <p class="card-text">{{ad.description}}</p>
+                        <button class="ui primary button">Book produkt</button>
+                        <p class="card-text">Pris: {{ad.price}}kr</p>
+                    </div>
                 {% endif %}
-                <p>Pris: {{ad.price}}kr</p>
-                <p>{{ad.description}}</p>
             </div>
-        </div>
     {% endfor %}
+    </div>
 {% else %}
 <p>Det er ingen annonser tilstede nå</p>
 {% endif %}
-
 
 {% endblock %}
