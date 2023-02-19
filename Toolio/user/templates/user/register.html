@@ -1,25 +1,62 @@
 {% extends 'main/base.html'%}
 
 
-{% load crispy_forms_tags %}
+{% block title %}<title>Sign Up</title>{% endblock title %}
+
 
 
 {% block content %}
+<div class="card" style="width: 35rem; margin: auto;">
+  <div class="card-body">
+    {% if messages %}
+    <ul class="alert alert-warning" role="alert">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
 
-{% if messages %}
-<ul class="alert alert-warning" role="alert">
-  {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-  {% endfor %}
-</ul>
-{% endif %}
-
-
-  <form method="POST" class="form-group">
-    {% csrf_token %}
-    {{ form|crispy }}
-
-    <button type="submit" class="btn btn-success">Register</button>
-  </form>
-  <p>Already have an account? Login <a href="/login">here</h></p>
+      <form method="POST" class="ui form" style="width: 80%; margin: auto;">
+        {% csrf_token %}
+        <h5 class="ui dividing header">Sign up</h5>  
+        <div class="field">
+          <label>Name</label>
+          <div class="two fields">
+            <div class="field">
+              <input type="text" name="first_name" placeholder="First Name">
+            </div>
+            <div class="field">
+              <input type="text" name="last_name" placeholder="Last Name">
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Username</label>
+          <input placeholder="Username" name="username" type="text">
+        </div>
+        <div class="field">
+          <label>Telefon</label>
+          <input placeholder="telefon" name="phone_number" type="text">
+        </div>
+        <div class="field">
+          <label>E-mail</label>
+          <input placeholder="" name="email" type="text">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <div class="two fields">
+            <div class="field">
+              <input type="text" name="password1" placeholder="">
+            </div>
+            <div class="field">
+              <input type="text" name="password2" placeholder="">
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="ui primary button">Register</button>
+        <p style="margin-top: 1.5em;">Already have an account? Login <a href="/login">here</h></p>
+      </form>
+  </div>
+</div>
+  
 {% endblock %}

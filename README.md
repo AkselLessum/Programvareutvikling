@@ -1,13 +1,185 @@
-# Group 48
+<p align="center">
+  <a href="" rel="noopener">
+  <img width=300px src="images/LogoTextBackground.png" alt="Toolio logo"></a>
+</p>
 
-- [ ] Check that all links are inserted
-- [ ] Check that all commands are correct
+<h3 align="center">Toolio</h3>
 
-This is the code repo for Group 48 in the subject TDT4140 Software Development.
+---
 
-Routines and standards for **contributing** can be found [here](#).
+This is the code repo for group 48 in the subject [TDT4140 Software Engineering](https://www.ntnu.edu/studies/courses/TDT4140#tab=omEmnet). 
 
-## Team Members
+## Table of Contents
+- [About](#about)
+- [Getting Started](#getting_started)
+- [Deployment](#deployment)
+- [Usage](#usage)
+- [Built Using](#built_using)
+- [TODO](docs/TODO.md)
+- [Contributing](docs/CONTRIBUTING.md)
+- [Roadmap](#roadmap)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgement)
+
+## 🧐 About <a name = "about"></a>
+Toolio is a platform where users can lend out their tools and equipment to each other by publishing advertisements. Through constant dialogue with our Student Assistant, who has simulated the role of Product Owner throughout this project, we have developed a product fulfilling his wishes and requirements.
+
+To illustrate the product's functionality goals of Sprint 1, a Figma [model](https://www.figma.com/file/7mZ3F55lnI0v0tEG3I7XU6/TOOLIO-SPRINT-1?node-id=25%3A227&t=KHcrblGRzwLO8f9o-1) was created.
+
+## 🏁 Getting Started <a name = "getting_started"></a>
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+
+### Prerequisites
+What you need to install the software, as well as how to install them.
+
+```
+Give examples
+```
+
+1. Download [git](https://git-scm.com/downloads) if not already installed.
+2. Python download
+
+### Installation
+A step by step series of examples that tell you how to get a development environment running.
+
+Say what the step will be
+
+```
+Give the example
+```
+
+And repeat
+
+```
+until finished
+```
+
+End with an example of getting some data out of the system or using it for a little demo.
+
+---
+
+Before installing the project make sure you have installed all the [required](#prerequisites) technologies for this project. Navigate to the folder where you want to have the project, and clone the project here.
+
+```
+git clone https://gitlab.stud.idi.ntnu.no/tdt4140-2023/landsby-3/gruppe-48/pu48.git
+```
+
+In the folder `pu48/Toolio/` install all dependecies.
+
+```
+pip install -r requirements.txt
+```
+
+To create and apply the database schema run the following commands.
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Then you can start the server.
+
+```
+python manage.py runserver
+```
+
+In the terminal a url will be displayed for where you can view the website. The default is [http://localhost:8000/](http://localhost:8000/). To view the website simply go to this url.
+
+
+## 🔧 Running the tests <a name = "tests"></a>
+This project has only used unit-testing. To run all the test type the following command:
+`python manage.py test ?Toolio?`
+
+### Test-coverage
+To display the test coverage the python library coverage must first be installed.
+```
+pip install coverage
+```
+To get a coverage report in the terminal run the following command, but replace the '#' with one of the following: main, Toolio, user.
+```
+coverage run --source='#' manage.py test && coverage report
+```
+To also get a html coverage report run the following command.
+```
+coverage run --source='#' manage.py test && coverage report && coverage html
+```
+
+To open the html report [live server](https://github.com/tapio/live-server) can be used, if not already installed run:
+```
+npm i -g live-server
+```
+and then to open the report run:
+```
+cd htmlcov/ && live-server
+```
+
+
+
+## 🎈 Usage <a name="usage"></a>
+Add notes about how to use the system.
+
+### Reset the Database
+
+Navigate to the right folder.
+```
+cd ./pu48/Toolio
+```
+Answer 'yes' if asked whether you're sure about resetting.
+```
+python manage.py flush
+```
+
+### Load data from Google Spreadsheets
+
+We have made a script that loads data from a Google Spreadsheet and dumps it into a json file, this file can be used to load data into the database.
+
+#### Google Sheet API
+
+Store the API key in `keys.json` inside the `Toolio` folder. Make sure this file is listed in the `.gitignore` file to avoid it being exposed through a public repository.
+
+#### Run script and load data
+
+1. Run the `read_users.py` file to generate the `users.json` file
+```
+python read_users.py
+```
+2. Load the file into the database
+```
+python manage.py loaddata users.json
+```
+
+Repeat the steps for `read_ads.py` and `ads.json`.
+
+### Make a New Super User
+
+Navigate to the right folder.
+```
+cd ./pu48/Toolio
+```
+
+Create a new super user.
+```
+python manage.py createsuperuser
+```
+Finish registration by filling out the questions asked in the terminal
+
+## 🚀 Deployment <a name = "deployment"></a>
+Add additional notes about how to deploy this on a live system.
+
+## ⛏️ Built Using <a name = "built_using"></a>
+- [Python 3.9.6](https://www.python.org/downloads/) - ??
+- [Django 3.2.8](https://www.djangoproject.com) - Web Framework
+- [Bootstrap4](https://getbootstrap.com/docs/4.1/getting-started/introduction/) - Frontend
+
+- ?[Crispy-forms#](https://github.com/django-crispy-forms/django-crispy-forms):?
+- ?[Pillow#](https://python-pillow.org)?
+
+## 🗺️ Roadmap
+
+**If you have ideas for releases in the future, it is a good idea to list them in the README.**
+
+
+## ✍️ Authors <a name = "authors"></a>
 - Magnus Stavland Jakobsen, magnsjak@stud.ntnu.no
 - Andreas Granhøy-Lieng, andrgran@stud.ntnu.no
 - Iver Ringheim, iverri@stud.ntnu.no
@@ -15,79 +187,14 @@ Routines and standards for **contributing** can be found [here](#).
 - Aksel Lessum, akselhl@stud.ntnu.no
 - Ksenia Mordovets, kseniam@stud.ntnu.no
 
-## Technology and Framework (unfinished)
+## 🎉 Acknowledgements <a name = "acknowledgement"></a>
+- Hat tip to anyone whose code was used
+- Inspiration
+- References
+- [The Documentation Compendium](https://github.com/kylelobo/The-Documentation-Compendium) - kylelobo
 
-**Back-end:**
 
-[Python 3.9.6](https://www.python.org/downloads/): Is the chosen language
+## ✒️ License
 
-[Django 3.2.8](https://www.djangoproject.com): Web-framework written in Python, is used to host all pages
-
-**Front-end:**
-
-[Bootstrap ?version?](https://getbootstrap.com/docs/4.1/getting-started/introduction/): 
-
-?[Crispy-forms#](https://github.com/django-crispy-forms/django-crispy-forms):?
-?[Pillow#](https://python-pillow.org)?
-
-## Installation 
-
-1. Download [git](https://git-scm.com/downloads) if not already installed.
-2. Clone the project with the following command from inside the folder where you want the project:
-`git clone https://gitlab.stud.idi.ntnu.no/tdt4140-2023/landsby-3/gruppe-48/pu48.git`
-3. Make sure you have the [required](#technology-and-framework) version of Python installed.
-4. Install dependencies from inside `pu48/Toolio/`: `pip install -r requirements.txt`
-5. In order to create and apply the database schema run the following commands from inside `pu48/Toolio/`:
-`python manage.py makemigrations`
-`python manage.py migrate`
-6. Run the server:
-`python manage.py runserver`
-7. Go to:
-[http://localhost:8000/](http://localhost:8000/)
-
-## Maintenance
-
-### Reset the Database
-
-1. `cd ./pu48/Toolio`
-2. `python manage.py flush` answer 'yes' if asked whether you're sure about resetting
-
-### Make a New SuperUser
-
-1. `cd ./pu48/Toolio`
-2. `python manage.py createsuperuser`
-3. Finish registration by filling out the questions asked in the terminal
-
-## Testing
-
-This project has only applied unit-testing. To run all the tests, type the following command:
-`python manage.py test ?Toolio?`
-
-### Test-coverage
-
-1. `pip install coverage`
-2. To get a coverage report in the terminal: `coverage run --source='#' manage.py test && coverage report` replace the '#' with one of the following: main, Toolio, user
-3. To also get a html coverage report: `coverage run --source='#' manage.py test && coverage report && coverage html` replace the '#' with one of the following: main, Toolio, user
-4. To open the html report [live server](https://github.com/tapio/live-server) can be used, if not already installed run: `npm i -g live-server` and then to open the report run: `cd htmlcov/ && live-server`
-
-## Not finished -->
-
-## Roadmap
-
-**If you have ideas for releases in the future, it is a good idea to list them in the README.**
-
-## Contributing
-
-**State if you are open to contributions and what your requirements are for accepting them.
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.**
-
-**Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.**
-
-**Please make sure to update tests as appropriate.**
-
-## License
-
-**[MIT](https://choosealicense.com/licenses/mit/)**
+[Apache 2.0](LICENSE.txt)
 

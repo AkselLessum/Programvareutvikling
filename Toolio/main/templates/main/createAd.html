@@ -2,12 +2,86 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %} Create new Ad {% endblock %}
+{% block title %}<title>Create New Ad</title>{% endblock %}
 
 {% block content %}
-    <form method="POST" class="form-group" enctype="multipart/form-data"> <!-- multipart/form-data allows for sending files throug POST request -->
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-success">Lag Annonse</button>
-    </form>
+<div class="card" style="width: 35rem; margin: auto;">
+    <div class="card-body">
+        <!-- multipart/form-data allows for sending files throug POST request -->
+        <form method="post" enctype="multipart/form-data" class="ui form" style="width: 80%; margin: auto;" id="adForm">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            {{ form.source.errors }}
+            {{ form.source }}
+
+           
+            {{ form.type.label_tag }}
+            {{ form.type.errors }}
+            {{ form.type }}
+            
+
+            <div class="field">
+              {{ form.title.label_tag }}
+              {{ form.title.errors }}
+              {{ form.title }}
+            </div>
+
+            <div class="field">
+              <div class="two fields">
+                <div class="field">
+                  <label for="id_date" id="dateLabel">Dato produktet er ledig til</label>
+                  <div class="ui calendar">
+                    <div class="ui input left icon">
+                      <i class="calendar icon"></i>
+                      {{ form.date.errors }}
+                      {{ form.date }}
+                    </div>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="id_price" id="priceLabel">Pris</label>
+                  <div class="ui right labeled input">
+                    <label for="amount" class="ui label" style="font-size: 0.8em !important; display: block; text-align: center;">NOK</label>
+                      {{ form.price.errors }}
+                      {{ form.price }}
+                    <div class="ui basic label">.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="field">
+              {{ form.description.label_tag }}
+              {{ form.description.errors }}
+              {{ form.description }}
+            </div>
+
+            <div class="field" id="imgField">
+              {{ form.image.label_tag }}
+              {{ form.image.errors }}
+              {{ form.image }}
+            </div>
+            <button type="submit" class="ui primary button">Post Ad</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function changeForm (radioID){
+        const imgField = document.getElementById("imgField");
+        
+        if (radioID == "id_type_1") {
+            document.getElementById("imgField").hidden = "true";
+            document.getElementById("priceLabel").innerText = "Budsjett";
+            document.getElementById("dateLabel").innerText = "Når ønsker du å leie til";
+        } else {
+            document.getElementById("imgField").removeAttribute("hidden");
+            document.getElementById("priceLabel").innerHTML = "Pris";
+            document.getElementById("dateLabel").innerHTML = "Dato produktet er ledig til";
+        }
+    }
+</script>
+
 {% endblock %}
