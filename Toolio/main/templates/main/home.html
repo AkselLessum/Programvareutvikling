@@ -45,7 +45,7 @@
             //The whole div for the card is two parent elements up
             let parentCard = adTitles[i].parentElement.parentElement;
             
-            if (adTitles[i].innerHTML.includes(value)) {
+            if (adTitles[i].innerHTML.toLowerCase().includes(value.toLowerCase())) {
                 parentCard.removeAttribute("hidden");
             } else {
                 parentCard.hidden = "true";
