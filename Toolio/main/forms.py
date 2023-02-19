@@ -32,7 +32,8 @@ class editAdForm(forms.ModelForm):
         fields = ('title', 'description', 'price', 'image')
 
 
-class editAdFormWanted(forms.ModelForm):
+
+class editAdFormWanted(forms.ModelForm): # Edit "ønsket leid", no image in fields
     description = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 10, 'cols': 40})
     )

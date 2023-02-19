@@ -39,7 +39,7 @@ def createAd(response):
 def edit_ad(request, ad_id):
     ad_to_edit = get_object_or_404(Ad, id=ad_id)
 
-    if ad_to_edit.isRequest:
+    if ad_to_edit.isRequest: # Different classes for editing "annonse" and editing "ønskes leid"
         form_class = editAdFormWanted
     else:
         form_class = editAdForm
