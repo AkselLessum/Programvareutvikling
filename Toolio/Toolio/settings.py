@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'user.apps.UserConfig',
     'rest_framework',
+    'rest_framework.authtoken',
+    'Toolio',
 ]
 
 MIDDLEWARE = [
@@ -133,11 +135,23 @@ STATIC_URL = 'static/'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-# Base url to serve media files 
-MEDIA_URL='/media/'
+# Base url to serve media files
+MEDIA_URL = '/media/'
 
-# Path where media is stored 
-MEDIA_ROOT=BASE_DIR / "media"
+# Path where media is stored
+MEDIA_ROOT = BASE_DIR / "media"
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
