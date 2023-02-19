@@ -7,6 +7,14 @@
 {% block content %}
 <div class="card" style="width: 35rem; margin: auto;">
   <div class="card-body">
+    {% if messages %}
+    <ul class="alert alert-warning" role="alert">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
       <form method="POST" class="ui form" style="width: 80%; margin: auto;">
         {% csrf_token %}
         <h5 class="ui dividing header">Sign up</h5>  
@@ -24,6 +32,10 @@
         <div class="field">
           <label>Username</label>
           <input placeholder="Username" name="username" type="text">
+        </div>
+        <div class="field">
+          <label>Telefon</label>
+          <input placeholder="telefon" name="phone_number" type="text">
         </div>
         <div class="field">
           <label>E-mail</label>

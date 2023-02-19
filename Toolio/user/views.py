@@ -5,8 +5,6 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import UpdateUserForm, UpdateProfileForm
 from django.contrib import messages
-from django.http import JsonResponse, HttpResponseBadRequest
-from django.contrib.auth.models import User
 
 
 # Create your views here.
