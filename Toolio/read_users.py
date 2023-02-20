@@ -15,7 +15,7 @@ creds = service_account.Credentials.from_service_account_file(
 
 # The ID  of the spreadsheet
 SAMPLE_SPREADSHEET_ID = '1Tas4OgAgvY6kfrJUCvT12w3tf9AedUG2d9P7_-skElE'
-SAMPLE_RANGE_NAME = 'Users!A1:F11'
+SAMPLE_RANGE_NAME = 'Users!A1:F12'
 
 service = build('sheets', 'v4', credentials=creds)
 
@@ -49,5 +49,3 @@ else:
 with open(f"users.json", "w") as output:
     json.dump(data, output, indent=4)
     output.write("\n")
-
-print(data)
