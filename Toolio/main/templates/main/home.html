@@ -1,5 +1,7 @@
 {% extends 'main/base.html' %}
 
+{% block title %}Hjem{% endblock title%}
+
 {% block content %}
 {% if user.is_authenticated %}
   You are logged in {{ user.username }}!
