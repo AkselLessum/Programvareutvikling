@@ -24,13 +24,12 @@ class createAdForm(forms.ModelForm):
 
 
 class editAdForm(forms.ModelForm):
-    description = forms.CharField(
-        widget=forms.Textarea(attrs={'rows': 10, 'cols': 40})
-    )
+    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 10, 'cols': 40}))
+    isRented = forms.BooleanField(widget=forms.CheckboxInput, label="Utleid", required=False)
 
     class Meta:
         model = ad
-        fields = ('title', 'description', 'price', 'image')
+        fields = ('title', 'description', 'price', 'image', 'isRented')
 
 
 
