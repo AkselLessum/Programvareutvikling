@@ -8,8 +8,9 @@
   You are logged in {{ user.username }}!
   <p><a href="{% url 'user:logout' %}">Log Out</a></p>
 {% endif %}
-    <center><h3 class="mx-5">Tilbud på markedet</h3></center>
-    {% if adList %}
+
+<center><h3 class="mx-5">Tilbud på markedet</h3></center>
+{% if adList %}
         <div class="card-columns" style="width: 80%; margin: auto;">
             {% for ad in adList %}
                 <div class="card">
@@ -18,7 +19,26 @@
                             <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
                             <p class="card-text">Budsjett: {{ ad.price }}kr</p>
-                            <button class="ui primary button">Lån bort produkt</button>
+                            <p class="card-text">Pris: {{ ad.price }}kr</p>
+
+                            <!-- Trigger/Open The Modal -->
+                            <!--<button id="myBtn">Book Produkt</button>-->
+                            <button id="open-modal-button">Book Produkt</button>
+
+                            <!-- The Modal -->
+                            <!--
+                            <div id="myModal" class="modal">
+                            -->
+
+                                <!-- Modal content -->
+                                <!--
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <p>Contact {{ ad.user }}!</p>
+                                    <p>{{ ad.user.email }}</p>
+                                    <p>{{ ad.user.phone_number }}</p>
+                                </div>
+                            </div> -->
                             <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
                         </div>
                     {% else %}
@@ -36,33 +56,46 @@
                                 {% endif %}
                             </div>
                             <p class="card-text">Pris: {{ ad.price }}kr</p>
-                                <!-- Trigger/Open The Modal -->
-                                <button id="myBtn">Open Modal</button>
-                                
-                                <!-- The Modal -->
-                            <div id="myModal" class="modal">
 
-                                <!-- Modal content -->
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
-                                    <p>Contact {{ad.user}}!</p>
-                                    <p>{{ad.user.email}}</p>
-                                    <p>{{ad.user.phonenumber}}</p>
-                                </div>
-                            </div>
-
+                            <!-- Trigger/Open The Modal -->
+                            <!-- <button id="myBtn">Book Produkt</button> -->
+                            <button id="open-modal-button">Book Produkt</button>
+                            <span class="contact-user">kontakt annonsør</span>
+                            <span class="hidden-contact-info" style="display:none;">{{ ad.user.phone_number }}</span>
+                            
+                            
                             <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
                         </div>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
-        {% else %}
-        <p>Det er ingen annonser tilstede nå</p>
-    {% endif %}
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+        <!-- The Modal -->
+        <!--<div id="myModal" class="modal">-->
+        <div id="modal-overlay">
+        <div id="modal">
+            <div class="head">
+                <a id="close-modal-button" href="javascript:;"></a>
+            </div>
+            <div class="content">Modal content</div>
+
+            <!-- Modal content -->
+            <!---
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Contact: {{ ad.user }}!</p>
+                <p>Email: {{ ad.user.email }}</p>
+                <p>Phone Number: {{ ad.user.phone_number }}</p>
+            </div> -->
+        </div>
+        </div>
+{% else %}
+    <p>Det er ingen annonser tilstede nå</p>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
         $(document).ready(function() {
             $(".expand-text").click(function() {
                 $(this).hide();
@@ -70,34 +103,79 @@
                 $(this).siblings(".card-text-truncated").hide();
             });
         });
-    </script>
+</script>
 
-    <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
-        
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-        
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+
+<script language="javascript">
+    var openModalButton = document.getElementById("open-modal-button");
+    var closeModalButton = document.getElementById("close-modal-button");
+
+    var modalOverlay = document.getElementById("modal-overlay");
+    var modal = document.getElementById("modal");
+
+    // function that open modal and display the overlay
+    openModalButton.addEventListener("click", event => {
+
+        modalOverlay.classList.add("modal-overlay-visible");
+        modal.classList.add("modal-visible");
+
+    });
+
+
+    // function that closes the modal and remove the overlay
+    closeModalButton.addEventListener("click", event => {
+
+        modalOverlay.classList.remove("modal-overlay-visible");
+        modal.classList.remove("modal-visible");
+
+    });
+  
+    
+
+
+    //$(document).ready(function() {
+    //    // Get the modal
+    //    var modal = $("#my-modal");
+//
+    //    // Open the modal
+    //    var button = $("#btn-open-modal");
+    //    button.on('click', function(event) {
+    //        modal.css('display', 'block');
+    //    })
+//
+    //    // Close the modal
+    //    var close_button = $(".close");
+    //    close_button.on('click', function(event) {
+    //        modal.css('display' , 'none');
+    //    })
+    //    
+    //    // When the user clicks anywhere outside of the modal, close it
+    //    $(window).on('click', function(event) {
+    //        if (event.target.id == modal.attr('id')) {
+    //            modal.css('display', 'none');
+    //        }
+    //    });
+    //});
+    
+    
+    
         
         // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-          modal.style.display = "block";
-        }
+        //btn.onclick = function() {
+        //  modal.style.display = "block";
+        //}
         
         // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
+        //span.onclick = function() {
+        //  modal.style.display = "none";
+        //}
         
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = "none";
-          }
-        }
-    </script>
+        //window.onclick = function(event) {
+        //  if (event.target == modal) {
+        //    modal.style.display = "none";
+        //  }
+        //}
+</script>
 
 {% endblock %}

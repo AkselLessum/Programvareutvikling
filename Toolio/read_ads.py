@@ -15,7 +15,7 @@ creds = service_account.Credentials.from_service_account_file(
 
 # The ID  of the spreadsheet
 SAMPLE_SPREADSHEET_ID = '1Tas4OgAgvY6kfrJUCvT12w3tf9AedUG2d9P7_-skElE'
-SAMPLE_RANGE_NAME = 'Ads!A1:F17'
+SAMPLE_RANGE_NAME = 'Ads!A1:G17'
 
 service = build('sheets', 'v4', credentials=creds)
 
@@ -41,6 +41,7 @@ else:
         "price": row[values[0].index("price")],
         "description": row[values[0].index("description")],
         "image": row[values[0].index("image")],
+        "user": row[values[0].index("user_id")],
       }
     }
     pk_counter += 1
