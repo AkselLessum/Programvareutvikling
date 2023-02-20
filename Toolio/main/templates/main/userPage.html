@@ -1,0 +1,43 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Profilside{% endblock title %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Du er logget på {{ user.username }}!
+  <p><a href="{% url 'user:logout' %}">Logg ut</a></p>
+  <div class="card-columns" style="width: 80%; margin: auto;">
+    {% for ad in user.advertisement.all %}
+        <div class="card">
+            {% if ad.isRequest == True %}
+                <div class="card-body">
+                    <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
+                    <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+                    <button class="ui primary button">Lån bort produkt</button>
+                    <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                </div>
+            {% else %}
+                <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ ad.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ ad.date }}</h6>
+                    <div class="card-text">
+                        {% if ad.description|length > 150 %}
+                            <span class="card-text-truncated">{{ ad.description|truncatewords:30 }}</span>
+                            <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
+                            <span class="hidden-text" style="display:none;">{{ ad.description }}</span>
+                        {% else %}
+                            {{ ad.description }}
+                        {% endif %}
+                    </div>
+                    <p class="card-text">Pris: {{ ad.price }}kr</p>
+                    <button class="ui primary button">Book produkt</button>
+                    <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock content%}

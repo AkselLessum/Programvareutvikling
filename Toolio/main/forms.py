@@ -9,7 +9,7 @@ AD_TYPES = [
 class DateInput(forms.DateInput):
     input_type = "date"
 
-class createAdForm(forms.Form):
+class createAdForm(forms.ModelForm):
     # Type's widget forms.RadioSelect has the attribute onchange, which gives the type-inputs this as a function call
     type = forms.ChoiceField(choices=AD_TYPES, widget=forms.RadioSelect(attrs={"onchange":"changeForm(this.id)"}))
     title = forms.CharField(label="Tittel", max_length=100)
