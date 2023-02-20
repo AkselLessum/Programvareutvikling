@@ -32,9 +32,7 @@
                     </div>
                     <p class="card-text">Pris: {{ ad.price }}kr</p>
                     {% if ad.isRented == True %}
-                            <button class="ui button bg-danger" diabled>UTLEID</button>
-                        {% else %}
-
+                            <button class="ui button bg-danger" disabled>UTLEID</button>
                     {% endif %}
                     <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
                 </div>
