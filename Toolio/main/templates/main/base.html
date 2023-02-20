@@ -52,7 +52,7 @@
                 margin-bottom:0;
             }
 
-            button {
+            .myBtn {
                 background-color: #211b31 !important;
                 color: #f7e7ce !important;
             }
@@ -69,8 +69,46 @@
               .toggle-button:hover {
                 background-color: #3e8e41;
               }
-              
+        
+            .modal {
+                    display: none; /* Hidden by default */
+                    position: fixed; /* Stay in place */
+                    z-index: 1; /* Sit on top */
+                    left: 0;
+                    top: 0;
+                    width: 100%; /* Full width */
+                    height: 100%; /* Full height */
+                    overflow: auto; /* Enable scroll if needed */
+                    background-color: rgb(0,0,0); /* Fallback color */
+                    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                }
+                
+                /* Modal Content/Box */
+                .modal-content {
+                    background-color: #fefefe;
+                    margin: 15% auto; /* 15% from the top and centered */
+                    padding: 20px;
+                    border: 1px solid #888;
+                    width: 60%; /* Could be more or less, depending on screen size */
+                }
+                
+                /* The Close Button */
+                .close {
+                    color: #aaaaaa;
+                    float: right;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+                
+                .close:hover,
+                .close:focus {
+                    color: #000;
+                    text-decoration: none;
+                    cursor: pointer;
+                }
         </style>
+
+        
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     
@@ -119,4 +157,6 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </body>
+
+    
 </html>
