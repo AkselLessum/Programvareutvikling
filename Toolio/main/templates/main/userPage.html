@@ -1,0 +1,10 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Profilside{% endblock title %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Du er logget på {{ user.username }}!
+  <p><a href="{% url 'user:logout' %}">Logg ut</a></p>
+{% endif %}
+{% endblock content%}

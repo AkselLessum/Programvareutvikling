@@ -1,21 +1,21 @@
 {% extends 'main/base.html' %}
 
-{% block title %}<title>Sign In</title>{% endblock title %}
+{% block title %}Logg inn{% endblock title %}
 
 {% load crispy_forms_tags %}
 
 {% block content %}
 {% if error %}
-<p><strong>Invalid username or password.</strong></p>
+<p><strong>Ugyldig brukernavn eller passord.</strong></p>
 {% endif %}
 <div class="card" style="width: 35rem; margin: auto;">
     <div class="card-body">
-        <h5 class="card-title">Sign in</h5>
+        <h5 class="card-title">Logg inn</h5>
         <form method="post" class="form-group" style="width: 80%; margin: auto;">
             {% csrf_token %}
             {{form|crispy}}
-            <p>Dont have an account? Create one <a href="/user/register">here</a><p>
-            <button type="submit" class="btn btn-success">Login</button>
+            <button type="submit" class="btn btn-success">Logg på</button>
+            <p>Har du ikke konto? Opprett en <a href="/user/register">her.</a><p>
         </form>
     </div>
 </div>

@@ -10,6 +10,9 @@ def home(response):
 
     return render(response, "main/home.html", context)
 
+def userPage(request):
+    return render(request, "main/userPage.html", {})
+
 def createAd(response):
     if response.method == "POST":
         form = createAdForm(response.POST, response.FILES)
