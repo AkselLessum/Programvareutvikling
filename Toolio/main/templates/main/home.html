@@ -1,6 +1,10 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
+{% if user.is_authenticated %}
+  You are logged in {{ user.username }}!
+  <p><a href="{% url 'user:logout' %}">Log Out</a></p>
+{% endif %}
     <center><h3 class="mx-5">Tilbud på markedet</h3></center>
     {% if adList %}
         <div class="card-columns" style="width: 80%; margin: auto;">
