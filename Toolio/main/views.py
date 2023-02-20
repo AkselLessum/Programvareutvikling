@@ -1,19 +1,22 @@
 from .models import ad
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import createAdForm, editAdForm, editAdFormWanted
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
+
 # Create your views here.
 
-def home(response):
+def home(request):
     context = {
         'adList': ad.objects.all()
     }
-
-    return render(response, "main/home.html", context)
+    return render(request, "main/home.html", context)
 
 def userPage(request):
     print(request.user.advertisement)
     return render(request, "main/userPage.html", {})
 
+@login_required(login_url=settings.LOGIN_URL)
 def createAd(request):
     if request.method == "POST":
         form = createAdForm(request.POST, request.FILES)
