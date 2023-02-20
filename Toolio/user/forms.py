@@ -4,7 +4,6 @@ from django.core.exceptions import ValidationError
 
 from .models import CustomUser
 
-
 class RegisterForm(UserCreationForm):
     phone_number = forms.IntegerField(required=True)
 
