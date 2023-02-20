@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegisterForm
 from django.contrib import messages
+
 
 
 # Create your views here.
@@ -23,6 +24,5 @@ def register(response):
     form=RegisterForm()
 
     return render(response, "user/register.html", {"form": form})
-  
 
-  
+

@@ -33,3 +33,6 @@ def createAd(response):
     else:
         form = createAdForm()
     return render(response, "main/createAd.html", {"form":form})
+
+def popup_view(request):
+    return render(request, 'popup.html')

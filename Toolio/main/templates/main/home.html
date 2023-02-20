@@ -20,7 +20,11 @@
                         <h5 class="card-title">{{ad.title}}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ad.date}}</h6>
                         <p class="card-text">{{ad.description}}</p>
-                        <button class="ui primary button">Book produkt</button>
+                        <form method="GET" action="{% url 'createAd' %}">
+                            {% csrf_token %}
+                            <button type="submit">Book Produkt</button>
+                        </form>
+                        <button id="popup-btn">Open Popup!!!!!</button>
                         <p class="card-text">Pris: {{ad.price}}kr</p>
                     </div>
                 {% endif %}
@@ -31,4 +35,14 @@
 <p>Det er ingen annonser tilstede nå</p>
 {% endif %}
 
+<script>
+    document.getElementById("popup-btn").addEventListener("click", function() {
+        window.open("{% url 'popup_view' %}", "popup_window", "width=500,height=500");
+    });
+</script>
+
 {% endblock %}
+
+
+    
+    
