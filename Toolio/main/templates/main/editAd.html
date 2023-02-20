@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Rediger annonse{% endblock %}
+
+{% block content %}
+<center><h3 class="mx-5">Endre annonse</h3></center>
+<div class="card" style="width: 35rem; margin: auto;">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data" class="ui form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+        <br>
+        <form method="POST" action="{% url 'delete_ad' ad.id %}">
+            {% csrf_token %}
+            <button type="submit" class="ui button red">Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
