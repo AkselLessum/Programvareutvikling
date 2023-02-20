@@ -5,13 +5,16 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+{% if error %}
+<p><strong>Invalid username or password.</strong></p>
+{% endif %}
 <div class="card" style="width: 35rem; margin: auto;">
     <div class="card-body">
         <h5 class="card-title">Sign in</h5>
         <form method="post" class="form-group" style="width: 80%; margin: auto;">
             {% csrf_token %}
             {{form|crispy}}
-            <p>Dont have an account? Create one <a href="/register">here</a><p>
+            <p>Dont have an account? Create one <a href="/user/register">here</a><p>
             <button type="submit" class="btn btn-success">Login</button>
         </form>
     </div>
