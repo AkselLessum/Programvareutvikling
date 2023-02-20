@@ -1,0 +1,14 @@
+[
+    {
+        "model": "main.ad",
+        "pk": 90,
+        "fields": {
+            "isRequest": "0",
+            "title": "\ud83e\udd96\ud83e\udd96\ud83e\udd96\ud83e\udd96",
+            "date": "2023-04-20",
+            "price": "69",
+            "description": "dinosaurtid",
+            "image": "images/dino-dinosaur.png"
+        }
+    }
+]
