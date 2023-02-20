@@ -17,8 +17,12 @@
                             <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
                             <p class="card-text">Budsjett: {{ ad.price }}kr</p>
-                            <button class="ui primary button">Lån bort produkt</button>
-                            <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                            {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
+                                <button class="ui primary button">Lån bort produkt</button>
+                            {% endif %}
+                            {% if ad.user == user %} <!--Only shows the edit button on "annonse" that the user owns-->
+                                <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                            {% endif %}
                         </div>
                     {% else %}
                         <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
@@ -36,11 +40,16 @@
                             </div>
                             <p class="card-text">Pris: {{ ad.price }}kr</p>
                             {% if ad.isRented == True %}
-                                <button class="ui button bg-danger" diabled>UTLEID</button>
+                                <button class="ui button bg-danger" disabled>UTLEID</button>
                             {% else %}
-                                <button class="ui primary button">Book produkt</button>
+                                {% if ad.user != user %} <!--Only shows the "book produkt" button on "annonse" that the user doesnt own-->
+                                    <button class="ui primary button">Book produkt</button>
+                                {% else %}
+                                    <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                                {% endif %}
                             {% endif %}
-                            <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                        
+
                         </div>
                     {% endif %}
                 </div>
