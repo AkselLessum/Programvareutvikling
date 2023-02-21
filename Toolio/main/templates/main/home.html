@@ -22,7 +22,17 @@
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
                             <p class="card-text">Budsjett: {{ ad.price }}kr</p>
                             {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
-                                <button class="ui primary button">Lån bort produkt</button>
+                                <button class="ui primary button" onclick="openPopup(this)">Lån bort produkt</button>
+
+                                <div class="popup">
+                                    <h2>{{ ad.title }}</h2>
+                                    <button type="button" onclick="closePopup(this)">⨉</button>
+                                    <p>Annonsør: {{ ad.user.first_name }} {{ ad.user.last_name }}</p>
+                                    <p>Telefon nummer: {{ ad.user.phone_number }}</p>
+                                    <p>E-post: {{ ad.user.email }}</p>
+                                </div>
+                                <div class="overlay hidden"></div>
+
                             {% endif %}
                             {% if ad.user == user %} <!--Only shows the edit button on "annonse" that the user owns-->
                                 <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
@@ -47,7 +57,17 @@
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
                             {% else %}
                                 {% if ad.user != user %} <!--Only shows the "book produkt" button on "annonse" that the user doesnt own-->
-                                    <button class="ui primary button">Book produkt</button>
+                                    <button class="ui primary button" onclick="openPopup(this)">Book produkt</button>
+
+                                    <div class="popup">
+                                        <h2>{{ ad.title }}</h2>
+                                        <button type="button" onclick="closePopup(this)">⨉</button>
+                                        <p>Annonsør: {{ ad.user.first_name }} {{ ad.user.last_name }}</p>
+                                        <p>Telefon nummer: {{ ad.user.phone_number }}</p>
+                                        <p>E-post: {{ ad.user.email }}</p>
+                                    </div>
+                                    <div class="overlay hidden"></div>
+
                                 {% else %}
                                     <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
                                 {% endif %}
@@ -55,6 +75,33 @@
                         </div>
                     {% endif %}
                 </div>
+                <script>
+
+                    function openPopup(element) {
+                        element.nextElementSibling.classList.add("open-popup");
+                        element.nextElementSibling.nextElementSibling.classList.remove("hidden");
+                    }
+
+                    function closePopup(element) {
+                        element.parentElement.classList.remove("open-popup");
+                        element.parentElement.nextElementSibling.classList.add("hidden");
+                    }
+
+                    
+                    window.onclick = function (event) {
+                        var overlay = document.getElementsByClassName("overlay");
+                        var popup = document.getElementsByClassName("popup");
+                        
+                        if (event.target.classList[0] == 'overlay') {
+                            Array.from(overlay).forEach((element) => {
+                            element.classList.add("hidden");
+                            });
+                            Array.from(popup).forEach((element) => {
+                            element.classList.remove("open-popup");
+                            });
+                        }
+                    }
+                </script>
             {% endfor %}
         </div>
     {% else %}

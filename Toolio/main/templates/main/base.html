@@ -55,6 +55,7 @@
             button {
                 background-color: #211b31 !important;
                 color: #f7e7ce !important;
+                box-shadow: 0 5px 5px rgba(0,0,0,0.2) !important;
             }
 
             .toggle-button {
@@ -65,10 +66,69 @@
                 cursor: pointer;
                 font-size: 14px;
                 border-radius: 4px;
-              }
-              .toggle-button:hover {
-                background-color: #3e8e41;
-              }
+            }
+
+            .toggle-button:hover {
+              background-color: #3e8e41;
+            }
+
+
+            .popup {
+                width: 400px;
+                background: #fff;
+                border-radius: 6px;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0.1);
+                text-align: left;
+                padding: 30px;
+                color: #333;
+                visibility: hidden;
+                transition: transform 0.4s, top 0.4s; 
+                display: inline-block;
+                z-index: 2;
+            }
+
+            .open-popup {
+                visibility: visible;
+                top: 50%;
+                transform: translate(-50%, -50%) scale(1);
+                position: fixed;
+            }
+
+            .popup button {
+                cursor: pointer;
+                border: none;
+                font-weight: 700;
+                font-size: 1.5em;
+                transform: translate(10px, -20px);
+                padding: 0.5rem 0.7rem;
+                background: #eee !important;
+                border-radius: 50%;
+                position: absolute;
+                top: 30px;
+                right: 30px;
+                color: #000 !important;
+                box-shadow: none !important;
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.02);
+                backdrop-filter: blur(3px);
+                z-index: 1;
+            }
+
+            .hidden {
+                display: none;
+            }
               
         </style>
 
