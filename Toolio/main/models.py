@@ -8,6 +8,7 @@ class ad(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="advertisement", null=True)
         
     isRequest = models.BooleanField(default="False")
+    isRented = models.BooleanField(default="False")
     title = models.CharField(max_length=100, default="")
     date = models.DateField(default=django.utils.timezone.now)
     price = models.IntegerField(default=0)
