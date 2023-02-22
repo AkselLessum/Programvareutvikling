@@ -2,21 +2,50 @@
 
 {% block title %}Profilside{% endblock title %}
 
+<style>
+    .card-columns {
+        width: 100%;
+        display: inline-block;
+        white-space: normal;
+      }
+      
+      .card {
+        display: inline-block;
+        vertical-align: top;
+        width: 20%;
+        margin-right: 20px;
+      }
+</style>
+
 {% block content %}
 {% if user.is_authenticated %}
-  Du er logget på {{ user.username }}!
-  <p><a href="{% url 'user:logout' %}">Logg ut</a></p>
-  <div class="card-columns" style="width: 80%; margin: auto;">
+<h1 class="display-2">Din side</h1>
+<h2>Brukerinformasjon: </h2>
+<p><span><f class="font-weight-bold">Fullt navn: </f>{{user.first_name}} {{user.last_name}}</span></p>
+<p><span><f class="font-weight-bold">Brukernavn: </f>{{user.username}}</span></p>
+<p><span><f class="font-weight-bold">E-post: </f>{{user.email}}</span></p>
+<p><span><f class="font-weight-bold">Telefon: </f>{{user.phone_number}}</span></p>
+  <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
+  <h2>Mine annonser</h2>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)" >Til Utleie</button>
+    <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
+    <button type="button" class="btn btn-secondary" name="all" id="all" onclick="onButtonClick(this)" >Alle</button>
+  </div>
+    <hr> 
+  <div class="card-columns" style="width: 80%; margin-left: 0px;">
     {% for ad in user.advertisement.all %}
-        <div class="card">
-            {% if ad.isRequest == True %}
+        {% if ad.isRequest == True %}
+            <div class="card" data-isrequest="true">
                 <div class="card-body">
                     <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
                     <p class="card-text">Budsjett: {{ ad.price }}kr</p>
                     <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
                 </div>
-            {% else %}
+            </div>
+        {% else %}
+            <div class="card" data-isrequest="false">
                 <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ ad.title }}</h5>
@@ -36,9 +65,40 @@
                     {% endif %}
                     <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
                 </div>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
     {% endfor %}
   </div>
+  <div class="card-group">
+  </div>
 {% endif %}
+
+<script>
+    function onButtonClick(btn) {
+        const ads = document.querySelectorAll('.card');
+        if (btn.id === 'forRent') {
+            ads.forEach(ad => {
+                if (ad.dataset.isrequest === 'false') {
+                    ad.style.display = 'inline-block';
+                } else {
+                    ad.style.display = 'none';
+                }
+            });
+        } else if (btn.id === 'request') {
+            ads.forEach(ad => {
+                if (ad.dataset.isrequest === 'true') {
+                    ad.style.display = 'inline-block';
+                } else {
+                    ad.style.display = 'none';
+                }
+            });   
+        } else {
+            ads.forEach(ad => {
+                ad.style.display = 'inline-block';
+            });
+        }
+    } 
+</script>
+  
+
 {% endblock content%}
