@@ -128,6 +128,28 @@ Answer 'yes' if asked whether you're sure about resetting.
 ```
 python manage.py flush
 ```
+
+### Load data from Google Spreadsheets
+
+We have made a script that loads data from a Google Spreadsheet and dumps it into a json file, this file can be used to load data into the database.
+
+#### Google Sheet API
+
+Store the API key in `keys.json` inside the `Toolio` folder. Make sure this file is listed in the `.gitignore` file to avoid it being exposed through a public repository.
+
+#### Run script and load data
+
+1. Run the `read_users.py` file to generate the `users.json` file
+```
+python read_users.py
+```
+2. Load the file into the database
+```
+python manage.py loaddata users.json
+```
+
+Repeat the steps for `read_ads.py` and `ads.json`.
+
 ### Make a New Super User
 
 Navigate to the right folder.

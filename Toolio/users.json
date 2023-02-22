@@ -1,0 +1,122 @@
+[
+    {
+        "model": "user.CustomUser",
+        "pk": 90,
+        "fields": {
+            "first_name": "Gwendolen",
+            "last_name": "Meys",
+            "username": "gmeys0",
+            "phone_number": "5063831420",
+            "email": "gmeys0@ted.com",
+            "password": "I0IVjx0"
+        }
+    },
+    {
+        "model": "user.CustomUser",
+        "pk": 91,
+        "fields": {
+            "first_name": "Tuckie",
+            "last_name": "Narup",
+            "username": "tnarup1",
+            "phone_number": "3182688662",
+            "email": "tnarup1@economist.com",
+            "password": "pdf53I9A1xV"
+        }
+    },
+    {
+        "model": "user.CustomUser",
+        "pk": 92,
+        "fields": {
+            "first_name": "Caril",
+            "last_name": "Grosier",
+            "username": "cgrosier2",
+            "phone_number": "3959866683",
+            "email": "cgrosier2@google.co.uk",
+            "password": "EuUB0nbTTv"
+        }
+    },
+    {
+        "model": "user.CustomUser",
+        "pk": 93,
+        "fields": {
+            "first_name": "Marga",
+            "last_name": "O'Reilly",
+            "username": "moreilly3",
+            "phone_number": "3025728155",
+            "email": "moreilly3@amazon.de",
+            "password": "cnzttslgfYZ"
+        }
+    },
+    {
+        "model": "user.CustomUser",
+        "pk": 94,
+        "fields": {
+            "first_name": "Bernette",
+            "last_name": "Wingham",
+            "username": "bwingham4",
+            "phone_number": "8567547792",
+            "email": "bwingham4@google.com.hk",
+            "password": "q0AdDn"
+        }
+    },
+    {
+        "model": "user.CustomUser",
+        "pk": 95,
+        "fields": {
+            "first_name": "Aimee",
+            "last_name": "Hamerton",
+            "username": "ahamerton5",
+            "phone_number": "3873613532",
+            "email": "ahamerton5@youku.com",
+            "password": "ZNxoPr"
+        }
+    },
+    {
+        "model": "user.CustomUser",
+        "pk": 96,
+        "fields": {
+            "first_name": "Eden",
+            "last_name": "Doull",
+            "username": "edoull6",
+            "phone_number": "9588386778",
+            "email": "edoull6@artisteer.com",
+            "password": "j8CaGN9"
+        }
+    },
+    {
+        "model": "user.CustomUser",
+        "pk": 97,
+        "fields": {
+            "first_name": "Basilius",
+            "last_name": "Seakin",
+            "username": "bseakin7",
+            "phone_number": "3364883688",
+            "email": "bseakin7@list-manage.com",
+            "password": "y3w3QU"
+        }
+    },
+    {
+        "model": "user.CustomUser",
+        "pk": 98,
+        "fields": {
+            "first_name": "Moreen",
+            "last_name": "Verdey",
+            "username": "mverdey8",
+            "phone_number": "7738926129",
+            "email": "mverdey8@mtv.com",
+            "password": "WAyGcUxqurbY"
+        }
+    },
+    {
+        "model": "user.CustomUser",
+        "pk": 99,
+        "fields": {
+            "first_name": "Con",
+            "last_name": "Lakeland",
+            "username": "clakeland9",
+            "phone_number": "8545514279",
+            "email": "clakeland9@vkontakte.ru",
+            "password": "vzajuD9X"
+        }
+    }
+]
