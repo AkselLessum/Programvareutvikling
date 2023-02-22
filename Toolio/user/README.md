@@ -16,10 +16,10 @@ Login as well as logout is handled by the [django.contrib.auth](https://docs.dja
 
 ## Testing
 
-Various tests to ensure the user registration and login features works as expected. The tests are implemented using Django's built-in [testing framework](https://docs.djangoproject.com/en/4.1/topics/testing/overview/), and are located in the tests.py file in the users app.
+Various tests to ensure the user registration and login features works as expected. The tests are implemented using Django's built-in [testing framework](https://docs.djangoproject.com/en/4.1/topics/testing/overview/), and are located in the tests folder in the users app.
 
 To run all test in the user application run:
 
 ```
-./manage.py test user
+python ../manage.py test user
 ```
