@@ -4,8 +4,8 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-  You are logged in {{ user.username }}!
-  <p><a href="{% url 'user:logout' %}">Log Out</a></p>
+<h1>Velkommen {{user.first_name}} {{user.last_name}}!</h1>
+    <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
 {% endif %}
 <center><h3 class="mx-5">Tilbud på markedet</h3>
 <input type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchFunc(this.value)"> 
