@@ -1,28 +1,53 @@
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
 from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.urls import reverse
+
+from .forms import RegisterForm, LogInForm
 
 
 # Create your views here.
-def register(response):
-  if response.method == "POST":
-    form = RegisterForm(response.POST)
+def register(request):
+  if request.method == "POST":
+    form = RegisterForm(request.POST)
 
     if form.is_valid():
-      form.save()
+      user = form.save()
+      login(request, user)
       return redirect("/")
+    
     else:
-
       for field in form:
         for error in field.errors:
-          messages.error(response, error)
+          messages.error(request, error)
     
-      return render(response, "user/register.html", {"form": form}, status=400) # Gir alt vissuelt, men ikke feilmelding 400
-      #return JsonResponse({'errors': form.errors}, status=400) # Gir feilmelding 400, men redirecter til en dumfane
+      return render(request, "user/register.html", {"form": form}, status=400)
+
   else:
     form=RegisterForm()
 
-    return render(response, "user/register.html", {"form": form})
-  
+    return render(request, "user/register.html", {"form": form})
 
+def log_in(request):
+  error = False
+  if request.user.is_authenticated:
+    return redirect('home')
+  if request.method == "POST":
+    form = LogInForm(request.POST)
+    if form.is_valid():
+      username = form.cleaned_data["username"]
+      password = form.cleaned_data["password"]
+      user = authenticate(username=username, password=password)
+      if user:
+        login(request, user)
+        return redirect("/")
+      else:
+        error = True
+  else:
+    form = LogInForm()
   
+  return render(request, "user/login.html", {"form": form, "error": error})
+
+def log_out(request):
+  logout(request)
+  return redirect(reverse("user:login"))

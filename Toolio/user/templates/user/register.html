@@ -1,7 +1,7 @@
 {% extends 'main/base.html'%}
 
 
-{% block title %}<title>Sign Up</title>{% endblock title %}
+{% block title %}Opprett bruker{% endblock title %}
 
 
 
@@ -18,9 +18,9 @@
 
       <form method="POST" class="ui form" style="width: 80%; margin: auto;">
         {% csrf_token %}
-        <h5 class="ui dividing header">Sign up</h5>  
+        <h5 class="ui dividing header">Opprett Toolio-konto</h5>  
         <div class="field">
-          <label>Name</label>
+          <label>Navn</label>
           <div class="two fields">
             <div class="field">
               <input type="text" name="first_name" placeholder="First Name">
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="field">
-          <label>Username</label>
+          <label>Brukernavn</label>
           <input placeholder="Username" name="username" type="text">
         </div>
         <div class="field">
@@ -39,11 +39,11 @@
           <input placeholder="telefon" name="phone_number" type="text">
         </div>
         <div class="field">
-          <label>E-mail</label>
+          <label>E-postadresse</label>
           <input placeholder="" name="email" type="text">
         </div>
         <div class="field">
-          <label>Password</label>
+          <label>Passord</label>
           <div class="two fields">
             <div class="field">
               <input type="text" name="password1" placeholder="">
@@ -53,8 +53,8 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="ui primary button">Register</button>
-        <p style="margin-top: 1.5em;">Already have an account? Login <a href="/login">here</h></p>
+        <button type="submit" class="ui primary button">Opprett bruker</button>
+        <p style="margin-top: 1.5em;">Har du allerede en konto? Logg på <a href="/user/login">her.</h></p>
       </form>
   </div>
 </div>

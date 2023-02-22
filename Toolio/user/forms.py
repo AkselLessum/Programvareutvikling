@@ -5,10 +5,7 @@ from django.core.exceptions import ValidationError
 from .models import CustomUser
 
 class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
     phone_number = forms.IntegerField(required=True)
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
 
     class Meta:
         model = CustomUser
@@ -19,14 +16,13 @@ class RegisterForm(UserCreationForm):
         if CustomUser.objects.filter(phone_number=phone_number).exists():
             raise ValidationError("This phone number is already in use.")
         return phone_number
-    
+
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if CustomUser.objects.filter(email=email).exists():
             raise ValidationError("This email is already in use.")
         return email
 
-
-
-
-  
+class LogInForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)

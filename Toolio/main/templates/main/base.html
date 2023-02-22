@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        {% block title %}<title>Toolio</title>{% endblock %}
+        <title>{% block title %}Toolio{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <style>
@@ -55,6 +55,79 @@
             button {
                 background-color: #211b31 !important;
                 color: #f7e7ce !important;
+                box-shadow: 0 5px 5px rgba(0,0,0,0.2) !important;
+            }
+
+            .toggle-button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 8px 16px;
+                border: none;
+                cursor: pointer;
+                font-size: 14px;
+                border-radius: 4px;
+            }
+
+            .toggle-button:hover {
+              background-color: #3e8e41;
+            }
+
+
+            .popup {
+                width: 400px;
+                background: #fff;
+                border-radius: 6px;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0.1);
+                text-align: left;
+                padding: 30px;
+                color: #333;
+                visibility: hidden;
+                transition: transform 0.4s, top 0.4s; 
+                display: inline-block;
+                z-index: 2;
+            }
+
+            .open-popup {
+                visibility: visible;
+                top: 50%;
+                transform: translate(-50%, -50%) scale(1);
+                position: fixed;
+            }
+
+            .popup button {
+                cursor: pointer;
+                border: none;
+                font-weight: 700;
+                font-size: 1.5em;
+                transform: translate(10px, -20px);
+                padding: 0.5rem 0.7rem;
+                background: #eee !important;
+                border-radius: 50%;
+                position: absolute;
+                top: 30px;
+                right: 30px;
+                color: #000 !important;
+                box-shadow: none !important;
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.02);
+                backdrop-filter: blur(3px);
+                z-index: 1;
+            }
+
+            .hidden {
+                display: none;
             }
               
         </style>
@@ -74,10 +147,14 @@
                     <img src="{% static 'media/ToolioLogoText.png' %}" height="60" class="d-inline-block align-top" alt="">
                 </a>
                 <div>
-                    <a href="/createAd">
+                    <a href="/createAd/">
                         <img src="{% static 'media/plus.png' %}" width="40" height="40" class="d-inline-block align-top" alt="">
                     </a>
-                    <a href="/login">
+                    {% if user.is_authenticated %}
+                        <a href="/userPage/">
+                    {% else %}
+                        <a href="/user/login">
+                    {% endif %}
                         <img src="{% static 'media/profile.png' %}" width="35" height="35" class="d-inline-block align-top" alt="">
                     </a>
                 </div>
@@ -89,13 +166,13 @@
         </main>
         <footer class="footer">
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">Home</a></li>
+                <li class="list-inline-item"><a href="/">Home</a></li>
                 <li class="list-inline-item"><a href="#">Services</a></li>
                 <li class="list-inline-item"><a href="#">About</a></li>
                 <li class="list-inline-item"><a href="#">Terms</a></li>
                 <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
             </ul>
-            <p class="copyright">Company Name © 2018</p>
+            <p class="copyright">Toolio © 2023</p>
         </footer>
         </div>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
