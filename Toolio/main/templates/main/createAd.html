@@ -16,15 +16,14 @@
             {{ form.source.errors }}
             {{ form.source }}
 
-           
-            <div class="btn-group btn-group-toggle" id="id_type">
-              <label for="id_type_0" class="btn btn-info">
-                <input type="radio" name="type" value="normalAd" required id="id_type_0" checked> Annonse
+            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
+              <label for="id_type_0" class="btn btn-info active">
+                <input type="radio" name="type" value="normalAd" required id="id_type_0" onchange="changeForm(this.id)" checked> Annonse
               </label>
               <label for="id_type_1" class="btn btn-info">
-                <input type="radio" name="type" value="requestAd" required id="id_type_1"> Ønskes leid
+                <input type="radio" name="type" value="requestAd" required id="id_type_1" onchange="changeForm(this.id)"> Ønskes leid
               </label>
-            </div>
+          </div>
             
 
             <div class="field">
@@ -47,11 +46,14 @@
                 </div>
                 <div class="field">
                   <label for="id_price" id="priceLabel">Pris</label>
-                  <div class="ui right labeled input">
-                    <label for="amount" class="ui label" style="font-size: 0.8em !important; display: block; text-align: center;">NOK</label>
-                      {{ form.price.errors }}
-                      {{ form.price }}
-                    <div class="ui basic label">.00</div>
+                  <div class="input-group mb-3" style="flex-wrap: nowrap;">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">NOK</span>
+                    </div>
+                    {{ form.price }}
+                    <div class="input-group-append">
+                      <span class="input-group-text">.00</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -68,7 +70,7 @@
               {{ form.image.errors }}
               {{ form.image }}
             </div>
-            <button type="submit" class="ui primary button">Post Ad</button>
+            <button type="submit" class="btn btn-success">Post Ad</button>
         </form>
     </div>
 </div>
