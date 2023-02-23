@@ -11,7 +11,6 @@
 <input type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchFunc(this.value)"> 
 </center>
 <br>
-    <center><h3 class="mx-5">Tilbud på markedet</h3></center>
     {% if adList %}
         <div class="card-columns" style="width: 80%; margin: auto;">
             {% for ad in adList %}
@@ -22,7 +21,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
                             <p class="card-text">Budsjett: {{ ad.price }}kr</p>
                             {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
-                                <button class="ui button default-button" onclick="openPopup(this)">Lån bort produkt</button>
+                                <button class="ui primary button" onclick="openPopup(this)">Lån bort produkt</button>
 
                                 <div class="popup">
                                     <h2>{{ ad.title }}</h2>
@@ -35,7 +34,7 @@
 
                             {% endif %}
                             {% if ad.user == user %} <!--Only shows the edit button on "annonse" that the user owns-->
-                                <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                                <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
                             {% endif %}
                         </div>
                     {% else %}
@@ -69,7 +68,7 @@
                                     <div class="overlay hidden"></div>
 
                                 {% else %}
-                                    <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                                    <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
                                 {% endif %}
                             {% endif %}
                         </div>

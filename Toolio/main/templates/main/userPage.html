@@ -27,10 +27,13 @@
 <p><span><f class="font-weight-bold">Telefon: </f>{{user.phone_number}}</span></p>
   <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
   <h2>Mine annonser</h2>
+  <!--
   <div class="btn-group" role="group" aria-label="Basic example">
-    <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)" >Til Utleie</button>
+  -->
+  <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
+    <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
     <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
-    <button type="button" class="btn btn-secondary" name="all" id="all" onclick="onButtonClick(this)" >Alle</button>
+    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)"checked>Alle</button>
   </div>
     <hr> 
   <div class="card-columns" style="width: 80%; margin-left: 0px;">
@@ -41,7 +44,7 @@
                     <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
                     <p class="card-text">Budsjett: {{ ad.price }}kr</p>
-                    <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                    <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
                 </div>
             </div>
         {% else %}
@@ -63,7 +66,7 @@
                     {% if ad.isRented == True %}
                             <button class="ui button bg-danger" disabled>UTLEID</button>
                     {% endif %}
-                    <a href="{% url 'edit_ad' ad.id %}" class="ui primary button">Rediger</a>
+                    <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
                 </div>
             </div>
         {% endif %}
