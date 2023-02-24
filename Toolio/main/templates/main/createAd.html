@@ -35,7 +35,7 @@
             <div class="field">
               <div class="two fields">
                 <div class="field">
-                  <label for="id_date" id="dateLabel">Dato produktet er ledig til</label>
+                  <label for="id_date" id="dateLabel">Produktet er ledig til</label>
                   <div class="ui calendar">
                     <!--<div class="ui input left icon">
                       <i class="calendar icon"></i>-->
@@ -82,11 +82,11 @@
         if (radioID == "id_type_1") {
             document.getElementById("imgField").hidden = "true";
             document.getElementById("priceLabel").innerText = "Budsjett";
-            document.getElementById("dateLabel").innerText = "Når ønsker du å leie til";
+            document.getElementById("dateLabel").innerText = "Ønsker å leie til";
         } else {
             document.getElementById("imgField").removeAttribute("hidden");
             document.getElementById("priceLabel").innerHTML = "Pris";
-            document.getElementById("dateLabel").innerHTML = "Dato produktet er ledig til";
+            document.getElementById("dateLabel").innerHTML = "Produktet er ledig til";
         }
     }
 </script>
