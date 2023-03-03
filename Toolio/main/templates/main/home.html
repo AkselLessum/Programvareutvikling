@@ -8,7 +8,10 @@
     <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
 {% endif %}
 <center><h3 class="mx-5">Tilbud på markedet</h3>
-<input type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchFunc(this.value)"> 
+<input type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchAndFilter(this.value, this.nextElementSibling.nextElementSibling.value)"> 
+<label for="customRange3" class="form-label">Maks Pris:</label>
+<input type="range" value="8500" min="0" max="findMaxPrice()" oninput="this.nextElementSibling.value = this.value ; searchAndFilter(this.previousElementSibling.previousElementSibling.value, this.value)" step="100">
+<output>8500</output>
 </center>
 <br>
     {% if adList %}
@@ -17,9 +20,9 @@
                 <div class="card">
                     {% if ad.isRequest == True %}
                         <div class="card-body">
-                            <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
+                            <h5 class="card-title" id="ad-title">Ønskes leid: {{ ad.title }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
-                            <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+                            <p class="card-text card-price" >Budsjett: {{ ad.price }}kr</p>
                             {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
                                 <button class="ui primary button" onclick="openPopup(this)">Lån bort produkt</button>
 
@@ -51,7 +54,7 @@
                                     {{ ad.description }}
                                 {% endif %}
                             </div>
-                            <p class="card-text">Pris: {{ ad.price }}kr</p>
+                            <p class="card-text card-price">Pris: {{ ad.price }}kr</p>
                             {% if ad.isRented == True %}
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
                             {% else %}
@@ -117,20 +120,53 @@
             });
         });
     </script>
+
     <script>
-        function searchFunc(value) {
-            let adTitles = document.getElementsByClassName("card-title");
-            // We use titles as source so we can search through with them as keywords
-            // Then in the loop we find the parent nodes so we can edit the whole "ad card"
-            for (let i = 0; i < adTitles.length; i++) {
-                //The whole div for the card is two parent elements up
-                let parentCard = adTitles[i].parentElement.parentElement;
-                if (adTitles[i].innerHTML.toLowerCase().includes(value.toLowerCase())) {
-                    parentCard.removeAttribute("hidden");
-                } else {
-                    parentCard.hidden = "true";
-                }
-            }
+        function searchAndFilter(search, max_price){
+            var ads = document.getElementsByClassName("card"); //gets all ads
+            for (var i = 0; i < ads.length; i++) { //iterates through every ad
+                var price = parseInt(ads[i].getElementsByClassName("card-text card-price")[0].innerText.replace(/[^0-9]/g, "")); //gets the price
+                var title = ads[i].getElementsByClassName("card-title")[0].innerHTML.toLowerCase(); //gets the title
+                if ((price <= parseInt(max_price)) && (title.includes(search.toLowerCase()))){
+                    ads[i].removeAttribute("hidden");
+        } else {
+            ads[i].hidden = true;
         }
-    </script>
+        }
+    }
+    </script>   
+
+    {% comment %} <script> FUNKER ALENE
+        function priceFilter(value) {
+            var ads = document.getElementsByClassName("card"); //gets all ads
+        for (var i = 0; i < ads.length; i++) { //iterates through every ad
+        var price = parseInt(ads[i].getElementsByClassName("card-text card-price")[0].innerText.replace(/[^0-9]/g, "")); //gets the price
+        if (price <= parseInt(value)) { 
+            ads[i].removeAttribute("hidden");
+        } else {
+            ads[i].hidden = true;
+        }
+    }   
+}
+    </script>  {% endcomment %}
+    
+
+    
+    {% comment %} <script> FUNKER OGSÅ ALENE
+        function searchFunc(value) {   
+    let adTitles = document.getElementsByClassName("card-title");
+    // We use titles as source so we can search through with them as keywords
+    // Then in the loop we find the parent nodes so we can edit the whole "ad card"
+    for (let i = 0; i < adTitles.length; i++) {
+        //The whole div for the card is two parent elements up
+        let parentCard = adTitles[i].parentElement.parentElement;
+        if (adTitles[i].innerHTML.toLowerCase().includes(value.toLowerCase())) {
+            parentCard.removeAttribute("hidden");
+        } else {
+            parentCard.hidden = "true";
+        }
+    } }
+</script> {% endcomment %}
+
+    
 {% endblock %}
