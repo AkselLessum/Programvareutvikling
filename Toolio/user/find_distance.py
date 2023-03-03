@@ -3,7 +3,7 @@ from geopy import Nominatim, distance
 
 def distance_between_two_postnumbers(post_nr_first, post_nr_second):
     """
-    Returns the distance between two postnumbers in km
+    Returns the distance between two postnumbers in km.
     distance_between_two_postnumbers(9790, 9770) returns the int 201 (km)
     """
 
