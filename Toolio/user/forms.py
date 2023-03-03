@@ -1,15 +1,18 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 
 from .models import CustomUser
 
 class RegisterForm(UserCreationForm):
     phone_number = forms.IntegerField(required=True)
-
+    postal_code = forms.CharField(max_length=4, validators=[RegexValidator(r'^\d{4}$', 'Postal code must be 4 digits.')], required=True)
+    
+    
     class Meta:
         model = CustomUser
-        fields = ["first_name", "last_name", "username", "phone_number", "email", "password1", "password2"]
+        fields = ["first_name", "last_name", "username", "phone_number", "postal_code", "email", "password1", "password2"]
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data.get('phone_number')
