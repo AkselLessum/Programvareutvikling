@@ -1,27 +1,21 @@
 from geopy import Nominatim, distance
+from main.models import ad
 
+def get_ad_distance_dict(user_postal_code):
+        geolocator = Nominatim(user_agent="Toolio")
+        location_object_user = geolocator.geocode(user_postal_code, country_codes="NOR")
+        location_user = (location_object_user.latitude,
+                location_object_user.longitude)
+        
+        ad_distance_dict = {}
+        for ad_instance in ad.objects.all():
+            location_object_ad_user = geolocator.geocode(
+                ad_instance.user.postal_code, country_codes="NOR")
 
-def distance_between_two_postnumbers(post_nr_first, post_nr_second):
-    """
-    Returns the distance between two postnumbers in km.
-    distance_between_two_postnumbers(9790, 9770) returns the int 201 (km)
-    """
+            location_ad_user = (location_object_ad_user.latitude,
+                            location_object_ad_user.longitude)
 
-    geolocator = Nominatim(user_agent="Toolio")
-
-    location_object_first = geolocator.geocode(
-        str(post_nr_first), country_codes="NOR")
-    location_object_second = geolocator.geocode(
-        str(post_nr_second), country_codes="NOR")
-
-    location_first = (location_object_first.latitude,
-                      location_object_first.longitude)
-    location_second = (location_object_second.latitude,
-                       location_object_second.longitude)
-
-    distance_in_km = int(round(distance.distance(
-        location_first, location_second).km))
-    return distance_in_km
-
-
-#print(distance_between_two_postnumbers(9790, 9770))
+            distance_in_km = int(round(distance.distance(
+               location_user, location_ad_user).km))
+            ad_distance_dict[ad_instance.pk] = distance_in_km
+        return ad_distance_dict

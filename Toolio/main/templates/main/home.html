@@ -4,6 +4,8 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+{% load custom_filters %}
+
 <h1>Velkommen {{user.first_name}} {{user.last_name}}!</h1>
     <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
 {% endif %}
@@ -50,8 +52,14 @@
                                 {% else %}
                                     {{ ad.description }}
                                 {% endif %}
-                            </div>
+                            </div>                            
                             <p class="card-text">Pris: {{ ad.price }}kr</p>
+                            {% if user.is_authenticated%}
+                                {% if user.pk != ad.user.pk%}
+                                    <p class="card-text">Distanse: {{ ad_distance_dict|get_item:ad.pk}}km</p> 
+                                {% endif %}
+                               
+                            {% endif %}
                             {% if ad.isRented == True %}
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
                             {% else %}
