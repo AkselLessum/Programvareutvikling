@@ -7,8 +7,6 @@
         <style>
             body {
                 padding: 3em 3em 6em 3em;
-                background: linear-gradient(0deg, rgba(249,211,146,1) 0%, rgba(243,220,180,1) 37%, rgba(247,241,232,1) 100%) !important;
-                background-attachment: fixed !important;
             }
 
             main {
@@ -16,7 +14,68 @@
                 min-height: 60%;
             }
 
+            .navbar {
+                background-color: #ffa541 !important;
+            }
 
+            .navbar-menu {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-evenly;
+                width: 20%;
+                align-items: center;
+            }
+
+            .default-button {
+                background-color: #3bd09c !important;
+                color: white !important;
+            }
+
+            .default-button:hover {
+                background-color: #4db38f !important;
+            }
+
+
+            /* Light Theme */
+            body.light {
+                background-color: #ffdbb3 !important;
+            }
+
+            /* Dark Theme */
+            body.dark {
+                background-color: #2d2d2d !important;
+                color: #fff !important;
+            } /* #9b59b6 */
+
+            body.dark h1, body.dark .support a, body.dark p, body.dark label, body.dark h5, body.dark h6{
+                color: #fff !important;
+            }
+
+            body.dark .card {
+                background-color: #3a3a3a !important;
+            }
+
+            body.dark input {
+                background: #4a4a4a !important;
+                color: #fff !important;
+                border: none;
+            }
+
+            body.dark .card-subtitle {
+                color: #aaa !important;
+            }
+
+            body.dark input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+                color: #aaa;
+                opacity: 1; /* Firefox */
+            }
+
+            body.dark .popup {
+                background: #4a4a4a !important;
+            }
+
+
+            /* Dark/Light mode */
             .toggle-button {
                 background-color: #4CAF50;
                 color: white;
@@ -31,16 +90,56 @@
               background-color: #3e8e41;
             }
 
-            .default-button {
-                background-color: #3bd09c !important;
-                color: white !important;
+            .checkbox {
+                opacity: 0;
+                position: absolute;
+              }
+  
+            .checkbox-label {
+                background-color: #111;
+                width: 50px;
+                height: 26px;
+                border-radius: 50px;
+                position: relative;
+                padding: 5px;
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+  
+            .fa-moon {
+                background-image: url('../../static/media/moon.svg');
+                width: 20px;
+                height: 20px;
+                background-repeat: no-repeat;
+            }
+  
+            .fa-sun {
+                background-image: url('../../static/media/sun.svg');
+                width: 17px;
+                height: 17px;
+                background-repeat: no-repeat;
+            }
+  
+            .checkbox-label .ball {
+                background-color: #fff;
+                width: 22px;
+                height: 22px;
+                position: absolute;
+                left: 2px;
+                top: 2px;
+                border-radius: 50%;
+                transition: transform 0.2s linear;
+            }
+  
+            .checkbox:checked + .checkbox-label .ball {
+                transform: translateX(24px);
             }
 
-            .default-button:hover {
-                background-color: #4db38f !important;
-            }
 
 
+            /* Popup */
             .popup {
                 width: 400px;
                 background: #fff;
@@ -98,6 +197,7 @@
                 display: none;
             }
 
+            /* Footer */
             .footer {
                 background-color: #211b31;
                 padding: 2em 0em 2em 0em;
@@ -133,7 +233,6 @@
                 color:#aaa;
                 margin-bottom:0;
             }
-              
         </style>
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -141,26 +240,40 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
         <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
+
+        <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     </head>
 
-    <body>
+    <body class="light">
         <header>
-            <div class="navbar " style="background-color: #fbc770;">
+            <div class="navbar ">
                 <a class ="navbar-brand" href="/">
                     {% load static %}
                     <img src="{% static 'media/ToolioLogoText.png' %}" height="60" class="d-inline-block align-top" alt="">
                 </a>
-                <div>
+                <div class="navbar-menu">
+                    <a href="/">
+                        <i class="fi fi-rr-home" style="color: black; font-size: 2em;"></i>
+                    </a>
                     <a href="/createAd/">
-                        <img src="{% static 'media/plus.png' %}" width="40" height="40" class="d-inline-block align-top" alt="">
+                        <i class="fi fi-rr-plus" style="color: black; font-size: 2em;"></i>
                     </a>
                     {% if user.is_authenticated %}
                         <a href="{% url 'userPage' user.id %}">
                     {% else %}
                         <a href="/user/login">
                     {% endif %}
-                        <img src="{% static 'media/profile.png' %}" width="35" height="35" class="d-inline-block align-top" alt="">
+                        <i class="fi fi-rr-user" style="color: black; font-size: 2em;"></i>
                     </a>
+
+                    <div>
+                        <input type="checkbox" class="checkbox" id="checkbox">
+                        <label for="checkbox" class="checkbox-label" style="margin: 0;">
+                            <i class="fa-solid fa-moon"></i>
+                            <i class="fa-solid fa-sun"></i>
+                          <span class="ball"></span>
+                        </label>
+                      </div>
                 </div>
             </div>
         </header>
@@ -179,6 +292,34 @@
             <p class="copyright">Toolio © 2023</p>
         </footer>
         </div>
+        <script>
+            const checkbox = document.getElementById("checkbox")
+            // Changes style to whatever mode has been chosen already
+            if(localStorage.getItem("mode") == "light") {
+                document.body.classList.remove("dark")
+                document.body.classList.add("light")
+                checkbox.checked = false;
+            } else {
+                document.body.classList.remove("light")
+                document.body.classList.add("dark")
+                checkbox.checked = true;
+            }
+
+            checkbox.addEventListener("change", () => {
+                console.log(checkbox.checked)
+                if(document.body.classList.contains("dark")) {
+                    document.body.classList.remove("dark")
+                    document.body.classList.add("light")
+                    localStorage.setItem("mode", "light");
+                } else {
+                    document.body.classList.remove("light")
+                    document.body.classList.add("dark")
+                    localStorage.setItem("mode", "dark");
+                }
+                //document.body.classList.toggle("dark")
+                //document.body.classList.toggle("light")    
+            })
+        </script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
