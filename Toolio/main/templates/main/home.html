@@ -22,6 +22,14 @@
                             <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
                             <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+
+                            {% if user.is_authenticated%}
+                                {% if user.pk != ad.user.pk%}
+                                    <p class="card-text">Distanse: {{ ad_distance_dict|get_item:ad.pk}}km</p> 
+                                {% endif %}
+                               
+                            {% endif %}
+
                             {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
                                 <button class="ui primary button" onclick="openPopup(this)">Lån bort produkt</button>
 
