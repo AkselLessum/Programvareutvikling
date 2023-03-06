@@ -8,7 +8,7 @@
     <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
 {% endif %}
 <center><h3 class="mx-5">Tilbud på markedet</h3>
-<input type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchFunc(this.value)"> 
+<input type="text" class="w-25 form-control" style="ma" placeholder="Søk etter verktøy" width="100" onkeyup="searchFunc(this.value)"> 
 </center>
 <br>
     {% if adList %}
@@ -27,7 +27,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
                             <p class="card-text">Budsjett: {{ ad.price }}kr</p>
                             {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
-                                <button class="ui primary button" onclick="openPopup(this)">Lån bort produkt</button>
+                                <button class="ui primary button" onclick="openPopup(this)">Lån bort verktøy</button>
 
                                 <div class="popup">
                                     <h2>{{ ad.title }}</h2>
@@ -62,7 +62,7 @@
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
                             {% else %}
                                 {% if ad.user != user %} <!--Only shows the "book produkt" button on "annonse" that the user doesnt own-->
-                                    <button class="ui button default-button" onclick="openPopup(this)">Book produkt</button>
+                                    <button class="ui button default-button" onclick="openPopup(this)">Book verktøy</button>
 
                                     <div class="popup">
                                         <h2>{{ ad.title }}</h2>
