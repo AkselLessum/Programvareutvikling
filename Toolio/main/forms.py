@@ -29,20 +29,25 @@ class createAdForm(forms.ModelForm):
 
 
 class editAdForm(forms.ModelForm):
-    description = forms.CharField(widget=forms.Textarea(attrs={'rows': 10, 'cols': 40}))
-    isRented = forms.BooleanField(widget=forms.CheckboxInput, label="Utleid", required=False)
+    title = forms.CharField(label="Tittel", max_length=100, label_suffix='')
+    date = forms.DateField(widget=DateInput(), label="Produktet er ledig frem til",label_suffix='')
+    price = forms.IntegerField(label="Pris", widget=widgets.NumberInput(attrs={"style":"border-radius: 0 !important;"}), label_suffix='')
+    description = forms.CharField(label="Beskrivelse",widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}), max_length=500, label_suffix='')
+    image = forms.FileField(label="Bilde av redskapet", required=False, label_suffix='')
+    isRented = forms.BooleanField(widget=forms.CheckboxInput, label="Utleid", required=False, label_suffix='')
 
     class Meta:
         model = ad
-        fields = ('title', 'description', 'price', 'image', 'isRented')
+        fields = ('title', 'date', 'price','description',  'image', 'isRented')
 
 
 
 class editAdFormWanted(forms.ModelForm): # Edit "ønsket leid", no image in fields
-    description = forms.CharField(
-        widget=forms.Textarea(attrs={'rows': 10, 'cols': 40})
-    )
+    title = forms.CharField(label="Tittel", max_length=100, label_suffix='')
+    date = forms.DateField(widget=DateInput(), label="Ønsker å leie til",label_suffix='')
+    price = forms.IntegerField(label="Budsjett", widget=widgets.NumberInput(attrs={"style":"border-radius: 0 !important;"}), label_suffix='')
+    description = forms.CharField(label="Beskrivelse",widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}), max_length=500, label_suffix='')
 
     class Meta:
         model = ad
-        fields = ('title', 'description', 'price')
+        fields = ('title', 'date', 'price','description')

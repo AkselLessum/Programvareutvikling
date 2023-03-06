@@ -8,13 +8,78 @@
     <div class="card-body">
         <form method="POST" enctype="multipart/form-data" class="ui form">
             {% csrf_token %}
+
+            <!--
             {{ form.as_p }}
-            <button class="btn btn-success" type="submit">Save</button>
+            -->
+
+
+            {{ form.non_field_errors }}
+
+            {{ form.source.errors }}
+            {{ form.source }}
+
+
+            <div class="field">
+                {{ form.title.label_tag }}
+                {{ form.title.errors }}
+                {{ form.title }}
+            </div>
+
+            <div class="field">
+                <div class="two fields">
+                  <div class="field">
+                    {% if ad.isRequest %}
+                        <label for="id_date" id="dateLabel">Ønsker å leie til</label>
+                    {% else %}
+                        <label for="id_date" id="dateLabel">Produktet er ledig til</label>
+                    {% endif %}
+                    <div class="ui calendar">
+                      <!--<div class="ui input left icon">
+                        <i class="calendar icon"></i>-->
+                        {{ form.date.errors }}
+                        {{ form.date }}
+                     <!--</div>-->
+                    </div>
+                  </div>
+                  <div class="field">
+                    {% if ad.isRequest %}
+                        <label for="id_price" id="priceLabel">Budsjett</label>
+                    {% else %}
+                        <label for="id_price" id="priceLabel">Pris</label>
+                    {% endif %}
+                    <div class="input-group mb-3" style="flex-wrap: nowrap;">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">NOK</span>
+                      </div>
+                      {{ form.price }}
+                      <div class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="field">
+                {{ form.description.label_tag }}
+                {{ form.description.errors }}
+                {{ form.description }}
+              </div>
+  
+              <div class="field" id="imgField">
+                {{ form.image.label_tag }}
+                {{ form.image.errors }}
+                {{ form.image }}
+              </div>
+
+
+            <button class="btn btn-success" type="submit">Lagre</button>
         </form>
         <br>
         <form method="POST" action="{% url 'delete_ad' ad.id %}">
             {% csrf_token %}
-            <button type="submit" class="ui button red">Delete</button>
+            <button type="submit" class="btn btn-danger">Slett</button>
         </form>
     </div>
 </div>
