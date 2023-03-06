@@ -15,6 +15,12 @@
         <div class="card-columns" style="width: 80%; margin: auto;">
             {% for ad in adList %}
                 <div class="card">
+                    <div class="card-header" style="margin: 0 !important; padding: 0.2em!important;">
+                        <a class="header" href="{% url 'userPage' ad.user.id %}">
+                            <p style="color: black; margin: 0.5em 0 0 0.5em;">{{ad.user.first_name}} {{ad.user.last_name}}</p>
+                            <p style="color: grey; margin: 0 0 0 0.5em;">@{{ ad.user }}</p>
+                        </a>
+                    </div>
                     {% if ad.isRequest == True %}
                         <div class="card-body">
                             <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
