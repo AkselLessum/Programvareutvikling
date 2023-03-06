@@ -157,11 +157,28 @@ Navigate to the right folder.
 cd ./pu48/Toolio
 ```
 
-Create a new super user.
+Create a new super user by running the following command:
 ```
 python manage.py createsuperuser
 ```
-Finish registration by filling out the questions asked in the terminal
+1. Insert a username for your Admin user.
+2. Choose a safe password
+3. Repeat your password
+
+A superuser has the ability to edit and delete a user or ad via the Django Administration site.
+To open the Django Administration site, visit the [http://localhost:8000/admin/](http://localhost:8000/admin/) URL while running the server. Here you can login with your superuser credentials.
+
+Delete a User from the Django Administration page:
+1. Select "Users". Here you have an overview over all existing users in the database.
+2. Check the box next to a user
+3. Choose "Delete selected users" from the pull-down menu
+4. Click "Go". The selected user(s) and their respective ads will then be deleted from the database.
+
+Delete an Ad from the Django Administration page:
+1. Navigate to the Django Administration homepage, and select "Ads". Here you have an overview over all existing ads in the database.
+2. Check the box next to an ad
+3. Choose "delete selected ads" from the pull-down menu
+4. Click "Go". The selected ad(s) will then be deleted from the database.
 
 ## 🚀 Deployment <a name = "deployment"></a>
 Add additional notes about how to deploy this on a live system.
