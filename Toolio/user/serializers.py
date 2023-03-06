@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from .models import CustomUser
 
 class CustomUserSerializer(serializers.ModelSerializer):
@@ -9,7 +8,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
   phone_number = serializers.IntegerField(source="phone_number")
   email = serializers.CharField(source="email")
   password = serializers.CharField(source="password")
+  longitude = serializers.FloatField(source="longitude")
+  latitude = serializers.FloatField(source="latitude")
   
   class Meta:
     model = CustomUser
-    fields=['first_name', 'last_name', 'username', 'phone_number', 'email', 'password']
+    fields=['first_name', 'last_name', 'username', 'phone_number', 'email', 'password','longitude', 'latitude']

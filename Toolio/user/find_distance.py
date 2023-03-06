@@ -1,14 +1,21 @@
-from geopy import Nominatim, distance
+import time
+from geopy import distance
 from main.models import ad
+#from users import CustomUser as user
 
-def get_ad_distance_dict(user_postal_code):
-    geolocator = Nominatim(user_agent="Toolio")
-    location_object_user = geolocator.geocode(user_postal_code, country_codes="NOR")
-    location_user = (location_object_user.latitude, location_object_user.longitude)
 
-    ad_postal_codes = ad.objects.all().values_list('user__postal_code', flat=True)
 
-    ad_distance_dict = {ad_instance.pk: int(round(distance.distance(location_user, geolocator.geocode(postal_code, country_codes="NOR").point).km)) 
-                        for ad_instance, postal_code in zip(ad.objects.all(), ad_postal_codes)}
+def get_ad_distance_dict(user):
+        
+      
+        location_user = (user.latitude, user.longitude)
+        
+        ad_distance_dict = {}
+        for ad_instance in ad.objects.all():
+     
+            location_ad_user = (ad_instance.user.latitude,ad_instance.user.longitude)
 
-    return ad_distance_dict
+            distance_in_km = int(round(distance.distance(location_user, location_ad_user).km))
+            ad_distance_dict[ad_instance.pk] = distance_in_km
+        
+        return ad_distance_dict

@@ -15,7 +15,7 @@ creds = service_account.Credentials.from_service_account_file(
 
 # The ID  of the spreadsheet
 SAMPLE_SPREADSHEET_ID = '1Tas4OgAgvY6kfrJUCvT12w3tf9AedUG2d9P7_-skElE'
-SAMPLE_RANGE_NAME = 'Users!A1:G12'
+SAMPLE_RANGE_NAME = 'Users!A1:I12'
 
 service = build('sheets', 'v4', credentials=creds)
 
@@ -42,6 +42,8 @@ else:
         "email": row[values[0].index("email")],
         "password": row[values[0].index("password")],
         "postal_code": row[values[0].index("postal_code")],
+        "longitude": row[values[0].index("longitude")],
+        "latitude": row[values[0].index("latitude")],
       }
     }
     pk_counter += 1
