@@ -2,7 +2,6 @@ import django.utils.timezone
 from django.db import models
 from user.models import CustomUser
 
-
 # Create your models here.
 class ad(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="advertisement", null=True)
@@ -10,6 +9,7 @@ class ad(models.Model):
     isRequest = models.BooleanField(default="False")
     isRented = models.BooleanField(default="False")
     title = models.CharField(max_length=100, default="")
+    category = models.CharField(max_length=100)
     date = models.DateField(default=django.utils.timezone.now)
     price = models.IntegerField(default=0)
     description = models.CharField(max_length=500, default="")
