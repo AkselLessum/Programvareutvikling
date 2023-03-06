@@ -155,7 +155,7 @@
                         <img src="{% static 'media/plus.png' %}" width="40" height="40" class="d-inline-block align-top" alt="">
                     </a>
                     {% if user.is_authenticated %}
-                        <a href="/userPage/">
+                        <a href="{% url 'userPage' user.id %}">
                     {% else %}
                         <a href="/user/login">
                     {% endif %}
