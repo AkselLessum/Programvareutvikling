@@ -15,7 +15,7 @@ class CustomUser(AbstractUser):
     def save(self, *args, **kwargs):
         if not self.longitude or not self.latitude:
             geolocator = Nominatim(user_agent="myapp")
-            location = geolocator.geocode(self.postal_code, country_codes="NOR")
+            location = geolocator.geocode(str(self.postal_code) + " Norway", country_codes="NOR")
             if location:
                 self.longitude = location.longitude
                 self.latitude = location.latitude

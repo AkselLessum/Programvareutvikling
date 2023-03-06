@@ -25,7 +25,7 @@
 
                             {% if user.is_authenticated%}
                                 {% if user.pk != ad.user.pk%}
-                                    <p class="card-text">Distanse: {{ ad_distance_dict|get_item:ad.pk}}km</p> 
+                                    <p class="card-text">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
                                 {% endif %}
                                
                             {% endif %}
@@ -64,7 +64,7 @@
                             <p class="card-text">Pris: {{ ad.price }}kr</p>
                             {% if user.is_authenticated%}
                                 {% if user.pk != ad.user.pk%}
-                                    <p class="card-text">Distanse: {{ ad_distance_dict|get_item:ad.pk}}km</p> 
+                                        <p class="card-text">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
                                 {% endif %}
                                
                             {% endif %}
