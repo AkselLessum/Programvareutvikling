@@ -45,7 +45,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
                             <p class="card-text card-price" >Budsjett: {{ ad.price }}kr</p>
                             {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
-                                <button class="ui primary button" onclick="openPopup(this)">Lån bort produkt</button>
+                                <button class="ui primary button" onclick="openPopup(this)">Lån bort verktøy</button>
 
                                 <div class="popup">
                                     <h2>{{ ad.title }}</h2>
@@ -81,7 +81,7 @@
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
                             {% else %}
                                 {% if ad.user != user %} <!--Only shows the "book produkt" button on "annonse" that the user doesnt own-->
-                                    <button class="ui button default-button" onclick="openPopup(this)">Book produkt</button>
+                                    <button class="ui button default-button" onclick="openPopup(this)">Book verktøy</button>
 
                                     <div class="popup">
                                         <h2>{{ ad.title }}</h2>
