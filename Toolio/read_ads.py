@@ -43,6 +43,7 @@ else:
         "image": row[values[0].index("image")],
         "user": row[values[0].index("user_id")],
         "isRented": row[values[0].index("isRented")],
+        "category": row[values[0].index("category")],
       }
     }
     pk_counter += 1
