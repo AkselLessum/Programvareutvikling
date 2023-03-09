@@ -161,24 +161,51 @@ Create a new super user by running the following command:
 ```
 python manage.py createsuperuser
 ```
-1. Insert a username for your Admin user.
-2. Choose a safe password
-3. Repeat your password
+<p align="left">
+  <a href="" rel="noopener">
+  <img width=400px src="images/createsuperuser.png" alt="createsuperuser"></a>
+</p>
+
+1. Insert a username for your Admin user
+2. Insert your Phone Number
+3. Choose a safe password
+4. Repeat your password
 
 A superuser has the ability to edit and delete a user or ad via the Django Administration site.
 To open the Django Administration site, visit the [http://localhost:8000/admin/](http://localhost:8000/admin/) URL while running the server. Here you can login with your superuser credentials.
 
-Delete a User from the Django Administration page:
+## Delete a User from the Django Administration page:
+
+<p align="left">
+  <a href="" rel="noopener">
+  <img width=500px src="images/useroverview.png" alt="useroverview"></a>
+</p>
+
 1. Select "Users". Here you have an overview over all existing users in the database.
 2. Check the box next to a user
 3. Choose "Delete selected users" from the pull-down menu
 4. Click "Go". The selected user(s) and their respective ads will then be deleted from the database.
 
-Delete an Ad from the Django Administration page:
+<p align="left">
+  <a href="" rel="noopener">
+  <img width=400px src="images/successdeleteuser.png" alt="successdeleteuser"></a>
+</p>
+
+## Delete an Ad from the Django Administration page:
+
+<p align="left">
+  <a href="" rel="noopener">
+  <img width=500px src="images/adoverview.png" alt="adoverview"></a>
+</p>
+
 1. Navigate to the Django Administration homepage, and select "Ads". Here you have an overview over all existing ads in the database.
 2. Check the box next to an ad
 3. Choose "delete selected ads" from the pull-down menu
 4. Click "Go". The selected ad(s) will then be deleted from the database.
+<p align="left">
+  <a href="" rel="noopener">
+  <img width=300px src="images/successdeletead.png" alt="successdeletead"></a>
+</p>
 
 ## 🚀 Deployment <a name = "deployment"></a>
 Add additional notes about how to deploy this on a live system.
