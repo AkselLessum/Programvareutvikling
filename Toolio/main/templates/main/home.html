@@ -7,9 +7,8 @@
 {% load custom_filters %}
 
 <h1>Velkommen {{user.first_name}} {{user.last_name}}!</h1>
-    <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
 {% endif %}
-<center><h3 class="mx-5">Tilbud på markedet</h3>
+<center><h3 class="mx-5">Tilbud på markedet</h3>  
 <input type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchAndFilter(this.value, this.nextElementSibling.nextElementSibling.value, this.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.value)"> 
 <label for="customRange3" class="form-label">Maks Pris:</label>
 <input type="range" value="10000" min="0" max= "10000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter(this.previousElementSibling.previousElementSibling.value, this.value, this.nextElementSibling.nextElementSibling.nextElementSibling.value)" step="100">
