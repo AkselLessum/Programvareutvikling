@@ -45,7 +45,7 @@
                             <h5 class="card-title" id="ad-title">Ønskes leid: {{ ad.title }}</h5>
                             <p class="category" hidden="True">{{ad.category}}</p>
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
-                            <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+                            <p class="card-text card-price">Budsjett: {{ ad.price }}kr</p>
 
                             {% if user.is_authenticated%}
                                 {% if user.pk != ad.user.pk%}
@@ -86,7 +86,7 @@
                                     {{ ad.description }}
                                 {% endif %}
                             </div>                            
-                            <p class="card-text">Pris: {{ ad.price }}kr</p>
+                            <p class="card-text card-price">Pris: {{ ad.price }}kr</p>
                             {% if user.is_authenticated%}
                                 {% if user.pk != ad.user.pk%}
                                         <p class="card-text">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
@@ -164,6 +164,7 @@
             var ads = document.getElementsByClassName("card"); //gets all ads
             for (var i = 0; i < ads.length; i++) { //iterates through every ad
                 var price = parseInt(ads[i].getElementsByClassName("card-text card-price")[0].innerText.replace(/[^0-9]/g, "")); //gets the price
+                console.log("pris funker");
                 var title = ads[i].getElementsByClassName("card-title")[0].innerHTML.toLowerCase(); //gets the title
                 var adCategory = ads[i].getElementsByClassName("category")[0].innerHTML;
                 if ((price <= parseInt(max_price)) && (title.includes(search.toLowerCase())) && (adCategory == searchCategory || searchCategory == "all")){

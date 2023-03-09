@@ -6,7 +6,7 @@ from geopy.geocoders import Nominatim
 # Create your models here.
 class CustomUser(AbstractUser):
     phone_number = models.IntegerField(unique=True)
-    postal_code = models.CharField(max_length=4, null=False, blank=False)
+    postal_code = models.CharField(max_length=4, null=False, blank=False, default="")
     longitude = models.FloatField(null=True, blank=True)
     latitude = models.FloatField(null=True, blank=True)
     
