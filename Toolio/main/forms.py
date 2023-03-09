@@ -11,7 +11,7 @@ options = [
     ("Annet", "Annet"),
     ("Snekring og tømrerarbeid", "Snekring og tømrerarbeid"),
     ("Maling og overflatebehandling", "Maling og overflatebehandling"),
-    ("Hagearbeid", "Hagearbeid"),
+    ("Hagearbeid", "Hagearbeid"),   
     ("Rørleggerarbeid", "Rørleggerarbeid"),
     ("Elektrikerarbeid", "Elektrikerarbeid"),
     ("Bilreperasjon", "Bilrepereasjon"),
