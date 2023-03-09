@@ -1,4 +1,5 @@
 from .models import ad
+from user.models import CustomUser
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import createAdForm, editAdForm, editAdFormWanted
 from django.contrib.auth.decorators import login_required
@@ -19,10 +20,17 @@ def home(request):
 
     return render(request, "main/home.html", context)
 
+<<<<<<< HEAD
 
 def userPage(request):
     print(request.user.advertisement)
     return render(request, "main/userPage.html", {})
+=======
+def userPage(request, user_id):
+    user_page = get_object_or_404(CustomUser, id=user_id)
+    return render(request, 'main/userPage.html', {'ad_user': user_page})
+    
+>>>>>>> origin/dev
 
 
 @login_required(login_url=settings.LOGIN_URL)
