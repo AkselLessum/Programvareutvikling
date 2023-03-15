@@ -90,7 +90,7 @@ class BaseTest(TestCase):
             'postal_code': '4022',
             'email': 'testemail.gmail.com',
             'password1': 'Sikkert123',
-            'password2': 'Sikkert124'
+            'password2': 'Sikkert123'
         }
 
         # A user profile with an invalid phone number
