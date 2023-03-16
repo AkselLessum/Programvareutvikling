@@ -30,7 +30,6 @@ def userPage(request, user_id):
 def createAd(request):
     if request.method == "POST":
         form = createAdForm(request.POST, request.FILES)
-        print(request.POST)
 
         if form.is_valid():
             type = form.cleaned_data["type"]
