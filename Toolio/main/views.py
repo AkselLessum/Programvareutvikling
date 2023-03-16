@@ -24,6 +24,15 @@ def home(request):
 
 def confirm_booking(request, ad_id):
     ad_instance= get_object_or_404(ad, id=ad_id)
+    ad_instance.isRented = True
+    ad_instance.save()
+    
+    return redirect('home')
+
+
+
+def confirm_booking2(request, ad_id):
+    ad_instance= get_object_or_404(ad, id=ad_id)
     #print("pikk:",ad_instance.isRented)
     ad_instance=ad(isRequest=ad_instance.isRequest, title=ad_instance.title, date=ad_instance.date, price=ad_instance.price, description=ad_instance.description, image=ad_instance.image, isRented=True, user_id=ad_instance.user_id)#kategori
     ad_instance.save()
