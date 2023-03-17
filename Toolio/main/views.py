@@ -1,5 +1,5 @@
 from .models import ad
-from user.models import CustomUser
+from user.models import CustomUser, Interaction
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import createAdForm, editAdForm, editAdFormWanted, confirmBooking
 from django.contrib.auth.decorators import login_required
@@ -33,28 +33,46 @@ def confirm_booking(request, ad_id):
 
 def confirm_booking2(request, ad_id):
     ad_instance= get_object_or_404(ad, id=ad_id)
-    #print("pikk:",ad_instance.isRented)
     ad_instance=ad(isRequest=ad_instance.isRequest, title=ad_instance.title, date=ad_instance.date, price=ad_instance.price, description=ad_instance.description, image=ad_instance.image, isRented=True, user_id=ad_instance.user_id)#kategori
     ad_instance.save()
-    print("HER BRO:",ad_instance.isRented)
-    
-    #if request.method == "POST":
-    #    form = confirmBooking(request.POST, ad_instance)
-    #    print(form)
-    #    
-    #    if form.is_valid():
-    #        form.save(commit=True)
-    #        return redirect('/')            
-    #
-    #else:
-    #    form = confirmBooking(instance=ad_instance)
+
     return render(request, 'main/home.html')
     
 
+def get_user_average_rating(user):
+    interactions = Interaction.objects.filter(lender=user.id).exclude(rating__isnull=True)
+    if interactions.count() == 0:
+        return None
+
+    total_rating = sum(interaction.rating for interaction in interactions)
+    return total_rating / interactions.count()
+
 def userPage(request, user_id):
-    user_page = get_object_or_404(CustomUser, id=user_id)
-    return render(request, 'main/userPage.html', {'ad_user': user_page})
+    profile_user = CustomUser.objects.get(id=user_id)
+    average_rating = get_user_average_rating(profile_user)
+    print(f"\n\n average rating: {average_rating} \n\n")
     
+    context = {
+        'profile_user': profile_user,
+        'average_rating': average_rating,
+    }
+    return render(request, 'main/userPage.html', context)
+
+def rate_user(request, user_id):
+    rated_user = CustomUser.objects.get(id=user_id)
+    user = request.user
+  
+    if request.method == "POST":
+        rating = int(request.POST["rating"])
+        interaction = Interaction.objects.get_or_create(
+            borrower = user,
+            lender = rated_user,
+            rating = rating
+        )
+   
+    return redirect('userPage', user_id)
+
+  
 
 
 @login_required(login_url=settings.LOGIN_URL)
