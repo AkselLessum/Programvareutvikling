@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import widgets
 
-from .models import ad
+from .models import ad, CustomList
 
 AD_TYPES = [
     ("normalAd", "Annonse"),
@@ -66,3 +66,10 @@ class editAdFormWanted(forms.ModelForm): # Edit "ønsket leid", no image in fiel
     class Meta:
         model = ad
         fields = ('title', 'category', 'date', 'price','description')
+
+class createCustomListForm(forms.ModelForm):
+    title = forms.CharField(label="Tittel", max_length=100, label_suffix='', widget=forms.TextInput)
+    
+    class Meta:
+        model = CustomList
+        fields = ['title']

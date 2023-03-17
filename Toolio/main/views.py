@@ -1,7 +1,7 @@
 from .models import ad
 from user.models import CustomUser
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import createAdForm, editAdForm, editAdFormWanted
+from .forms import createAdForm, editAdForm, editAdFormWanted, createCustomListForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from user.find_distance import get_ad_distance_dict
@@ -22,7 +22,8 @@ def home(request):
 
 def userPage(request, user_id):
     user_page = get_object_or_404(CustomUser, id=user_id)
-    return render(request, 'main/userPage.html', {'ad_user': user_page})
+    form = createCustomListForm()
+    return render(request, 'main/userPage.html', {'ad_user': user_page, 'form': form})
     
 
 
@@ -30,7 +31,7 @@ def userPage(request, user_id):
 def createAd(request):
     if request.method == "POST":
         form = createAdForm(request.POST, request.FILES)
-        print(request.POST)
+        print(request.POST)     #### why print her
 
         if form.is_valid():
             type = form.cleaned_data["type"]
@@ -84,5 +85,16 @@ def delete_ad(request, ad_id):
     ad_obj.delete()
     return redirect('home')  # redirect to the home page
 
+def create_custom_list(request, user_id):
+    if request.method == "POST":
+        form = createCustomListForm(request.POST)
 
+        if form.is_valid():
+            newList = form.save(commit=False)
+            newList.user = request.user
+            newList.save()
+        return redirect("/")
 
+    else:
+        form = createCustomListForm()
+    return redirect('userPage', user_id)
