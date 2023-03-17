@@ -7,14 +7,16 @@
 
 ---
 
-This is the code repo for group 48 in the subject [TDT4140 Software Engineering](https://www.ntnu.edu/studies/courses/TDT4140#tab=omEmnet). 
+This is the code repo for group 48 in the subject [TDT4140 Software Engineering](https://www.ntnu.edu/studies/courses/TDT4140#tab=omEmnet).
 
 ## Table of Contents
+
 - [About](#about)
 - [Getting Started](#getting_started)
 - [Deployment](#deployment)
 - [Usage](#usage)
 - [Built Using](#built_using)
+- [Dependencies](#dependencies)
 - [TODO](docs/TODO.md)
 - [Contributing](docs/CONTRIBUTING.md)
 - [Roadmap](#roadmap)
@@ -22,14 +24,17 @@ This is the code repo for group 48 in the subject [TDT4140 Software Engineering]
 - [Acknowledgments](#acknowledgement)
 
 ## 🧐 About <a name = "about"></a>
+
 Toolio is a platform where users can lend out their tools and equipment to each other by publishing advertisements. Through constant dialogue with our Student Assistant, who has simulated the role of Product Owner throughout this project, we have developed a product fulfilling his wishes and requirements.
 
 To illustrate the product's functionality goals of Sprint 1, a Figma [model](https://www.figma.com/file/7mZ3F55lnI0v0tEG3I7XU6/TOOLIO-SPRINT-1?node-id=25%3A227&t=KHcrblGRzwLO8f9o-1) was created.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
+
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
 ### Prerequisites
+
 What you need to install the software, as well as how to install them.
 
 ```
@@ -40,6 +45,7 @@ Give examples
 2. Python download
 
 ### Installation
+
 A step by step series of examples that tell you how to get a development environment running.
 
 Before installing the project make sure you have installed all the [required](#prerequisites) technologies for this project. Navigate to the folder where you want to have the project, and clone the project here.
@@ -69,48 +75,58 @@ python manage.py runserver
 
 In the terminal a url will be displayed for where you can view the website. The default is [http://localhost:8000/](http://localhost:8000/). To view the website simply go to this url.
 
-To populate the website with objects and users, navigate to Usage see the instructions about resetting the database and loading data from 
+To populate the website with objects and users, navigate to Usage see the instructions about resetting the database and loading data from
 google spreadsheets.
 
-
 ## 🔧 Running the tests <a name = "tests"></a>
+
 This project has only used unit-testing. To run all the test type the following command:
 `python manage.py test ?Toolio?`
 
 ### Test-coverage
+
 To display the test coverage the python library coverage must first be installed.
+
 ```
 pip install coverage
 ```
+
 To get a coverage report in the terminal run the following command, but replace the '#' with one of the following: main, Toolio, user.
+
 ```
 coverage run --source='#' manage.py test && coverage report
 ```
+
 To also get a html coverage report run the following command.
+
 ```
 coverage run --source='#' manage.py test && coverage report && coverage html
 ```
 
 To open the html report [live server](https://github.com/tapio/live-server) can be used, if not already installed run:
+
 ```
 npm i -g live-server
 ```
+
 and then to open the report run:
+
 ```
 cd htmlcov/ && live-server
 ```
-
-
 
 ## 🎈 Usage <a name="usage"></a>
 
 ### Reset the Database
 
 Navigate to the right folder.
+
 ```
 cd ./pu48/Toolio
 ```
+
 Answer 'yes' if asked whether you're sure about resetting.
+
 ```
 python manage.py flush
 ```
@@ -126,10 +142,13 @@ Store the API key in `keys.json` inside the `Toolio` folder. Make sure this file
 #### Run script and load data
 
 1. Run the `read_users.py` file to generate the `users.json` file
+
 ```
 python read_users.py
 ```
+
 2. Load the file into the database
+
 ```
 python manage.py loaddata users.json
 ```
@@ -139,14 +158,17 @@ Repeat the steps for `read_ads.py` and `ads.json`.
 ### Make a New Super User
 
 Navigate to the right folder.
+
 ```
 cd ./pu48/Toolio
 ```
 
 Create a new super user by running the following command:
+
 ```
 python manage.py createsuperuser
 ```
+
 <p align="left">
   <a href="" rel="noopener">
   <img width=400px src="images/createsuperuser.png" alt="createsuperuser"></a>
@@ -194,14 +216,18 @@ To open the Django Administration site, visit the [http://localhost:8000/admin/]
 </p>
 
 ## ⛏️ Built Using <a name = "built_using"></a>
-- [Python 3.9.6](https://www.python.org/downloads/) - ??
+
+- [Python 3.9.6](https://www.python.org/downloads/) - General-purpose programming language
 - [Django 3.2.8](https://www.djangoproject.com) - Web Framework
 - [Bootstrap4](https://getbootstrap.com/docs/4.1/getting-started/introduction/) - Frontend
 
-- ?[Crispy-forms#](https://github.com/django-crispy-forms/django-crispy-forms):?
-- ?[Pillow#](https://python-pillow.org)?
+## ⛏️ Dependencies <a name = "dependencies"></a>
+
+- [Crispy-forms#](https://github.com/django-crispy-forms/django-crispy-forms) - A Django package for building and customizing forms.
+- [Pillow#](https://python-pillow.org) - A Python imaging library
 
 ## ✍️ Authors <a name = "authors"></a>
+
 - Magnus Stavland Jakobsen, magnsjak@stud.ntnu.no
 - Andreas Granhøy-Lieng, andrgran@stud.ntnu.no
 - Iver Ringheim, iverri@stud.ntnu.no
@@ -210,13 +236,12 @@ To open the Django Administration site, visit the [http://localhost:8000/admin/]
 - Ksenia Mordovets, kseniam@stud.ntnu.no
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
+
 - Hat tip to anyone whose code was used
 - Inspiration
 - References
 - [The Documentation Compendium](https://github.com/kylelobo/The-Documentation-Compendium) - kylelobo
 
-
 ## ✒️ License
 
 [Apache 2.0](LICENSE.txt)
-
