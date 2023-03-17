@@ -111,12 +111,13 @@
                                         <p>Annonsør: {{ ad.user.first_name }} {{ ad.user.last_name }}</p>
                                         <p>Telefon nummer: {{ ad.user.phone_number }}</p>
                                         <p>E-post: {{ ad.user.email }}</p>
-
-                                        <form method="POST" class="ui form" action="{% url 'confirmBooking' ad.id %}">
-                                            {% csrf_token %}
-                                            <input type="hidden" id="id_booking" name="id_booking" value ="true">
-                                            <button type ="submit">Bekreft booking</button>
-                                        </form>
+                                        {% if user.is_authenticated %}
+                                            <form method="POST" class="ui form" action="{% url 'confirmBooking' ad.id %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="id_booking" name="id_booking" value ="true">
+                                                <button type ="submit">Bekreft booking</button>
+                                            </form>
+                                        {% endif %}
 
 
                                         
