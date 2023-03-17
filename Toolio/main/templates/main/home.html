@@ -13,9 +13,13 @@
     <label for="customRange3" class="form-label">Maks Pris:</label>
     <input id="maxPriceSlider" type="range" value="10000" min="0" max= "10000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
     <output>10000</output>
+    {% if user.is_authenticated %}
     <label for="customRange3" class="form-label">Maks avstand:</label>
     <input id="distanceSlider" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
     <output>1000</output>
+    {% else %}
+    <input id="distanceSlider" hidden="true" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
+    {% endif %}
     <label for="categories" class="form-label">Kategori</label>
     <select name="categories" class="form-select" id="categories" onchange="searchAndFilter()">
     <option value="all">Alle verktøy</options>
@@ -55,7 +59,8 @@
                                     {% else %}
                                     <p class="card-text distance" hidden="True">0</p>
                                     {% endif %}
-                               
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
                             {% endif %}
 
                             {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
@@ -97,7 +102,8 @@
                                 {% else %}
                                         <p class="card-text distance" hidden="True">0</p>
                                 {% endif %}
-                               
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
                             {% endif %}
                             {% if ad.isRented == True %}
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
@@ -182,7 +188,6 @@
                     ads[i].removeAttribute("hidden");
         } else {
             ads[i].hidden = true;
-            console.log(distanceSlider, title, distance)
         }
         }
     }
