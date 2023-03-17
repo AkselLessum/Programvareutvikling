@@ -9,12 +9,15 @@
 <h1>Velkommen {{user.first_name}} {{user.last_name}}!</h1>
 {% endif %}
 <center><h3 class="mx-5">Tilbud på markedet</h3>  
-<input type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchAndFilter(this.value, this.nextElementSibling.nextElementSibling.value, this.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.value)"> 
-<label for="customRange3" class="form-label">Maks Pris:</label>
-<input type="range" value="10000" min="0" max= "10000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter(this.previousElementSibling.previousElementSibling.value, this.value, this.nextElementSibling.nextElementSibling.nextElementSibling.value)" step="100">
-<output>10000</output>
-<label for="categories" class="form-label">Kategori</label>
-<select name="categories" class="form-select" id="categories" onchange="searchAndFilter(this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.value, this.previousElementSibling.previousElementSibling.previousElementSibling.value, this.value)">
+    <input id="prodSearch" type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchAndFilter()"> 
+    <label for="customRange3" class="form-label">Maks Pris:</label>
+    <input id="maxPriceSlider" type="range" value="10000" min="0" max= "10000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
+    <output>10000</output>
+    <label for="customRange3" class="form-label">Maks avstand:</label>
+    <input id="distanceSlider" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
+    <output>1000</output>
+    <label for="categories" class="form-label">Kategori</label>
+    <select name="categories" class="form-select" id="categories" onchange="searchAndFilter()">
     <option value="all">Alle verktøy</options>
     <option value="Snekring og tømrerarbeid">Snekring og tømrerarbeid</options>
     <option value="Maling og overflatebehandling">Maling og overflatebehandling</options>
@@ -48,8 +51,10 @@
 
                             {% if user.is_authenticated%}
                                 {% if user.pk != ad.user.pk%}
-                                    <p class="card-text">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
-                                {% endif %}
+                                    <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
+                                    {% else %}
+                                    <p class="card-text distance" hidden="True">0</p>
+                                    {% endif %}
                                
                             {% endif %}
 
@@ -88,7 +93,9 @@
                             <p class="card-text card-price">Pris: {{ ad.price }}kr</p>
                             {% if user.is_authenticated%}
                                 {% if user.pk != ad.user.pk%}
-                                        <p class="card-text">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
+                                        <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
+                                {% else %}
+                                        <p class="card-text distance" hidden="True">0</p>
                                 {% endif %}
                                
                             {% endif %}
@@ -159,17 +166,23 @@
     </script>
 
     <script>
-        function searchAndFilter(search, max_price, searchCategory){
+        function searchAndFilter(){
+            var search = document.querySelector("#prodSearch").value;
+            var max_price = document.querySelector("#maxPriceSlider").value;
+            var searchCategory = document.querySelector("#categories").value;
+            var distanceSlider = document.querySelector("#distanceSlider").value;
             var ads = document.getElementsByClassName("card"); //gets all ads
             for (var i = 0; i < ads.length; i++) { //iterates through every ad
                 var price = parseInt(ads[i].getElementsByClassName("card-text card-price")[0].innerText.replace(/[^0-9]/g, "")); //gets the price
-                console.log("pris funker");
                 var title = ads[i].getElementsByClassName("card-title")[0].innerHTML.toLowerCase(); //gets the title
-                var adCategory = ads[i].getElementsByClassName("category")[0].innerHTML;
-                if ((price <= parseInt(max_price)) && (title.includes(search.toLowerCase())) && (adCategory == searchCategory || searchCategory == "all")){
+                var adCategory = ads[i].getElementsByClassName("category")[0].innerHTML; // gets the category
+                var distance = parseInt(ads[i].getElementsByClassName("card-text distance")[0].innerText.replace(/[^0-9]/g, "")); // gets the distance
+                if ((price <= parseInt(max_price)) && (title.includes(search.toLowerCase())) 
+                && (adCategory == searchCategory || searchCategory == "all") && (distance <= distanceSlider || distance == 0)){
                     ads[i].removeAttribute("hidden");
         } else {
             ads[i].hidden = true;
+            console.log(distanceSlider, title, distance)
         }
         }
     }
