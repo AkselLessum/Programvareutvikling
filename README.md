@@ -42,22 +42,6 @@ Give examples
 ### Installation
 A step by step series of examples that tell you how to get a development environment running.
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
-
----
-
 Before installing the project make sure you have installed all the [required](#prerequisites) technologies for this project. Navigate to the folder where you want to have the project, and clone the project here.
 
 ```
@@ -84,6 +68,9 @@ python manage.py runserver
 ```
 
 In the terminal a url will be displayed for where you can view the website. The default is [http://localhost:8000/](http://localhost:8000/). To view the website simply go to this url.
+
+To populate the website with objects and users, navigate to Usage see the instructions about resetting the database and loading data from 
+google spreadsheets.
 
 
 ## 🔧 Running the tests <a name = "tests"></a>
@@ -116,7 +103,6 @@ cd htmlcov/ && live-server
 
 
 ## 🎈 Usage <a name="usage"></a>
-Add notes about how to use the system.
 
 ### Reset the Database
 
@@ -207,9 +193,6 @@ To open the Django Administration site, visit the [http://localhost:8000/admin/]
   <img width=300px src="images/successdeletead.png" alt="successdeletead"></a>
 </p>
 
-## 🚀 Deployment <a name = "deployment"></a>
-Add additional notes about how to deploy this on a live system.
-
 ## ⛏️ Built Using <a name = "built_using"></a>
 - [Python 3.9.6](https://www.python.org/downloads/) - ??
 - [Django 3.2.8](https://www.djangoproject.com) - Web Framework
@@ -218,17 +201,12 @@ Add additional notes about how to deploy this on a live system.
 - ?[Crispy-forms#](https://github.com/django-crispy-forms/django-crispy-forms):?
 - ?[Pillow#](https://python-pillow.org)?
 
-## 🗺️ Roadmap
-
-**If you have ideas for releases in the future, it is a good idea to list them in the README.**
-
-
 ## ✍️ Authors <a name = "authors"></a>
 - Magnus Stavland Jakobsen, magnsjak@stud.ntnu.no
 - Andreas Granhøy-Lieng, andrgran@stud.ntnu.no
 - Iver Ringheim, iverri@stud.ntnu.no
 - Mats Kjær, mbkjaer@stud.ntnu.no
-- Aksel Lessum, akselhl@stud.ntnu.no
+- Aksel Henrik Lessum, akselhl@stud.ntnu.no
 - Ksenia Mordovets, kseniam@stud.ntnu.no
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
