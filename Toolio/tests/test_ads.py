@@ -40,7 +40,7 @@ class AdViewsTestCase(TestCase):
             "description": "Test Description"
         }
 
-        self.invalid_ad_data = {
+        self.no_title_ad_data = {
             "user": bruker,
             "isRequest": False,
             "isRented": False,
@@ -51,6 +51,19 @@ class AdViewsTestCase(TestCase):
             "description": "Test Description",
             "image": SimpleUploadedFile("test_image.png", b"file_content", content_type="image/png")
         }
+
+        self.invalid_price_ad_data = {
+            "user": bruker,
+            "isRequest": False,
+            "isRented": False,
+            "title": "Test Ad",
+            "category": "Snekring og tømrearbeid",
+            "date": "2023-03-15",
+            "price": -100, #Price can't 
+            "description": "Test Description",
+            "image": SimpleUploadedFile("test_image.png", b"file_content", content_type="image/png")
+        }
+
         self.ad = ad.objects.create(**self.ad_data)
         self.ad_request = ad.objects.create(**self.ad_data_request)
 
@@ -69,10 +82,10 @@ class AdViewsTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(ad.objects.filter(title="Test Ad").exists(), msg="FAILED: ad was not created")    
 
-    def test_create_invalid_ad(self):
+    def test_create_no_title_ad(self):
         self.client.login(username="brukernavn", password="Bananmann1")
         response = self.client.post(
-            self.ad_url, data=self.invalid_ad_data, follow=True)
+            self.ad_url, data=self.no_title_ad_data, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertFalse(ad.objects.filter(title="").exists(), msg="FAILED: able to create ad without title")
 
