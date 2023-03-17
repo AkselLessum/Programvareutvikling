@@ -7,3 +7,4 @@ google-auth-oauthlib==1.0.0
 django-jquery==3.1.0
 djangorestframework==3.14.0
 geographiclib==2.0
+geopy=2.3.0
