@@ -24,4 +24,6 @@ class CustomUser(AbstractUser):
 class Interaction(models.Model):
     borrower = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="borrowed_interactions")
     lender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="lent_interactions")
-    rating = models.IntegerField()
+    rating = models.IntegerField(default=-1)
+    #rating = models.IntegerField(null=True, blank=True)
+    rated = models.BooleanField(default=False)

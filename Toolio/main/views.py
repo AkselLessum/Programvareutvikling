@@ -27,17 +27,15 @@ def confirm_booking(request, ad_id):
     ad_instance.isRented = True
     ad_instance.save()
     
+    interaction = Interaction.objects.create(
+        borrower=request.user,
+        lender=ad_instance.user
+    )
+    
     return redirect('home')
 
 
 
-def confirm_booking2(request, ad_id):
-    ad_instance= get_object_or_404(ad, id=ad_id)
-    ad_instance=ad(isRequest=ad_instance.isRequest, title=ad_instance.title, date=ad_instance.date, price=ad_instance.price, description=ad_instance.description, image=ad_instance.image, isRented=True, user_id=ad_instance.user_id)#kategori
-    ad_instance.save()
-
-    return render(request, 'main/home.html')
-    
 
 def get_user_average_rating(user):
     interactions = Interaction.objects.filter(lender=user.id).exclude(rating__isnull=True)
@@ -58,19 +56,51 @@ def userPage(request, user_id):
     }
     return render(request, 'main/userPage.html', context)
 
+#def rate_user(request, user_id):
+#    rated_user = CustomUser.objects.get(id=user_id)
+#    user = request.user
+#  
+#    if request.method == "POST":
+#        rating = int(request.POST["rating"])
+#        interaction = Interaction.objects.get_or_create(
+#            borrower = user,
+#            lender = rated_user,
+#            rating = rating
+#        )
+#   
+#    return redirect('userPage', user_id)
+
+
 def rate_user(request, user_id):
     rated_user = CustomUser.objects.get(id=user_id)
     user = request.user
+    
+    # Check if an interaction record exists between the borrower and the lender
+    interaction = Interaction.objects.filter(borrower=user, lender=rated_user, rated=False).first()
+        
+    # Retrieve the ad object associated with the booking
+    ad_obj = ad.objects.filter(isRented=True, user=rated_user).first()
   
     if request.method == "POST":
-        rating = int(request.POST["rating"])
-        interaction = Interaction.objects.get_or_create(
-            borrower = user,
-            lender = rated_user,
-            rating = rating
-        )
+        # Check if the user has confirmed the booking and if an interaction record exists
+        if ad_obj and interaction:
+            rating = int(request.POST["rating"])
+            interaction.rating = rating
+            interaction.rated = True
+            interaction.save()
+            return redirect('userPage', user_id)
+        else:
+            print("         __")
+            print("        / _)")
+            print(" .-^^^-/ /")
+            print("(_,____/   ")
+
    
     return redirect('userPage', user_id)
+
+
+
+
 
   
 
