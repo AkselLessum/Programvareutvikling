@@ -104,13 +104,6 @@ def rate_user(request, user_id):
    
     return redirect('userPage', user_id)
 
-
-
-
-
-  
-
-
 @login_required(login_url=settings.LOGIN_URL)
 def createAd(request):
     if request.method == "POST":
