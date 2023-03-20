@@ -59,8 +59,6 @@
                                 {% else %}
                                     <p class="card-text distance" hidden="True">0</p>
                                 {% endif %}
-                            {% else %}
- <p class="card-text distance" hidden="True">0</p>
                                 <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
                                     {% csrf_token %}
                                     <select name="list_id">
@@ -72,6 +70,9 @@
                                     <input type="hidden" name="ad_id" value={{ ad.id }}></input>
                                     <button type="submit" class="btn">Legg til</button>
                                 </form>
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
+                                
                             {% endif %}
 
                             {% if ad.user != user %} <!-- Only shows the "lån bort" button on "ønskes leid" that the user doesnt own -->
