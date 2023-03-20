@@ -13,7 +13,6 @@
     <label for="customRange3" class="form-label">Maks Pris:</label>
     <input id="maxPriceSlider" type="range" value="10000" min="0" max= "10000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
     <output>10000</output>
-<<<<<<< HEAD
     {% if user.is_authenticated %}
     <label for="customRange3" class="form-label">Maks avstand:</label>
     <input id="distanceSlider" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
@@ -21,11 +20,6 @@
     {% else %}
     <input id="distanceSlider" hidden="true" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
     {% endif %}
-=======
-    <label for="customRange3" class="form-label">Maks avstand:</label>
-    <input id="distanceSlider" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
-    <output>1000</output>
->>>>>>> dev
     <label for="categories" class="form-label">Kategori</label>
     <select name="categories" class="form-select" id="categories" onchange="searchAndFilter()">
     <option value="all">Alle verktøy</options>
@@ -65,12 +59,8 @@
                                     {% else %}
                                     <p class="card-text distance" hidden="True">0</p>
                                     {% endif %}
-<<<<<<< HEAD
                             {% else %}
                                 <p class="card-text distance" hidden="True">0</p>
-=======
-                               
->>>>>>> dev
                             {% endif %}
 
                             {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
