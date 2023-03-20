@@ -1,7 +1,13 @@
 from .models import ad, CustomList, adInList
+<<<<<<< HEAD
 from .forms import createAdForm, editAdForm, editAdFormWanted, createCustomListForm, confirmBooking
 from user.models import CustomUser, Interaction
 from django.shortcuts import render, get_object_or_404, redirect
+=======
+from user.models import CustomUser, Interaction
+from django.shortcuts import render, get_object_or_404, redirect
+from .forms import createAdForm, editAdForm, editAdFormWanted, confirmBooking, createCustomListForm
+>>>>>>> dev
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from user.find_distance import get_ad_distance_dict
@@ -16,6 +22,7 @@ def home(request):
     if request.user.is_authenticated:
         ad_distance_dict = get_ad_distance_dict(request.user)
         context['ad_distance_dict'] = ad_distance_dict
+<<<<<<< HEAD
 
 
     return render(request, "main/home.html", context)
@@ -25,6 +32,12 @@ def userPage(request, user_id):
     list_form = createCustomListForm()
     #save_form = saveAdToListForm()
     return render(request, 'main/userPage.html', {'ad_user': user_page, 'list_form': list_form})
+=======
+    
+        
+
+    return render(request, "main/home.html", context)
+>>>>>>> dev
 
 
 def confirm_booking(request, ad_id):
@@ -57,17 +70,21 @@ def get_user_average_rating(user):
 def userPage(request, user_id):
     profile_user = CustomUser.objects.get(id=user_id)
     average_rating = get_user_average_rating(profile_user)
+    list_form = createCustomListForm()
     print(f"\n\n average rating: {average_rating} \n\n")
     
     context = {
         'profile_user': profile_user,
         'average_rating': average_rating,
+        'form': list_form
     }
     return render(request, 'main/userPage.html', context)
 
 #def rate_user(request, user_id):
 #    rated_user = CustomUser.objects.get(id=user_id)
-#    user = request.user
+#    list_form = createCustomListForm()
+    #save_form = saveAdToListForm()
+    #user = request.user
 #  
 #    if request.method == "POST":
 #        rating = int(request.POST["rating"])

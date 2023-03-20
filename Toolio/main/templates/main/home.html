@@ -59,6 +59,22 @@
                                 {% else %}
                                     <p class="card-text distance" hidden="True">0</p>
                                 {% endif %}
+<<<<<<< HEAD
+=======
+                            {% else %}
+ <p class="card-text distance" hidden="True">0</p>
+                                <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
+                                    {% csrf_token %}
+                                    <select name="list_id">
+                                        <option value="" disabled selected>Velg en liste</option>
+                                    {% for cl in user.custom_list.all %}
+                                        <option value={{ cl.id }}> {{ cl.title }}</option>
+                                    {% endfor %}
+                                    </select>
+                                    <input type="hidden" name="ad_id" value={{ ad.id }}></input>
+                                    <button type="submit" class="btn">Legg til</button>
+                                </form>
+>>>>>>> dev
                             {% endif %}
 
                             {% if ad.user != user %} <!-- Only shows the "lån bort" button on "ønskes leid" that the user doesnt own -->
