@@ -91,7 +91,7 @@
                                     <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
                                     <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
                                         {% csrf_token %}
-                                        <select name="list_id">
+                                        <select name="list_id" required>
                                             <option value="" disabled selected>Velg en liste</option>
                                         {% for cl in user.custom_list.all %}
                                             <option value={{ cl.id }}> {{ cl.title }}</option>
@@ -169,7 +169,7 @@
                                     <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
                                     <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
                                         {% csrf_token %}
-                                        <select name="list_id">
+                                        <select name="list_id" required>
                                             <option value="" disabled selected>Velg en liste</option>
                                         {% for cl in user.custom_list.all %}
                                             <option value={{ cl.id }}> {{ cl.title }}</option>
