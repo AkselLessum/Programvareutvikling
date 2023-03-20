@@ -94,22 +94,24 @@
         <p>Denne brukeren har ikke blitt vurdert enda.</p>
     {% endif %}
 
-    <form method="post" action={% url 'rate_user' profile_user.id %}>
-        {% csrf_token %}
-        <label>Vurder: </label>
-        <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
-        <input type="hidden" id="rating" name="rating" value=""> 
-      <button type="submit">Lagre</button>
-    </form>
+    {% if user.is_authenticated %}   
+        <form method="post" action={% url 'rate_user' profile_user.id %}>
+            {% csrf_token %}
+            <label>Vurder: </label>
+            <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
+            <input type="hidden" id="rating" name="rating" value=""> 
+        <button type="submit">Lagre</button>
+        </form>
 
-    <script>
-        $('.ui.rating')
-        .rating('setting', 'onRate', function(value) {
-            console.log(value);
-            $('#rating').val(value);
-            console.log($('#rating').val());
-        });
-    </script>
+        <script>
+            $('.ui.rating')
+            .rating('setting', 'onRate', function(value) {
+                console.log(value);
+                $('#rating').val(value);
+                console.log($('#rating').val());
+            });
+        </script>
+    {% endif %}
 
     <h2>Annonser</h2>
   <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
