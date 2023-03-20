@@ -52,13 +52,24 @@
                             {% if user.is_authenticated%}
                                 {% if user.pk != ad.user.pk%}
                                     <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
-                                    {% else %}
+                                {% else %}
                                     <p class="card-text distance" hidden="True">0</p>
-                                    {% endif %}
-                               
+                                {% endif %}
+
+                                <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
+                                    {% csrf_token %}
+                                    <select name="list_id">
+                                        <option value="" disabled selected>Velg en liste</option>
+                                    {% for cl in user.custom_list.all %}
+                                        <option value={{ cl.id }}> {{ cl.title }}</option>
+                                    {% endfor %}
+                                    </select>
+                                    <input type="hidden" name="ad_id" value={{ ad.id }}></input>
+                                    <button type="submit" class="btn">Legg til</button>
+                                </form>
                             {% endif %}
 
-                            {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
+                            {% if ad.user != user %} <!-- Only shows the "lån bort" button on "ønskes leid" that the user doesnt own -->
                                 <button class="ui primary button" onclick="openPopup(this)">Lån bort verktøy</button>
 
                                 <div class="popup">

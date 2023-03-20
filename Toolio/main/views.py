@@ -16,7 +16,7 @@ def home(request):
     if request.user.is_authenticated:
         ad_distance_dict = get_ad_distance_dict(request.user)
         context['ad_distance_dict'] = ad_distance_dict
-            
+
 
     return render(request, "main/home.html", context)
 
@@ -110,5 +110,6 @@ def save_ad_to_list(request, user_id):
         customList = list_to_add,
         savedAd = ad_to_save
     )
+    print(f'\n Ad: {saved_ad_to_list.savedAd.title} to the list: {saved_ad_to_list.customList.title}\n')
     
     return redirect('userPage', request.user.id)
