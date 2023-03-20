@@ -29,6 +29,29 @@
 <p><span><f class="font-weight-bold">Telefon: </f>{{user.phone_number}}</span></p>
 <p><span><f class="font-weight-bold">Postnummer: </f>{{user.postal_code}}</span></p>
   <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
+
+  <h2>Opprett en egendefinert liste</h2>
+  <form method="POST" action="{% url 'create_custom_list' user.id %}">
+        {% csrf_token %}
+        {{ list_form }}
+        <button type="submit" class="btn btn-danger">Opprett</button>
+  </form>
+
+  <h2>Dine lister</h2>
+  <div>
+    {% for list in user.custom_list.all %}
+        <p> {{ list.title }} <p>
+    {% endfor %}
+  </div>
+
+  <h2>Lagre annonse i liste</h2>
+  <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
+        {% csrf_token %}
+        <input type="number" name="list_id"></input>
+        <input type="number" name="ad_id"></input>
+        <button type="submit" class="btn btn-danger">Lagre</button>
+    </form>
+
   <h2>Mine annonser</h2>
   <!--
   <div class="btn-group" role="group" aria-label="Basic example">
