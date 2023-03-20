@@ -16,8 +16,6 @@ def home(request):
     if request.user.is_authenticated:
         ad_distance_dict = get_ad_distance_dict(request.user)
         context['ad_distance_dict'] = ad_distance_dict
-    
-        
 
     return render(request, "main/home.html", context)
 
