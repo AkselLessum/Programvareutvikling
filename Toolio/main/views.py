@@ -24,7 +24,7 @@ def userPage(request, user_id):
     user_page = get_object_or_404(CustomUser, id=user_id)
     list_form = createCustomListForm()
     #save_form = saveAdToListForm()
-    return render(request, 'main/userPage.html', {'ad_user': user_page, 'list_form': list_form})
+    return render(request, 'main/userPage.html', {'ad_user': user_page, 'form': list_form})
     
 
 
