@@ -135,13 +135,22 @@
 
                                     <div class="popup">
                                         <h2>{{ ad.title }}</h2>
-                                        <button type="button" onclick="closePopup(this)">⨉</button>
+                                        <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
                                         <p>Annonsør: {{ ad.user.first_name }} {{ ad.user.last_name }}</p>
                                         <p>Telefon nummer: {{ ad.user.phone_number }}</p>
                                         <p>E-post: {{ ad.user.email }}</p>
+                                        {% if user.is_authenticated %}
+                                            <form method="POST" class="ui form" action="{% url 'confirmBooking' ad.id %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="id_booking" name="id_booking" value ="true">
+                                                <button type ="submit">Bekreft booking</button>
+                                            </form>
+                                        {% endif %}
+
+
+                                        
                                     </div>
                                     <div class="overlay hidden"></div>
-
                                 {% else %}
                                     <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
                                 {% endif %}
