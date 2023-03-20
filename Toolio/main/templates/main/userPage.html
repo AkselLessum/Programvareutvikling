@@ -28,6 +28,11 @@
 <p><span><f class="font-weight-bold">E-post: </f>{{user.email}}</span></p>
 <p><span><f class="font-weight-bold">Telefon: </f>{{user.phone_number}}</span></p>
 <p><span><f class="font-weight-bold">Postnummer: </f>{{user.postal_code}}</span></p>
+{% if average_rating %}
+  <p>Gjennomsnitlig vurdering: {{ average_rating|floatformat:1 }} / 5</p>
+{% else %}
+  <p>Du har ikke blitt vurdert enda.</p>
+{% endif %}
   <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
 
   <h2>Mine annonser</h2>
@@ -36,8 +41,8 @@
   -->
   <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
     <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
-    <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
-    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)"checked>Alle</button>
+    <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)">Forespørsler</button>
+    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)">Alle</button>
   </div>
     <hr> 
   <div class="card-columns" style="width: 80%; margin-left: 0px;">
@@ -134,16 +139,40 @@
 
 {% else %}
     <h2>Brukerinformasjon: </h2>
-    <p><span><f class="font-weight-bold">Fullt navn: </f>{{ad_user.first_name}} {{ad_user.last_name}}</span></p>
-    <p><span><f class="font-weight-bold">Brukernavn: </f>{{ad_user.username}}</span></p>
-    <p><span><f class="font-weight-bold">E-post: </f>{{ad_user.email}}</span></p>
-    <p><span><f class="font-weight-bold">Telefon: </f>{{ad_user.phone_number}}</span></p>
+    <p><span><f class="font-weight-bold">Fullt navn: </f>{{profile_user.first_name}} {{profile_user.last_name}}</span></p>
+    <p><span><f class="font-weight-bold">Brukernavn: </f>{{profile_user.username}}</span></p>
+    <p><span><f class="font-weight-bold">E-post: </f>{{profile_user.email}}</span></p>
+    <p><span><f class="font-weight-bold">Telefon: </f>{{profile_user.phone_number}}</span></p>
+    {% if average_rating %}
+        <p>Gjennomsnitlig vurdering: {{ average_rating|floatformat:1 }} / 5</p>
+    {% else %}
+        <p>Denne brukeren har ikke blitt vurdert enda.</p>
+    {% endif %}
+
+    {% if user.is_authenticated %}   
+        <form method="post" action={% url 'rate_user' profile_user.id %}>
+            {% csrf_token %}
+            <label>Vurder: </label>
+            <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
+            <input type="hidden" id="rating" name="rating" value=""> 
+        <button type="submit">Lagre</button>
+        </form>
+
+        <script>
+            $('.ui.rating')
+            .rating('setting', 'onRate', function(value) {
+                console.log(value);
+                $('#rating').val(value);
+                console.log($('#rating').val());
+            });
+        </script>
+    {% endif %}
 
     <h2>Annonser</h2>
   <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
     <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
     <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
-    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)"checked>Alle</button>
+    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)">Alle</button>
   </div>
     <hr> 
   <div class="card-columns" style="width: 80%; margin-left: 0px;">

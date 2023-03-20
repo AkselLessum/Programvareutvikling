@@ -13,9 +13,13 @@
     <label for="customRange3" class="form-label">Maks Pris:</label>
     <input id="maxPriceSlider" type="range" value="10000" min="0" max= "10000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
     <output>10000</output>
+    {% if user.is_authenticated %}
     <label for="customRange3" class="form-label">Maks avstand:</label>
     <input id="distanceSlider" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
     <output>1000</output>
+    {% else %}
+    <input id="distanceSlider" hidden="true" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
+    {% endif %}
     <label for="categories" class="form-label">Kategori</label>
     <select name="categories" class="form-select" id="categories" onchange="searchAndFilter()">
     <option value="all">Alle verktøy</options>
@@ -55,7 +59,8 @@
                                 {% else %}
                                     <p class="card-text distance" hidden="True">0</p>
                                 {% endif %}
-
+                            {% else %}
+ <p class="card-text distance" hidden="True">0</p>
                                 <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
                                     {% csrf_token %}
                                     <select name="list_id">
@@ -108,7 +113,8 @@
                                 {% else %}
                                         <p class="card-text distance" hidden="True">0</p>
                                 {% endif %}
-                               
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
                             {% endif %}
                             {% if ad.isRented == True %}
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
@@ -118,13 +124,22 @@
 
                                     <div class="popup">
                                         <h2>{{ ad.title }}</h2>
-                                        <button type="button" onclick="closePopup(this)">⨉</button>
+                                        <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
                                         <p>Annonsør: {{ ad.user.first_name }} {{ ad.user.last_name }}</p>
                                         <p>Telefon nummer: {{ ad.user.phone_number }}</p>
                                         <p>E-post: {{ ad.user.email }}</p>
+                                        {% if user.is_authenticated %}
+                                            <form method="POST" class="ui form" action="{% url 'confirmBooking' ad.id %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="id_booking" name="id_booking" value ="true">
+                                                <button type ="submit">Bekreft booking</button>
+                                            </form>
+                                        {% endif %}
+
+
+                                        
                                     </div>
                                     <div class="overlay hidden"></div>
-
                                 {% else %}
                                     <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
                                 {% endif %}

@@ -62,10 +62,19 @@ class editAdFormWanted(forms.ModelForm): # Edit "ønsket leid", no image in fiel
     date = forms.DateField(widget=DateInput(), label="Ønsker å leie til",label_suffix='')
     price = forms.IntegerField(label="Budsjett", widget=widgets.NumberInput(attrs={"style":"border-radius: 0 !important;"}), label_suffix='')
     description = forms.CharField(label="Beskrivelse",widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}), max_length=500, label_suffix='')
-
+    
     class Meta:
         model = ad
         fields = ('title', 'category', 'date', 'price','description')
+
+
+class confirmBooking(forms.ModelForm):
+    isRented = forms.BooleanField(initial=True, widget=forms.CheckboxInput, label="Utleid", required=False, label_suffix='')
+    
+    class Meta:
+        model = ad 
+        fields = ('isRented',)
+
 
 class createCustomListForm(forms.ModelForm):
     title = forms.CharField(label="Tittel", max_length=100, label_suffix='', widget=forms.TextInput)
