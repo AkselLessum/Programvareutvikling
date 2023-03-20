@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 from .models import ad, CustomList, adInList
-from user.models import CustomUser
-from django.shortcuts import render, get_object_or_404, redirect
-from .forms import createAdForm, editAdForm, editAdFormWanted, createCustomListForm
-=======
-from .models import ad
+from .forms import createAdForm, editAdForm, editAdFormWanted, createCustomListForm, confirmBooking
 from user.models import CustomUser, Interaction
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import createAdForm, editAdForm, editAdFormWanted, confirmBooking
->>>>>>> dev
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from user.find_distance import get_ad_distance_dict
@@ -23,7 +16,6 @@ def home(request):
     if request.user.is_authenticated:
         ad_distance_dict = get_ad_distance_dict(request.user)
         context['ad_distance_dict'] = ad_distance_dict
-<<<<<<< HEAD
 
 
     return render(request, "main/home.html", context)
@@ -33,18 +25,12 @@ def userPage(request, user_id):
     list_form = createCustomListForm()
     #save_form = saveAdToListForm()
     return render(request, 'main/userPage.html', {'ad_user': user_page, 'list_form': list_form})
-=======
-    
-        
-
-    return render(request, "main/home.html", context)
 
 
 def confirm_booking(request, ad_id):
     ad_instance= get_object_or_404(ad, id=ad_id)
     ad_instance.isRented = True
     ad_instance.save()
->>>>>>> dev
     
     interaction = Interaction.objects.update_or_create(
         borrower=request.user,
