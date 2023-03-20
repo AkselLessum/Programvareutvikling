@@ -27,10 +27,14 @@ def confirm_booking(request, ad_id):
     ad_instance.isRented = True
     ad_instance.save()
     
-    interaction = Interaction.objects.create(
+    interaction = Interaction.objects.update_or_create(
         borrower=request.user,
-        lender=ad_instance.user
+        lender=ad_instance.user,
     )
+    interaction[0].rated = False
+    interaction[0].save()
+    
+    
     
     return redirect('home')
 
@@ -38,7 +42,7 @@ def confirm_booking(request, ad_id):
 
 
 def get_user_average_rating(user):
-    interactions = Interaction.objects.filter(lender=user.id).exclude(rating__isnull=True)
+    interactions = Interaction.objects.filter(lender=user.id, rating__gt=0).exclude(rating__isnull=True)
     if interactions.count() == 0:
         return None
 
