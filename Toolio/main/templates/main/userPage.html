@@ -33,7 +33,7 @@
   <h2>Opprett en egendefinert liste</h2>
   <form method="POST" action="{% url 'create_custom_list' user.id %}">
         {% csrf_token %}
-        {{ form }}
+        {{ list_form }}
         <button type="submit" class="btn btn-danger">Opprett</button>
   </form>
 
@@ -43,6 +43,14 @@
         <p> {{ list.title }} <p>
     {% endfor %}
   </div>
+
+  <h2>Lagre annonse i liste</h2>
+  <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
+        {% csrf_token %}
+        <input type="number" name="list_id"></input>
+        <input type="number" name="ad_id"></input>
+        <button type="submit" class="btn btn-danger">Lagre</button>
+    </form>
 
   <h2>Mine annonser</h2>
   <!--

@@ -1,4 +1,4 @@
-from .models import ad
+from .models import ad, CustomList, adInList
 from user.models import CustomUser
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import createAdForm, editAdForm, editAdFormWanted, createCustomListForm
@@ -22,8 +22,9 @@ def home(request):
 
 def userPage(request, user_id):
     user_page = get_object_or_404(CustomUser, id=user_id)
-    form = createCustomListForm()
-    return render(request, 'main/userPage.html', {'ad_user': user_page, 'form': form})
+    list_form = createCustomListForm()
+    #save_form = saveAdToListForm()
+    return render(request, 'main/userPage.html', {'ad_user': user_page, 'list_form': list_form})
     
 
 
@@ -97,4 +98,17 @@ def create_custom_list(request, user_id):
 
     else:
         form = createCustomListForm()
-    return redirect('userPage', user_id)
+    return redirect('userPage', request.user)
+
+def save_ad_to_list(request, user_id):
+    ad_id = request.POST["ad_id"]
+    list_id = request.POST["list_id"]
+    ad_to_save = ad.objects.get(pk=ad_id)
+    list_to_add = CustomList.objects.get(pk=list_id)
+    
+    saved_ad_to_list, created = adInList.objects.get_or_create(
+        customList = list_to_add,
+        savedAd = ad_to_save
+    )
+    
+    return redirect('userPage', request.user.id)
