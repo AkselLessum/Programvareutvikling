@@ -1,13 +1,7 @@
 from .models import ad, CustomList, adInList
-<<<<<<< HEAD
-from .forms import createAdForm, editAdForm, editAdFormWanted, createCustomListForm, confirmBooking
-from user.models import CustomUser, Interaction
-from django.shortcuts import render, get_object_or_404, redirect
-=======
 from user.models import CustomUser, Interaction
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import createAdForm, editAdForm, editAdFormWanted, confirmBooking, createCustomListForm
->>>>>>> dev
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from user.find_distance import get_ad_distance_dict
@@ -22,22 +16,8 @@ def home(request):
     if request.user.is_authenticated:
         ad_distance_dict = get_ad_distance_dict(request.user)
         context['ad_distance_dict'] = ad_distance_dict
-<<<<<<< HEAD
-
 
     return render(request, "main/home.html", context)
-
-def userPage(request, user_id):
-    user_page = get_object_or_404(CustomUser, id=user_id)
-    list_form = createCustomListForm()
-    #save_form = saveAdToListForm()
-    return render(request, 'main/userPage.html', {'ad_user': user_page, 'list_form': list_form})
-=======
-    
-        
-
-    return render(request, "main/home.html", context)
->>>>>>> dev
 
 
 def confirm_booking(request, ad_id):

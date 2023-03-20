@@ -67,15 +67,6 @@ class editAdFormWanted(forms.ModelForm): # Edit "ønsket leid", no image in fiel
         model = ad
         fields = ('title', 'category', 'date', 'price','description')
 
-<<<<<<< HEAD
-class createCustomListForm(forms.ModelForm):
-    title = forms.CharField(label="Tittel", max_length=100, label_suffix='', widget=forms.TextInput)
-    
-    class Meta:
-        model = CustomList
-        fields = ['title']
-=======
->>>>>>> dev
 
 class confirmBooking(forms.ModelForm):
     isRented = forms.BooleanField(initial=True, widget=forms.CheckboxInput, label="Utleid", required=False, label_suffix='')
@@ -83,8 +74,6 @@ class confirmBooking(forms.ModelForm):
     class Meta:
         model = ad 
         fields = ('isRented',)
-<<<<<<< HEAD
-=======
 
 
 class createCustomListForm(forms.ModelForm):
@@ -93,4 +82,3 @@ class createCustomListForm(forms.ModelForm):
     class Meta:
         model = CustomList
         fields = ['title']
->>>>>>> dev
