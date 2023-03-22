@@ -80,8 +80,62 @@
         {% endif %}
     {% endfor %}
   </div>
-  <div class="card-group">
-  </div>
+
+
+
+
+
+
+    <h2>Opprett en egendefinert liste</h2>
+    <form method="POST" class="ui form" action="{% url 'create_custom_list' user.id %}" style="width: 30%;"> 
+          {% csrf_token %}
+          <div class="field">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+          </div>
+          <button type="submit" class="ui green button">Opprett</button>
+    </form>
+
+
+    {% for list in user.custom_list.all %}
+        <h2> {{ list.title }} </h2>
+        <div class="card-columns" style="width: 80%; margin-left: 0px;">
+            {% for listRow in list.in_list.all %}
+                {% if listRow.savedAd.isRequest == True %}
+                    <div class="card" data-isrequest="true">
+                        <div class="card-body">
+                            <h5 class="card-title">Ønskes leid: {{ listRow.savedAd.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ listRow.savedAd.date }}</h6>
+                            <p class="card-text">Budsjett: {{ listRow.savedAd.price }}kr</p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card" data-isrequest="false">
+                        <img class="card-img-top" src="{{ listRow.savedAd.image.url }}" alt="{{ listRow.savedAd.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ listRow.savedAd.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ listRow.savedAd.date }}</h6>
+                            <div class="card-text">
+                                {% if listRow.savedAd.description|length > 150 %}
+                                    <span class="card-text-truncated">{{ listRow.savedAd.description|truncatewords:30 }}</span>
+                                    <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
+                                    <span class="hidden-text" style="display:none;">{{ listRow.savedAd.description }}</span>
+                                {% else %}
+                                    {{ listRow.savedAd.description }}
+                                {% endif %}
+                            </div>
+                            <p class="card-text">Pris: {{ listRow.savedAd.price }}kr</p>
+                            {% if listRow.savedAd.isRented == True %}
+                                <button class="ui button bg-danger" disabled>UTLEID</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+
 {% else %}
     <h2>Brukerinformasjon: </h2>
     <p><span><f class="font-weight-bold">Fullt navn: </f>{{profile_user.first_name}} {{profile_user.last_name}}</span></p>
@@ -151,7 +205,7 @@
   </div>
     <hr> 
   <div class="card-columns" style="width: 80%; margin-left: 0px;">
-    {% for ad in ad_user.advertisement.all %}
+    {% for ad in profile_user.advertisement.all %}
         {% if ad.isRequest == True %}
             <div class="card" data-isrequest="true">
                 <div class="card-body">

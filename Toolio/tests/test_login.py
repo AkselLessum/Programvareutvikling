@@ -24,6 +24,7 @@ class LogInTest(TestCase):
             self.login_url, wrong_username_credentials, follow=True)
 
         # checks that the invalid user is not authenticated
+        print("Asserts that a user with the wrong username is not authenticated ...")
         self.assertFalse(response.context['user'].is_authenticated)
 
     def test_invalidLogin_password(self):
@@ -34,6 +35,7 @@ class LogInTest(TestCase):
             self.login_url, wrong_password_credentials, follow=True)
 
         # checks that the invalid user is not authenticated
+        print("Asserts that a user with the wrong password is not authenticated ...")
         self.assertFalse(response.context['user'].is_authenticated)
 
     def test_validLogin(self):
@@ -41,8 +43,8 @@ class LogInTest(TestCase):
         response = self.client.post(
             self.login_url, self.credentials, follow=True)
 
-        # checks that status code of response is as intended (200)
+        print("Asserts that the response code of a valid login is correct ...")
         self.assertEquals(response.status_code, 200)
 
-        # checks that the user is authenticated
+        print("Asserts that a user with valid credentials is authenticated ...")
         self.assertTrue(response.context['user'].is_authenticated)
