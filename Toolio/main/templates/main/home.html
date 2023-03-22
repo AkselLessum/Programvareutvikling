@@ -13,9 +13,13 @@
     <label for="customRange3" class="form-label">Maks Pris:</label>
     <input id="maxPriceSlider" type="range" value="10000" min="0" max= "10000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
     <output>10000</output>
+    {% if user.is_authenticated %}
     <label for="customRange3" class="form-label">Maks avstand:</label>
     <input id="distanceSlider" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
     <output>1000</output>
+    {% else %}
+    <input id="distanceSlider" hidden="true" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
+    {% endif %}
     <label for="categories" class="form-label">Kategori</label>
     <select name="categories" class="form-select" id="categories" onchange="searchAndFilter()">
     <option value="all">Alle verktøy</options>
@@ -52,13 +56,14 @@
                             {% if user.is_authenticated%}
                                 {% if user.pk != ad.user.pk%}
                                     <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
-                                    {% else %}
+                                {% else %}
                                     <p class="card-text distance" hidden="True">0</p>
-                                    {% endif %}
-                               
+                                {% endif %}
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
                             {% endif %}
 
-                            {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
+                            {% if ad.user != user %} <!-- Only shows the "lån bort" button on "ønskes leid" that the user doesnt own -->
                                 <button class="ui primary button" onclick="openPopup(this)">Lån bort verktøy</button>
 
                                 <div class="popup">
@@ -73,6 +78,30 @@
                             {% endif %}
                             {% if ad.user == user %} <!--Only shows the edit button on "annonse" that the user owns-->
                                 <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                                {% if user.pk != ad.user.pk %}
+                                <button class="float-right ui btn btn-info" type="button" onclick="openPopup(this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
+                                        <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"/>
+                                        <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"/>
+                                    </svg>
+                                </button>
+                                <div class="popup">
+                                    <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
+                                    <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
+                                        {% csrf_token %}
+                                        <select name="list_id" required>
+                                            <option value="" disabled selected>Velg en liste</option>
+                                        {% for cl in user.custom_list.all %}
+                                            <option value={{ cl.id }}> {{ cl.title }}</option>
+                                        {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="ad_id" value={{ ad.id }}></input>
+                                        <button type="submit" class="btn btn-primary">Legg til</button>
+                                    </form>
+                                </div>
+                                {% endif %}
                             {% endif %}
                         </div>
                     {% else %}
@@ -97,7 +126,8 @@
                                 {% else %}
                                         <p class="card-text distance" hidden="True">0</p>
                                 {% endif %}
-                               
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
                             {% endif %}
                             {% if ad.isRented == True %}
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
@@ -107,15 +137,48 @@
 
                                     <div class="popup">
                                         <h2>{{ ad.title }}</h2>
-                                        <button type="button" onclick="closePopup(this)">⨉</button>
+                                        <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
                                         <p>Annonsør: {{ ad.user.first_name }} {{ ad.user.last_name }}</p>
                                         <p>Telefon nummer: {{ ad.user.phone_number }}</p>
                                         <p>E-post: {{ ad.user.email }}</p>
+                                        {% if user.is_authenticated %}
+                                            <form method="POST" class="ui form" action="{% url 'confirmBooking' ad.id %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="id_booking" name="id_booking" value ="true">
+                                                <button type ="submit">Bekreft booking</button>
+                                            </form>
+                                        {% endif %}
+
+
+                                        
                                     </div>
                                     <div class="overlay hidden"></div>
-
                                 {% else %}
                                     <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
+                                {% endif %}
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                                {% if user.pk != ad.user.pk %}
+                                <button class="float-right ui btn btn-info" type="button" onclick="openPopup(this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
+                                        <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"/>
+                                        <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"/>
+                                    </svg>
+                                </button>
+                                <div class="popup">
+                                    <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
+                                    <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
+                                        {% csrf_token %}
+                                        <select name="list_id" required>
+                                            <option value="" disabled selected>Velg en liste</option>
+                                        {% for cl in user.custom_list.all %}
+                                            <option value={{ cl.id }}> {{ cl.title }}</option>
+                                        {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="ad_id" value={{ ad.id }}></input>
+                                        <button type="submit" class="btn btn-primary">Legg til</button>
+                                    </form>
+                                </div>
                                 {% endif %}
                             {% endif %}
                         </div>

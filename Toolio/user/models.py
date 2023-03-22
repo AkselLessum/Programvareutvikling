@@ -20,3 +20,10 @@ class CustomUser(AbstractUser):
                 self.longitude = location.longitude
                 self.latitude = location.latitude
         super().save(*args, **kwargs)
+
+class Interaction(models.Model):
+    borrower = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="borrowed_interactions")
+    lender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="lent_interactions")
+    rating = models.IntegerField(default=-1)
+    #rating = models.IntegerField(null=True, blank=True)
+    rated = models.BooleanField(default=False)
