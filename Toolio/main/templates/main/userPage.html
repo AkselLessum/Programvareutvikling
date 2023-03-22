@@ -157,7 +157,7 @@
                 <label>Vurder: </label>
                 <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
                 <input type="hidden" id="rating" name="rating" value=""> 
-            <button type="submit">Lagre</button>
+                <button type="submit">Lagre</button>
             </form>
     
             <script>
@@ -180,7 +180,7 @@
                 <label>Vurder: </label>
                 <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
                 <input type="hidden" id="rating" name="rating" value=""> 
-            <button type="submit">Lagre</button>
+                <button type="submit">Lagre</button>
             </form>
     
             <script>
@@ -196,49 +196,48 @@
     {% endfor %}
 
 
-        {% endif %}
     <h2>Annonser</h2>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
-    <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
-    <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
-    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)">Alle</button>
-  </div>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
+        <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
+        <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
+        <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)">Alle</button>
+    </div>
     <hr> 
-  <div class="card-columns" style="width: 80%; margin-left: 0px;">
-    {% for ad in profile_user.advertisement.all %}
-        {% if ad.isRequest == True %}
-            <div class="card" data-isrequest="true">
-                <div class="card-body">
-                    <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
-                    <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+    <div class="card-columns" style="width: 80%; margin-left: 0px;">
+        {% for ad in profile_user.advertisement.all %}
+            {% if ad.isRequest == True %}
+                <div class="card" data-isrequest="true">
+                    <div class="card-body">
+                        <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
+                        <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+                    </div>
                 </div>
-            </div>
-        {% else %}
-            <div class="card" data-isrequest="false">
-                <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ ad.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ ad.date }}</h6>
-                    <div class="card-text">
-                        {% if ad.description|length > 150 %}
-                            <span class="card-text-truncated">{{ ad.description|truncatewords:30 }}</span>
-                            <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
-                            <span class="hidden-text" style="display:none;">{{ ad.description }}</span>
-                        {% else %}
-                            {{ ad.description }}
+            {% else %}
+                <div class="card" data-isrequest="false">
+                    <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ad.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ ad.date }}</h6>
+                        <div class="card-text">
+                            {% if ad.description|length > 150 %}
+                                <span class="card-text-truncated">{{ ad.description|truncatewords:30 }}</span>
+                                <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
+                                <span class="hidden-text" style="display:none;">{{ ad.description }}</span>
+                            {% else %}
+                                {{ ad.description }}
+                            {% endif %}
+                        </div>
+                        <p class="card-text">Pris: {{ ad.price }}kr</p>
+                        {% if ad.isRented == True %}
+                            <button class="ui button bg-danger" disabled>UTLEID</button>
                         {% endif %}
                     </div>
-                    <p class="card-text">Pris: {{ ad.price }}kr</p>
-                    {% if ad.isRented == True %}
-                            <button class="ui button bg-danger" disabled>UTLEID</button>
-                    {% endif %}
                 </div>
-            </div>
-        {% endif %}
-    {% endfor %}
-  </div>
-
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
 
 <script>
     function onButtonClick(btn) {

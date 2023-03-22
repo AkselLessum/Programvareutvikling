@@ -37,8 +37,6 @@ def confirm_booking(request, ad_id):
     return redirect('home')
 
 
-
-
 def get_user_average_rating(user):
     b=True
     interactions = Interaction.objects.filter(b_id=user.id, rating_b__gt=0).exclude(rating_b__isnull=True)
@@ -58,10 +56,31 @@ def get_user_average_rating(user):
 
     return total_rating / interactions.count()
 
+
 def userPage(request, user_id):
-    user_page = get_object_or_404(CustomUser, id=user_id)
-    return render(request, 'main/userPage.html', {'ad_user': user_page})
+    profile_user = CustomUser.objects.get(id=user_id)
+    average_rating = get_user_average_rating(profile_user)
+    list_form = createCustomListForm()
+    print(f"\n\n average rating: {average_rating} \n\n")
     
+    context = {
+        'profile_user': profile_user,
+        'average_rating': average_rating,
+        'form': list_form
+    }
+    return render(request, 'main/userPage.html', context)
+
+def rate_user(request, user_id):
+    rated_user = CustomUser.objects.get(id=user_id) #b
+    user = request.user #a
+    b = True
+    
+    # Check if an interaction record exists between the borrower and the lender
+    interaction = Interaction.objects.filter(a=user, b=rated_user, rated_b=False).first()
+    
+    # Retrieve the ad object associated with the booking
+    ad_obj = ad.objects.filter(isRented=True, user=rated_user).first()
+
     if interaction==None:
         interaction = Interaction.objects.filter(b=user, a=rated_user, rated_a=False).first()
         print(interaction)
@@ -87,12 +106,6 @@ def userPage(request, user_id):
             print("        / _)")
             print(" .-^^^-/ /")
             print("(_,____/   ")
-
-   
-    return redirect('userPage', user_id)
-
-
-
 
    
     return redirect('userPage', user_id)
