@@ -94,25 +94,55 @@
         <p>Denne brukeren har ikke blitt vurdert enda.</p>
     {% endif %}
 
-    {% if user.is_authenticated %}   
-        <form method="post" action={% url 'rate_user' profile_user.id %}>
-            {% csrf_token %}
-            <label>Vurder: </label>
-            <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
-            <input type="hidden" id="rating" name="rating" value=""> 
-        <button type="submit">Lagre</button>
-        </form>
 
-        <script>
-            $('.ui.rating')
-            .rating('setting', 'onRate', function(value) {
-                console.log(value);
-                $('#rating').val(value);
-                console.log($('#rating').val());
-            });
-        </script>
-    {% endif %}
+    {% for interaction in user.a_interactions.all %}
+        {% if interaction.b_id == profile_user.id %}
+            {% if not interaction.rated_b %}
+            <form method="post" action={% url 'rate_user' profile_user.id %}>
+                {% csrf_token %}
+                <label>Vurder: </label>
+                <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
+                <input type="hidden" id="rating" name="rating" value=""> 
+            <button type="submit">Lagre</button>
+            </form>
+    
+            <script>
+                $('.ui.rating')
+                .rating('setting', 'onRate', function(value) {
+                    console.log(value);
+                    $('#rating').val(value);
+                    console.log($('#rating').val());
+                });
+            </script>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
 
+    {% for interaction in user.b_interactions.all %}
+        {% if interaction.a_id == profile_user.id %}
+            {% if not interaction.rated_a %}
+            <form method="post" action={% url 'rate_user' profile_user.id %}>
+                {% csrf_token %}
+                <label>Vurder: </label>
+                <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
+                <input type="hidden" id="rating" name="rating" value=""> 
+            <button type="submit">Lagre</button>
+            </form>
+    
+            <script>
+                $('.ui.rating')
+                .rating('setting', 'onRate', function(value) {
+                    console.log(value);
+                    $('#rating').val(value);
+                    console.log($('#rating').val());
+                });
+            </script>
+             {% endif %}
+        {% endif %}
+    {% endfor %}
+
+
+        {% endif %}
     <h2>Annonser</h2>
   <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
     <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
@@ -154,7 +184,7 @@
         {% endif %}
     {% endfor %}
   </div>
-{% endif %}
+
 
 <script>
     function onButtonClick(btn) {
