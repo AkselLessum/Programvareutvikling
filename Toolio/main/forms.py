@@ -32,7 +32,7 @@ class createAdForm(forms.ModelForm):
     title = forms.CharField(label="Tittel", max_length=100, widget=forms.TextInput(attrs={"placeholder": "Toolio"}), label_suffix='')
     category = forms.ChoiceField(label = "Kategori", choices = options)
     date = forms.DateField(widget=DateInput(), label="Produktet er ledig frem til")
-    price = forms.IntegerField(label="Pris", widget=widgets.NumberInput(attrs={"style":"border-radius: 0 !important;"}))
+    price = forms.IntegerField(label="Pris", widget=widgets.NumberInput(attrs={"style":"border-radius: 0 !important;"}),min_value=0)
     description = forms.CharField(label="Beskrivelse", widget=forms.Textarea(attrs={"placeholder": "Beskriv verktøyet", "rows": 3}), max_length=500, label_suffix='')
     image = forms.FileField(label="Bilde av redskapet", required=False, label_suffix='')
 
@@ -45,7 +45,7 @@ class editAdForm(forms.ModelForm):
     title = forms.CharField(label="Tittel", max_length=100, label_suffix='')
     category = forms.ChoiceField(label = "Katerogi", choices = options)
     date = forms.DateField(widget=DateInput(), label="Produktet er ledig frem til",label_suffix='')
-    price = forms.IntegerField(label="Pris", widget=widgets.NumberInput(attrs={"style":"border-radius: 0 !important;"}), label_suffix='')
+    price = forms.IntegerField(label="Pris", widget=widgets.NumberInput(attrs={"style":"border-radius: 0 !important;"}), label_suffix='', min_value=0)
     description = forms.CharField(label="Beskrivelse",widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}), max_length=500, label_suffix='')
     image = forms.FileField(label="Bilde av redskapet", required=False, label_suffix='')
     isRented = forms.BooleanField(widget=forms.CheckboxInput, label="Utleid", required=False, label_suffix='')
@@ -60,7 +60,7 @@ class editAdFormWanted(forms.ModelForm): # Edit "ønsket leid", no image in fiel
     title = forms.CharField(label="Tittel", max_length=100, label_suffix='')
     category = forms.ChoiceField(label = "Katerogi", choices = options)
     date = forms.DateField(widget=DateInput(), label="Ønsker å leie til",label_suffix='')
-    price = forms.IntegerField(label="Budsjett", widget=widgets.NumberInput(attrs={"style":"border-radius: 0 !important;"}), label_suffix='')
+    price = forms.IntegerField(label="Budsjett", widget=widgets.NumberInput(attrs={"style":"border-radius: 0 !important;"}), label_suffix='', min_value=0)
     description = forms.CharField(label="Beskrivelse",widget=forms.Textarea(attrs={'rows': 5, 'cols': 40}), max_length=500, label_suffix='')
     
     class Meta:
