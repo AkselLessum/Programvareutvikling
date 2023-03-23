@@ -13,7 +13,8 @@ class adSerializer(serializers.ModelSerializer):
   description = serializers.CharField(source="description")
   image = serializers.ImageField(source="image")
   isRented = serializers.BooleanField(source="isRented")
+  category = serializers.CharField(source="category")
   
   class Meta:
     model = ad
-    fields=['isRequest', 'title', 'date', 'price', 'description', 'image', 'user', 'isRented']
+    fields=['isRequest', 'title', 'category', 'date', 'price', 'description', 'image', 'user', 'isRented']

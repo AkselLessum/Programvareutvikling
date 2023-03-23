@@ -8,6 +8,12 @@ from .forms import RegisterForm, LogInForm
 
 # Create your views here.
 def register(request):
+  form=RegisterForm()
+  
+  context = {
+    "form": form
+  }
+  
   if request.method == "POST":
     form = RegisterForm(request.POST)
 
@@ -18,18 +24,24 @@ def register(request):
     
     else:
       for field in form:
+        if "password" not in field.name:
+          context[field.name] = form[field.name].value()
         for error in field.errors:
           messages.error(request, error)
     
-      return render(request, "user/register.html", {"form": form}, status=400)
+      return render(request, "user/register.html", context, status=400)
 
-  else:
-    form=RegisterForm()
-
-    return render(request, "user/register.html", {"form": form})
+  return render(request, "user/register.html", context)
 
 def log_in(request):
+  form = LogInForm()
   error = False
+  
+  context = {
+    "form": form,
+    "error": error
+  }
+  
   if request.user.is_authenticated:
     return redirect('home')
   if request.method == "POST":
@@ -42,11 +54,11 @@ def log_in(request):
         login(request, user)
         return redirect("/")
       else:
+        context["username"] = username
+        messages.info(request, 'Brukernavn eller passord er ugyldig.')
         error = True
-  else:
-    form = LogInForm()
-  
-  return render(request, "user/login.html", {"form": form, "error": error})
+    
+  return render(request, "user/login.html", context)
 
 def log_out(request):
   logout(request)
