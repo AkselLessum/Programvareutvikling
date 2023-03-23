@@ -22,7 +22,7 @@
 {% block content %}
 
 
-{% if user.is_authenticated and ad_user.id == user.id %}
+{% if user.is_authenticated and profile_user.id == user.id %}
 <h1 class="display-2">Din side</h1>
 <h2>Brukerinformasjon: </h2>
 <p><span><f class="font-weight-bold">Fullt navn: </f>{{user.first_name}} {{user.last_name}}</span></p>
