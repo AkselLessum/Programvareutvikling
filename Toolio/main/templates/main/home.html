@@ -4,16 +4,24 @@
 
 {% block content %}
 {% if user.is_authenticated %}
+{% load custom_filters %}
+
 <h1>Velkommen {{user.first_name}} {{user.last_name}}!</h1>
-    <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
 {% endif %}
-<center><h3 class="mx-5">Tilbud på markedet</h3>
-<input type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchAndFilter(this.value, this.nextElementSibling.nextElementSibling.value, this.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.value)"> 
-<label for="customRange3" class="form-label">Maks Pris:</label>
-<input type="range" value="10000" min="0" max= "10000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter(this.previousElementSibling.previousElementSibling.value, this.value, this.nextElementSibling.nextElementSibling.nextElementSibling.value)" step="100">
-<output>10000</output>
-<label for="categories" class="form-label">Kategori</label>
-<select name="categories" class="form-select" id="categories" onchange="searchAndFilter(this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.value, this.previousElementSibling.previousElementSibling.previousElementSibling.value, this.value)">
+<center><h3 class="mx-5">Tilbud på markedet</h3>  
+    <input id="prodSearch" type="text" class="w-25 form-control" style="ma" placeholder="Søk etter produkt" width="100" onkeyup="searchAndFilter()"> 
+    <label for="customRange3" class="form-label">Maks Pris:</label>
+    <input id="maxPriceSlider" type="range" value="10000" min="0" max= "10000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
+    <output>10000</output>
+    {% if user.is_authenticated %}
+    <label for="customRange3" class="form-label">Maks avstand:</label>
+    <input id="distanceSlider" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
+    <output>1000</output>
+    {% else %}
+    <input id="distanceSlider" hidden="true" type="range" value="1000" min="0" max= "1000" oninput="this.nextElementSibling.value = this.value ; searchAndFilter()" step="100">
+    {% endif %}
+    <label for="categories" class="form-label">Kategori</label>
+    <select name="categories" class="form-select" id="categories" onchange="searchAndFilter()">
     <option value="all">Alle verktøy</options>
     <option value="Snekring og tømrerarbeid">Snekring og tømrerarbeid</options>
     <option value="Maling og overflatebehandling">Maling og overflatebehandling</options>
@@ -43,13 +51,24 @@
                             <h5 class="card-title" id="ad-title">Ønskes leid: {{ ad.title }}</h5>
                             <p class="category" hidden="True">{{ad.category}}</p>
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
-                            <p class="card-text card-price" >Budsjett: {{ ad.price }}kr</p>
-                            {% if ad.user != user %} <!--Only shows the "lån bort" button on "ønskes leid" that the user doesnt own-->
-                                <button class="ui primary button" onclick="openPopup(this)">Lån bort produkt</button>
+                            <p class="card-text card-price">Budsjett: {{ ad.price }}kr</p>
+
+                            {% if user.is_authenticated%}
+                                {% if user.pk != ad.user.pk%}
+                                    <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
+                                {% else %}
+                                    <p class="card-text distance" hidden="True">0</p>
+                                {% endif %}
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
+                            {% endif %}
+
+                            {% if ad.user != user %} <!-- Only shows the "lån bort" button on "ønskes leid" that the user doesnt own -->
+                                <button class="ui primary button" onclick="openPopup(this)">Lån bort verktøy</button>
 
                                 <div class="popup">
                                     <h2>{{ ad.title }}</h2>
-                                    <button type="button" onclick="closePopup(this)">⨉</button>
+                                    <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
                                     <p>Annonsør: {{ ad.user.first_name }} {{ ad.user.last_name }}</p>
                                     <p>Telefon nummer: {{ ad.user.phone_number }}</p>
                                     <p>E-post: {{ ad.user.email }}</p>
@@ -59,6 +78,30 @@
                             {% endif %}
                             {% if ad.user == user %} <!--Only shows the edit button on "annonse" that the user owns-->
                                 <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                                {% if user.pk != ad.user.pk %}
+                                <button class="float-right ui btn btn-info" type="button" onclick="openPopup(this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
+                                        <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"/>
+                                        <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"/>
+                                    </svg>
+                                </button>
+                                <div class="popup">
+                                    <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
+                                    <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
+                                        {% csrf_token %}
+                                        <select name="list_id" required>
+                                            <option value="" disabled selected>Velg en liste</option>
+                                        {% for cl in user.custom_list.all %}
+                                            <option value={{ cl.id }}> {{ cl.title }}</option>
+                                        {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="ad_id" value={{ ad.id }}></input>
+                                        <button type="submit" class="btn btn-primary">Legg til</button>
+                                    </form>
+                                </div>
+                                {% endif %}
                             {% endif %}
                         </div>
                     {% else %}
@@ -75,25 +118,67 @@
                                 {% else %}
                                     {{ ad.description }}
                                 {% endif %}
-                            </div>
+                            </div>                            
                             <p class="card-text card-price">Pris: {{ ad.price }}kr</p>
+                            {% if user.is_authenticated%}
+                                {% if user.pk != ad.user.pk%}
+                                        <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:ad.pk}} km unna</p> 
+                                {% else %}
+                                        <p class="card-text distance" hidden="True">0</p>
+                                {% endif %}
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
+                            {% endif %}
                             {% if ad.isRented == True %}
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
                             {% else %}
                                 {% if ad.user != user %} <!--Only shows the "book produkt" button on "annonse" that the user doesnt own-->
-                                    <button class="ui button default-button" onclick="openPopup(this)">Book produkt</button>
+                                    <button class="ui button default-button" onclick="openPopup(this)">Book verktøy</button>
 
                                     <div class="popup">
                                         <h2>{{ ad.title }}</h2>
-                                        <button type="button" onclick="closePopup(this)">⨉</button>
+                                        <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
                                         <p>Annonsør: {{ ad.user.first_name }} {{ ad.user.last_name }}</p>
                                         <p>Telefon nummer: {{ ad.user.phone_number }}</p>
                                         <p>E-post: {{ ad.user.email }}</p>
+                                        {% if user.is_authenticated %}
+                                            <form method="POST" class="ui form" action="{% url 'confirmBooking' ad.id %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="id_booking" name="id_booking" value ="true">
+                                                <button type ="submit">Bekreft booking</button>
+                                            </form>
+                                        {% endif %}
+
+
+                                        
                                     </div>
                                     <div class="overlay hidden"></div>
-
                                 {% else %}
                                     <a href="{% url 'edit_ad' ad.id %}" class="ui orange button">Rediger</a>
+                                {% endif %}
+                            {% endif %}
+                            {% if user.is_authenticated %}
+                                {% if user.pk != ad.user.pk %}
+                                <button class="float-right ui btn btn-info" type="button" onclick="openPopup(this)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmarks" viewBox="0 0 16 16">
+                                        <path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z"/>
+                                        <path d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z"/>
+                                    </svg>
+                                </button>
+                                <div class="popup">
+                                    <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
+                                    <form method="POST" action="{% url 'save_ad_to_list' user.id %}">
+                                        {% csrf_token %}
+                                        <select name="list_id" required>
+                                            <option value="" disabled selected>Velg en liste</option>
+                                        {% for cl in user.custom_list.all %}
+                                            <option value={{ cl.id }}> {{ cl.title }}</option>
+                                        {% endfor %}
+                                        </select>
+                                        <input type="hidden" name="ad_id" value={{ ad.id }}></input>
+                                        <button type="submit" class="btn btn-primary">Legg til</button>
+                                    </form>
+                                </div>
                                 {% endif %}
                             {% endif %}
                         </div>
@@ -144,16 +229,23 @@
     </script>
 
     <script>
-        function searchAndFilter(search, max_price, searchCategory){
+        function searchAndFilter(){
+            var search = document.querySelector("#prodSearch").value;
+            var max_price = document.querySelector("#maxPriceSlider").value;
+            var searchCategory = document.querySelector("#categories").value;
+            var distanceSlider = document.querySelector("#distanceSlider").value;
             var ads = document.getElementsByClassName("card"); //gets all ads
             for (var i = 0; i < ads.length; i++) { //iterates through every ad
                 var price = parseInt(ads[i].getElementsByClassName("card-text card-price")[0].innerText.replace(/[^0-9]/g, "")); //gets the price
                 var title = ads[i].getElementsByClassName("card-title")[0].innerHTML.toLowerCase(); //gets the title
-                var adCategory = ads[i].getElementsByClassName("category")[0].innerHTML;
-                if ((price <= parseInt(max_price)) && (title.includes(search.toLowerCase())) && (adCategory == searchCategory || searchCategory == "all")){
+                var adCategory = ads[i].getElementsByClassName("category")[0].innerHTML; // gets the category
+                var distance = parseInt(ads[i].getElementsByClassName("card-text distance")[0].innerText.replace(/[^0-9]/g, "")); // gets the distance
+                if ((price <= parseInt(max_price)) && (title.includes(search.toLowerCase())) 
+                && (adCategory == searchCategory || searchCategory == "all") && (distance <= distanceSlider || distance == 0)){
                     ads[i].removeAttribute("hidden");
         } else {
             ads[i].hidden = true;
+            console.log(distanceSlider, title, distance)
         }
         }
     }

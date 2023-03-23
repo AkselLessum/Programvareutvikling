@@ -17,6 +17,8 @@
       }
 </style>
 
+{% load custom_filters %}
+
 {% block content %}
 
 
@@ -27,6 +29,12 @@
 <p><span><f class="font-weight-bold">Brukernavn: </f>{{user.username}}</span></p>
 <p><span><f class="font-weight-bold">E-post: </f>{{user.email}}</span></p>
 <p><span><f class="font-weight-bold">Telefon: </f>{{user.phone_number}}</span></p>
+<p><span><f class="font-weight-bold">Postnummer: </f>{{user.postal_code}}</span></p>
+{% if average_rating %}
+  <p>Gjennomsnitlig vurdering: {{ average_rating|floatformat:1 }} / 5</p>
+{% else %}
+  <p>Du har ikke blitt vurdert enda.</p>
+{% endif %}
   <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
   <h2>Mine annonser</h2>
   <!--
@@ -34,8 +42,8 @@
   -->
   <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
     <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
-    <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
-    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)"checked>Alle</button>
+    <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)">Forespørsler</button>
+    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)">Alle</button>
   </div>
     <hr> 
   <div class="card-columns" style="width: 80%; margin-left: 0px;">
@@ -74,56 +82,255 @@
         {% endif %}
     {% endfor %}
   </div>
-  <div class="card-group">
-  </div>
-{% else %}
-    <h2>Brukerinformasjon: </h2>
-    <p><span><f class="font-weight-bold">Fullt navn: </f>{{ad_user.first_name}} {{ad_user.last_name}}</span></p>
-    <p><span><f class="font-weight-bold">Brukernavn: </f>{{ad_user.username}}</span></p>
-    <p><span><f class="font-weight-bold">E-post: </f>{{ad_user.email}}</span></p>
-    <p><span><f class="font-weight-bold">Telefon: </f>{{ad_user.phone_number}}</span></p>
 
-    <h2>Annonser</h2>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
-    <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
-    <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
-    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)"checked>Alle</button>
-  </div>
-    <hr> 
-  <div class="card-columns" style="width: 80%; margin-left: 0px;">
-    {% for ad in ad_user.advertisement.all %}
-        {% if ad.isRequest == True %}
-            <div class="card" data-isrequest="true">
-                <div class="card-body">
-                    <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
-                    <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+
+
+
+
+
+    <h2>Opprett en egendefinert liste</h2>
+    <form method="POST" class="ui form" action="{% url 'create_custom_list' user.id %}" style="width: 30%;"> 
+          {% csrf_token %}
+          <div class="field">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+          </div>
+          <button type="submit" class="ui green button">Opprett</button>
+    </form>
+
+
+    {% for list in user.custom_list.all %}
+        <h2> {{ list.title }} </h2>
+        <div class="card-columns" style="width: 80%; margin-left: 0px;">
+            {% for listRow in list.in_list.all %}
+            <div class="card">
+                <div class="card-header" style="margin: 0 !important; padding: 0.2em!important;">
+                    <a class="header" href="{% url 'userPage' listRow.savedAd.user.id %}">
+                        <p style="color: black; margin: 0.5em 0 0 0.5em;">{{listRow.savedAd.user.first_name}} {{listRow.savedAd.user.last_name}}</p>
+                        <p style="color: grey; margin: 0 0 0 0.5em;">@{{ listRow.savedAd.user }}</p>
+                    </a>
                 </div>
-            </div>
-        {% else %}
-            <div class="card" data-isrequest="false">
-                <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ ad.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ ad.date }}</h6>
-                    <div class="card-text">
-                        {% if ad.description|length > 150 %}
-                            <span class="card-text-truncated">{{ ad.description|truncatewords:30 }}</span>
-                            <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
-                            <span class="hidden-text" style="display:none;">{{ ad.description }}</span>
+                {% if listRow.savedAd.isRequest == True %}
+                    <!--
+                        <div class="card" data-isrequest="true">
+                    -->
+                        <div class="card-body">
+                            <h5 class="card-title">Ønskes leid: {{ listRow.savedAd.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ listRow.savedAd.date }}</h6>
+                            <p class="card-text">Budsjett: {{ listRow.savedAd.price }}kr</p>
+                        
+
+                        {% if user.is_authenticated%}
+                                {% if user.pk != listRow.savedAd.user.pk%}
+                                    <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:listRow.savedAd.pk }} km unna</p> 
+                                {% else %}
+                                    <p class="card-text distance" hidden="True">0</p>
+                                {% endif %}
                         {% else %}
-                            {{ ad.description }}
+                                <p class="card-text distance" hidden="True">0</p>
+                        {% endif %}
+
+                        {% if listRow.savedAd.user != user %} <!-- Only shows the "lån bort" button on "ønskes leid" that the user doesnt own -->
+                        <button class="ui primary button" onclick="openPopup(this)">Lån bort verktøy</button>
+
+                        <div class="popup">
+                            <h2>{{ listRow.savedAd.title }}</h2>
+                            <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
+                            <p>Annonsør: {{ listRow.savedAd.user.first_name }} {{ listRow.savedAd.user.last_name }}</p>
+                            <p>Telefon nummer: {{ listRow.savedAd.user.phone_number }}</p>
+                            <p>E-post: {{ listRow.savedAd.user.email }}</p>
+                        </div>
+                        <div class="overlay hidden"></div>
+
                         {% endif %}
                     </div>
-                    <p class="card-text">Pris: {{ ad.price }}kr</p>
-                    {% if ad.isRented == True %}
-                            <button class="ui button bg-danger" disabled>UTLEID</button>
+                   
+                {% else %}
+                    
+                        <img class="card-img-top" src="{{ listRow.savedAd.image.url }}" alt="{{ listRow.savedAd.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ listRow.savedAd.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ listRow.savedAd.date }}</h6>
+                            <div class="card-text">
+                                {% if listRow.savedAd.description|length > 150 %}
+                                    <span class="card-text-truncated">{{ listRow.savedAd.description|truncatewords:30 }}</span>
+                                    <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
+                                    <span class="hidden-text" style="display:none;">{{ listRow.savedAd.description }}</span>
+                                {% else %}
+                                    {{ listRow.savedAd.description }}
+                                {% endif %}
+                            </div>
+                            <p class="card-text">Pris: {{ listRow.savedAd.price }}kr</p>
+
+                            {% if user.is_authenticated%}
+                                {% if user.pk != listRow.savedAd.user.pk%}
+                                    <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:listRow.savedAd.pk }} km unna</p> 
+                                {% else %}
+                                    <p class="card-text distance" hidden="True">0</p>
+                                {% endif %}
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
+                            {% endif %}
+
+                            {% if listRow.savedAd.isRented == True %}
+                                <button class="ui button bg-danger" disabled>UTLEID</button>
+                            {% else %}
+                                {% if listRow.savedAd.user != user %} <!-- Only shows the "lån bort" button on "ønskes leid" that the user doesnt own -->
+                                    <button class="ui primary button" onclick="openPopup(this)">Book verktøy</button>
+
+                                    <div class="popup">
+                                        <h2>{{ listRow.savedAd.title }}</h2>
+                                        <button type="button" onclick="closePopup(this)">⨉</button>
+                                        <p>Annonsør: {{ listRow.savedAd.user.first_name }} {{ listRow.savedAd.user.last_name }}</p>
+                                        <p>Telefon nummer: {{ listRow.savedAd.user.phone_number }}</p>
+                                        <p>E-post: {{ listRow.savedAd.user.email }}</p>
+                                        {% if user.is_authenticated %}
+                                            <form method="POST" class="ui form" action="{% url 'confirmBooking' listRow.savedAd.id %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="id_booking" name="id_booking" value ="true">
+                                                <button type ="submit">Bekreft booking</button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                    <div class="overlay hidden"></div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
                     {% endif %}
                 </div>
-            </div>
+                <script>
+
+                    function openPopup(element) {
+                        element.nextElementSibling.classList.add("open-popup");
+                        element.nextElementSibling.nextElementSibling.classList.remove("hidden");
+                    }
+
+                    function closePopup(element) {
+                        element.parentElement.classList.remove("open-popup");
+                        element.parentElement.nextElementSibling.classList.add("hidden");
+                    }
+
+                    
+                    window.onclick = function (event) {
+                        var overlay = document.getElementsByClassName("overlay");
+                        var popup = document.getElementsByClassName("popup");
+                        
+                        if (event.target.classList[0] == 'overlay') {
+                            Array.from(overlay).forEach((element) => {
+                            element.classList.add("hidden");
+                            });
+                            Array.from(popup).forEach((element) => {
+                            element.classList.remove("open-popup");
+                            });
+                        }
+                    }
+                </script>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+
+{% else %}
+    <h2>Brukerinformasjon: </h2>
+    <p><span><f class="font-weight-bold">Fullt navn: </f>{{profile_user.first_name}} {{profile_user.last_name}}</span></p>
+    <p><span><f class="font-weight-bold">Brukernavn: </f>{{profile_user.username}}</span></p>
+    <p><span><f class="font-weight-bold">E-post: </f>{{profile_user.email}}</span></p>
+    <p><span><f class="font-weight-bold">Telefon: </f>{{profile_user.phone_number}}</span></p>
+    {% if average_rating %}
+        <p>Gjennomsnitlig vurdering: {{ average_rating|floatformat:1 }} / 5</p>
+    {% else %}
+        <p>Denne brukeren har ikke blitt vurdert enda.</p>
+    {% endif %}
+
+
+    {% for interaction in user.a_interactions.all %}
+        {% if interaction.b_id == profile_user.id %}
+            {% if not interaction.rated_b %}
+            <form method="post" action={% url 'rate_user' profile_user.id %}>
+                {% csrf_token %}
+                <label>Vurder: </label>
+                <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
+                <input type="hidden" id="rating" name="rating" value=""> 
+                <button type="submit">Lagre</button>
+            </form>
+    
+            <script>
+                $('.ui.rating')
+                .rating('setting', 'onRate', function(value) {
+                    console.log(value);
+                    $('#rating').val(value);
+                    console.log($('#rating').val());
+                });
+            </script>
+            {% endif %}
         {% endif %}
     {% endfor %}
-  </div>
+
+    {% for interaction in user.b_interactions.all %}
+        {% if interaction.a_id == profile_user.id %}
+            {% if not interaction.rated_a %}
+            <form method="post" action={% url 'rate_user' profile_user.id %}>
+                {% csrf_token %}
+                <label>Vurder: </label>
+                <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
+                <input type="hidden" id="rating" name="rating" value=""> 
+                <button type="submit">Lagre</button>
+            </form>
+    
+            <script>
+                $('.ui.rating')
+                .rating('setting', 'onRate', function(value) {
+                    console.log(value);
+                    $('#rating').val(value);
+                    console.log($('#rating').val());
+                });
+            </script>
+             {% endif %}
+        {% endif %}
+    {% endfor %}
+
+
+    <h2>Annonser</h2>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
+        <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
+        <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
+        <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)">Alle</button>
+    </div>
+    <hr> 
+    <div class="card-columns" style="width: 80%; margin-left: 0px;">
+        {% for ad in profile_user.advertisement.all %}
+            {% if ad.isRequest == True %}
+                <div class="card" data-isrequest="true">
+                    <div class="card-body">
+                        <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
+                        <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card" data-isrequest="false">
+                    <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ad.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ ad.date }}</h6>
+                        <div class="card-text">
+                            {% if ad.description|length > 150 %}
+                                <span class="card-text-truncated">{{ ad.description|truncatewords:30 }}</span>
+                                <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
+                                <span class="hidden-text" style="display:none;">{{ ad.description }}</span>
+                            {% else %}
+                                {{ ad.description }}
+                            {% endif %}
+                        </div>
+                        <p class="card-text">Pris: {{ ad.price }}kr</p>
+                        {% if ad.isRented == True %}
+                            <button class="ui button bg-danger" disabled>UTLEID</button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endif %}
 
 <script>

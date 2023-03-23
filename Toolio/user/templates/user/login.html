@@ -5,15 +5,28 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if error %}
-<p><strong>Ugyldig brukernavn eller passord.</strong></p>
+
+{% if messages %}
+    <ul class="alert alert-warning" role="alert" style="width: 35rem; margin: auto;">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
 {% endif %}
+
 <div class="card" style="width: 35rem; margin: auto;">
     <div class="card-body">
         <h5 class="card-title">Logg inn</h5>
-        <form method="post" class="form-group" style="width: 80%; margin: auto;">
+        <form method="post" class="ui form" style="width: 80%; margin: auto;">
             {% csrf_token %}
-            {{form|crispy}}
+            <label>Brukernavn*</label>
+            <div class="field">
+                <input type="text" name="username" tabindex="1" class="form-control" placeholder="Brukernavn" value="{{ username }}" required>
+            </div>
+            <label>Passord*</label>
+            <div class="field">
+                <input type="password" name="password" tabindex="1" class="form-control" placeholder="********" required>
+            </div>
             <button type="submit" class="btn btn-success">Logg på</button>
             <p>Har du ikke konto? Opprett en <a href="/user/register">her.</a><p>
         </form>
