@@ -21,26 +21,25 @@
 
 {% block content %}
 
-{% if user.is_authenticated and profile_user.id == user.id %}
-    <h1 class="display-2">Din side</h1>
-    <h2>Brukerinformasjon: </h2>
-    <p><span><f class="font-weight-bold">Fullt navn: </f>{{user.first_name}} {{user.last_name}}</span></p>
-    <p><span><f class="font-weight-bold">Brukernavn: </f>{{user.username}}</span></p>
-    <p><span><f class="font-weight-bold">E-post: </f>{{user.email}}</span></p>
-    <p><span><f class="font-weight-bold">Telefon: </f>{{user.phone_number}}</span></p>
-    <p><span><f class="font-weight-bold">Postnummer: </f>{{user.postal_code}}</span></p>
 
-    {% if average_rating %}
-      <p>Gjennomsnitlig vurdering: {{ average_rating|floatformat:1 }} / 5</p>
-    {% else %}
-      <p>Du har ikke blitt vurdert enda.</p>
-    {% endif %}
-      <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
-
-    <h2>Mine annonser</h2>
-    <!--
-    <div class="btn-group" role="group" aria-label="Basic example">
-    -->
+{% if user.is_authenticated and ad_user.id == user.id %}
+<h1 class="display-2">Din side</h1>
+<h2>Brukerinformasjon: </h2>
+<p><span><f class="font-weight-bold">Fullt navn: </f>{{user.first_name}} {{user.last_name}}</span></p>
+<p><span><f class="font-weight-bold">Brukernavn: </f>{{user.username}}</span></p>
+<p><span><f class="font-weight-bold">E-post: </f>{{user.email}}</span></p>
+<p><span><f class="font-weight-bold">Telefon: </f>{{user.phone_number}}</span></p>
+<p><span><f class="font-weight-bold">Postnummer: </f>{{user.postal_code}}</span></p>
+{% if average_rating %}
+  <p>Gjennomsnitlig vurdering: {{ average_rating|floatformat:1 }} / 5</p>
+{% else %}
+  <p>Du har ikke blitt vurdert enda.</p>
+{% endif %}
+  <p><a href="{% url 'user:logout' %}" class="btn btn-danger">Logg ut</a></p>
+  <h2>Mine annonser</h2>
+  <!--
+  <div class="btn-group" role="group" aria-label="Basic example">
+  -->
   <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
     <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
     <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)">Forespørsler</button>
@@ -243,66 +242,95 @@
         <p>Denne brukeren har ikke blitt vurdert enda.</p>
     {% endif %}
 
-    {% if user.is_authenticated %}   
-        <form method="post" action={% url 'rate_user' profile_user.id %}>
-            {% csrf_token %}
-            <label>Vurder: </label>
-            <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
-            <input type="hidden" id="rating" name="rating" value=""> 
-        <button type="submit">Lagre</button>
-        </form>
 
-        <script>
-            $('.ui.rating')
-            .rating('setting', 'onRate', function(value) {
-                console.log(value);
-                $('#rating').val(value);
-                console.log($('#rating').val());
-            });
-        </script>
-    {% endif %}
-
-    <h2>Annonser</h2>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
-    <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
-    <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
-    <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)">Alle</button>
-  </div>
-    <hr> 
-  <div class="card-columns" style="width: 80%; margin-left: 0px;">
-    {% for ad in profile_user.advertisement.all %}
-        {% if ad.isRequest == True %}
-            <div class="card" data-isrequest="true">
-                <div class="card-body">
-                    <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
-                    <p class="card-text">Budsjett: {{ ad.price }}kr</p>
-                </div>
-            </div>
-        {% else %}
-            <div class="card" data-isrequest="false">
-                <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ ad.title }}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ ad.date }}</h6>
-                    <div class="card-text">
-                        {% if ad.description|length > 150 %}
-                            <span class="card-text-truncated">{{ ad.description|truncatewords:30 }}</span>
-                            <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
-                            <span class="hidden-text" style="display:none;">{{ ad.description }}</span>
-                        {% else %}
-                            {{ ad.description }}
-                        {% endif %}
-                    </div>
-                    <p class="card-text">Pris: {{ ad.price }}kr</p>
-                    {% if ad.isRented == True %}
-                            <button class="ui button bg-danger" disabled>UTLEID</button>
-                    {% endif %}
-                </div>
-            </div>
+    {% for interaction in user.a_interactions.all %}
+        {% if interaction.b_id == profile_user.id %}
+            {% if not interaction.rated_b %}
+            <form method="post" action={% url 'rate_user' profile_user.id %}>
+                {% csrf_token %}
+                <label>Vurder: </label>
+                <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
+                <input type="hidden" id="rating" name="rating" value=""> 
+                <button type="submit">Lagre</button>
+            </form>
+    
+            <script>
+                $('.ui.rating')
+                .rating('setting', 'onRate', function(value) {
+                    console.log(value);
+                    $('#rating').val(value);
+                    console.log($('#rating').val());
+                });
+            </script>
+            {% endif %}
         {% endif %}
     {% endfor %}
-  </div>
+
+    {% for interaction in user.b_interactions.all %}
+        {% if interaction.a_id == profile_user.id %}
+            {% if not interaction.rated_a %}
+            <form method="post" action={% url 'rate_user' profile_user.id %}>
+                {% csrf_token %}
+                <label>Vurder: </label>
+                <div class="ui yellow rating" data-icon="star" data-max-rating="5"></div>
+                <input type="hidden" id="rating" name="rating" value=""> 
+                <button type="submit">Lagre</button>
+            </form>
+    
+            <script>
+                $('.ui.rating')
+                .rating('setting', 'onRate', function(value) {
+                    console.log(value);
+                    $('#rating').val(value);
+                    console.log($('#rating').val());
+                });
+            </script>
+             {% endif %}
+        {% endif %}
+    {% endfor %}
+
+
+    <h2>Annonser</h2>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-bottom: 0.7em;">
+        <button type="button" class="btn btn-secondary" name="forRent" id="forRent" onclick="onButtonClick(this)">Til Utleie</button>
+        <button type="button" class="btn btn-secondary" name="request" id="request" onclick="onButtonClick(this)" >Forespørsler</button>
+        <button type="button" class="btn btn-secondary active" name="all" id="all" onclick="onButtonClick(this)">Alle</button>
+    </div>
+    <hr> 
+    <div class="card-columns" style="width: 80%; margin-left: 0px;">
+        {% for ad in profile_user.advertisement.all %}
+            {% if ad.isRequest == True %}
+                <div class="card" data-isrequest="true">
+                    <div class="card-body">
+                        <h5 class="card-title">Ønskes leid: {{ ad.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ ad.date }}</h6>
+                        <p class="card-text">Budsjett: {{ ad.price }}kr</p>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card" data-isrequest="false">
+                    <img class="card-img-top" src="{{ ad.image.url }}" alt="{{ ad.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ad.title }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Ledig til: {{ ad.date }}</h6>
+                        <div class="card-text">
+                            {% if ad.description|length > 150 %}
+                                <span class="card-text-truncated">{{ ad.description|truncatewords:30 }}</span>
+                                <span class="expand-text" style="color:blue; cursor:pointer;">mer</span>
+                                <span class="hidden-text" style="display:none;">{{ ad.description }}</span>
+                            {% else %}
+                                {{ ad.description }}
+                            {% endif %}
+                        </div>
+                        <p class="card-text">Pris: {{ ad.price }}kr</p>
+                        {% if ad.isRented == True %}
+                            <button class="ui button bg-danger" disabled>UTLEID</button>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endif %}
 
 <script>

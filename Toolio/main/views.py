@@ -1,7 +1,7 @@
 from .models import ad, CustomList, adInList
-from user.models import CustomUser, Interaction
+from user.models import CustomUser, Interaction, Interaction
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import createAdForm, editAdForm, editAdFormWanted, confirmBooking, createCustomListForm
+from .forms import createAdForm, editAdForm, editAdFormWanted, confirmBooking, createCustomListForm, confirmBooking
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from user.find_distance import get_ad_distance_dict
@@ -26,26 +26,36 @@ def confirm_booking(request, ad_id):
     ad_instance.save()
     
     interaction = Interaction.objects.update_or_create(
-        borrower=request.user,
-        lender=ad_instance.user,
+        a=request.user,
+        b=ad_instance.user,
     )
-    interaction[0].rated = False
+    interaction[0].rated_a = False
+    interaction[0].rated_b = False
     interaction[0].save()
-    
     
     
     return redirect('home')
 
 
-
-
 def get_user_average_rating(user):
-    interactions = Interaction.objects.filter(lender=user.id, rating__gt=0).exclude(rating__isnull=True)
+    b=True
+    interactions = Interaction.objects.filter(b_id=user.id, rating_b__gt=0).exclude(rating_b__isnull=True)
+        
+    if interactions.count() == 0:
+        interactions = Interaction.objects.filter(a_id=user.id, rating_a__gt=0).exclude(rating_a__isnull=True)
+        b=False
+
     if interactions.count() == 0:
         return None
 
-    total_rating = sum(interaction.rating for interaction in interactions)
+    if b:
+        total_rating = sum(interaction.rating_b for interaction in interactions)
+
+    else:
+        total_rating = sum(interaction.rating_a for interaction in interactions)
+
     return total_rating / interactions.count()
+
 
 def userPage(request, user_id):
     profile_user = CustomUser.objects.get(id=user_id)
@@ -62,39 +72,35 @@ def userPage(request, user_id):
     }
     return render(request, 'main/userPage.html', context)
 
-#def rate_user(request, user_id):
-#    rated_user = CustomUser.objects.get(id=user_id)
-#    list_form = createCustomListForm()
-    #save_form = saveAdToListForm()
-    #user = request.user
-#  
-#    if request.method == "POST":
-#        rating = int(request.POST["rating"])
-#        interaction = Interaction.objects.get_or_create(
-#            borrower = user,
-#            lender = rated_user,
-#            rating = rating
-#        )
-#   
-#    return redirect('userPage', user_id)
-
-
 def rate_user(request, user_id):
-    rated_user = CustomUser.objects.get(id=user_id)
-    user = request.user
+    rated_user = CustomUser.objects.get(id=user_id) #b
+    user = request.user #a
+    b = True
     
     # Check if an interaction record exists between the borrower and the lender
-    interaction = Interaction.objects.filter(borrower=user, lender=rated_user, rated=False).first()
-        
+    interaction = Interaction.objects.filter(a=user, b=rated_user, rated_b=False).first()
+    
     # Retrieve the ad object associated with the booking
     ad_obj = ad.objects.filter(isRented=True, user=rated_user).first()
+
+    if interaction==None:
+        interaction = Interaction.objects.filter(b=user, a=rated_user, rated_a=False).first()
+        print(interaction)
+        ad_obj = ad.objects.filter(isRented=True, user=user).first()
+        b = False
   
     if request.method == "POST":
         # Check if the user has confirmed the booking and if an interaction record exists
-        if ad_obj and interaction:
+        if ad_obj and interaction and b:
             rating = int(request.POST["rating"])
-            interaction.rating = rating
-            interaction.rated = True
+            interaction.rating_b = rating
+            interaction.rated_b = True
+            interaction.save()
+            return redirect('userPage', user_id)
+        elif ad_obj and interaction:
+            rating = int(request.POST["rating"])
+            interaction.rating_a = rating
+            interaction.rated_a = True
             interaction.save()
             return redirect('userPage', user_id)
         else:
