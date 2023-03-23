@@ -20,40 +20,40 @@
         {% csrf_token %}
         <h5 class="ui dividing header">Opprett Toolio-konto</h5>  
         <div class="field">
-          <label>Navn</label>
+          <label>Navn*</label>
           <div class="two fields">
             <div class="field">
-              <input type="text" name="first_name" placeholder="Fornavn">
+              <input type="text" name="first_name" placeholder="Fornavn" value="{{ first_name }}" required>
             </div>
             <div class="field">
-              <input type="text" name="last_name" placeholder="Etternavn">
+              <input type="text" name="last_name" placeholder="Etternavn" value="{{ last_name }}" required>
             </div>
           </div>
         </div>
         <div class="field">
-          <label>Brukernavn</label>
-          <input placeholder="Brukernavn" name="username" type="text">
+          <label>Brukernavn*</label>
+          <input placeholder="Brukernavn" name="username" type="text" value="{{ username }}" required>
         </div>
         <div class="field">
-          <label>Telefon</label>
-          <input placeholder="Telefon" name="phone_number" type="text">
+          <label>Telefon*</label>
+          <input placeholder="Telefon" name="phone_number" type="text" value="{{ phone_number }}" required>
         </div>
         <div class="field">
-          <label>Postnummer</label>
-          <input placeholder="postnummer" name="postal_code" type="text">
+          <label>Postnummer*</label>
+          <input placeholder="postnummer" name="postal_code" type="text" value="{{ postal_code }}" required>
         </div>
         <div class="field">
-          <label>E-postadresse</label>
-          <input placeholder="E-postadresse" name="email" type="text">
+          <label>E-postadresse*</label>
+          <input placeholder="E-postadresse" name="email" type="text" value="{{ email }}" required>
         </div>
         <div class="field">
-          <label>Passord</label>
+          <label>Passord*</label>
           <div class="two fields">
             <div class="field">
-              <input type="text" name="password1" placeholder="********">
+              <input type="password" name="password1" placeholder="********" required>
             </div>
             <div class="field">
-              <input type="text" name="password2" placeholder="********">
+              <input type="password" name="password2" placeholder="********" required>
             </div>
           </div>
         </div>
