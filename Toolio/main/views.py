@@ -51,12 +51,14 @@ def userPage(request, user_id):
     profile_user = CustomUser.objects.get(id=user_id)
     average_rating = get_user_average_rating(profile_user)
     list_form = createCustomListForm()
-    print(f"\n\n average rating: {average_rating} \n\n")
+    ad_distance_dict = get_ad_distance_dict(request.user)
+       
     
     context = {
         'profile_user': profile_user,
         'average_rating': average_rating,
-        'form': list_form
+        'form': list_form,
+         'ad_distance_dict': ad_distance_dict
     }
     return render(request, 'main/userPage.html', context)
 

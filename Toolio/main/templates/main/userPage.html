@@ -17,6 +17,8 @@
       }
 </style>
 
+{% load custom_filters %}
+
 {% block content %}
 
 {% if user.is_authenticated and profile_user.id == user.id %}
@@ -102,16 +104,50 @@
         <h2> {{ list.title }} </h2>
         <div class="card-columns" style="width: 80%; margin-left: 0px;">
             {% for listRow in list.in_list.all %}
+            <div class="card">
+                <div class="card-header" style="margin: 0 !important; padding: 0.2em!important;">
+                    <a class="header" href="{% url 'userPage' listRow.savedAd.user.id %}">
+                        <p style="color: black; margin: 0.5em 0 0 0.5em;">{{listRow.savedAd.user.first_name}} {{listRow.savedAd.user.last_name}}</p>
+                        <p style="color: grey; margin: 0 0 0 0.5em;">@{{ listRow.savedAd.user }}</p>
+                    </a>
+                </div>
                 {% if listRow.savedAd.isRequest == True %}
-                    <div class="card" data-isrequest="true">
+                    <!--
+                        <div class="card" data-isrequest="true">
+                    -->
                         <div class="card-body">
                             <h5 class="card-title">Ønskes leid: {{ listRow.savedAd.title }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Ønskes til: {{ listRow.savedAd.date }}</h6>
                             <p class="card-text">Budsjett: {{ listRow.savedAd.price }}kr</p>
+                        
+
+                        {% if user.is_authenticated%}
+                                {% if user.pk != listRow.savedAd.user.pk%}
+                                    <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:listRow.savedAd.pk }} km unna</p> 
+                                {% else %}
+                                    <p class="card-text distance" hidden="True">0</p>
+                                {% endif %}
+                        {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
+                        {% endif %}
+
+                        {% if listRow.savedAd.user != user %} <!-- Only shows the "lån bort" button on "ønskes leid" that the user doesnt own -->
+                        <button class="ui primary button" onclick="openPopup(this)">Lån bort verktøy</button>
+
+                        <div class="popup">
+                            <h2>{{ listRow.savedAd.title }}</h2>
+                            <button type="button" id="closebutton" onclick="closePopup(this)">⨉</button>
+                            <p>Annonsør: {{ listRow.savedAd.user.first_name }} {{ listRow.savedAd.user.last_name }}</p>
+                            <p>Telefon nummer: {{ listRow.savedAd.user.phone_number }}</p>
+                            <p>E-post: {{ listRow.savedAd.user.email }}</p>
                         </div>
+                        <div class="overlay hidden"></div>
+
+                        {% endif %}
                     </div>
+                   
                 {% else %}
-                    <div class="card" data-isrequest="false">
+                    
                         <img class="card-img-top" src="{{ listRow.savedAd.image.url }}" alt="{{ listRow.savedAd.title }}">
                         <div class="card-body">
                             <h5 class="card-title">{{ listRow.savedAd.title }}</h5>
@@ -126,12 +162,70 @@
                                 {% endif %}
                             </div>
                             <p class="card-text">Pris: {{ listRow.savedAd.price }}kr</p>
+
+                            {% if user.is_authenticated%}
+                                {% if user.pk != listRow.savedAd.user.pk%}
+                                    <p class="card-text distance">Mindre enn {{ ad_distance_dict|get_item:listRow.savedAd.pk }} km unna</p> 
+                                {% else %}
+                                    <p class="card-text distance" hidden="True">0</p>
+                                {% endif %}
+                            {% else %}
+                                <p class="card-text distance" hidden="True">0</p>
+                            {% endif %}
+
                             {% if listRow.savedAd.isRented == True %}
                                 <button class="ui button bg-danger" disabled>UTLEID</button>
+                            {% else %}
+                                {% if listRow.savedAd.user != user %} <!-- Only shows the "lån bort" button on "ønskes leid" that the user doesnt own -->
+                                    <button class="ui primary button" onclick="openPopup(this)">Book verktøy</button>
+
+                                    <div class="popup">
+                                        <h2>{{ listRow.savedAd.title }}</h2>
+                                        <button type="button" onclick="closePopup(this)">⨉</button>
+                                        <p>Annonsør: {{ listRow.savedAd.user.first_name }} {{ listRow.savedAd.user.last_name }}</p>
+                                        <p>Telefon nummer: {{ listRow.savedAd.user.phone_number }}</p>
+                                        <p>E-post: {{ listRow.savedAd.user.email }}</p>
+                                        {% if user.is_authenticated %}
+                                            <form method="POST" class="ui form" action="{% url 'confirmBooking' listRow.savedAd.id %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" id="id_booking" name="id_booking" value ="true">
+                                                <button type ="submit">Bekreft booking</button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                    <div class="overlay hidden"></div>
+                                {% endif %}
                             {% endif %}
                         </div>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
+                <script>
+
+                    function openPopup(element) {
+                        element.nextElementSibling.classList.add("open-popup");
+                        element.nextElementSibling.nextElementSibling.classList.remove("hidden");
+                    }
+
+                    function closePopup(element) {
+                        element.parentElement.classList.remove("open-popup");
+                        element.parentElement.nextElementSibling.classList.add("hidden");
+                    }
+
+                    
+                    window.onclick = function (event) {
+                        var overlay = document.getElementsByClassName("overlay");
+                        var popup = document.getElementsByClassName("popup");
+                        
+                        if (event.target.classList[0] == 'overlay') {
+                            Array.from(overlay).forEach((element) => {
+                            element.classList.add("hidden");
+                            });
+                            Array.from(popup).forEach((element) => {
+                            element.classList.remove("open-popup");
+                            });
+                        }
+                    }
+                </script>
             {% endfor %}
         </div>
     {% endfor %}
